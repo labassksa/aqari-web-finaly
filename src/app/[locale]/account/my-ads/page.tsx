@@ -181,7 +181,12 @@ export default function MyAdsPage() {
             const isDraft = listing.status === 'draft';
 
             return (
-              <div key={listing.id} className="bg-white rounded-2xl shadow-sm overflow-hidden">
+              <div
+                key={listing.id}
+                className={`relative bg-white rounded-2xl shadow-sm ${
+                  openMenu === listing.id ? 'z-20 overflow-visible' : 'z-0 overflow-hidden'
+                }`}
+              >
                 <div className="flex items-center gap-4 p-4">
                   {/* Cover photo */}
                   <div className="relative w-[120px] h-[80px] rounded-lg overflow-hidden bg-gray-100 shrink-0">
