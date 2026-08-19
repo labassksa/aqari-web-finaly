@@ -146,7 +146,9 @@
     "legal": "Legal",
     "contact": "Contact",
     "rights": "All rights reserved",
-    "company": "Aqora Company"
+    "company": "Aqora Company",
+    "intellectualProperty": "Intellectual Property Policy",
+    "complaints": "Submit a Complaint"
   },
   "privacy": {
     "title": "Privacy Policy",
@@ -250,6 +252,63 @@
         "title": "Governing Law",
         "text": "These Terms are governed by the laws of the Kingdom of Saudi Arabia, and Saudi courts have exclusive jurisdiction over any disputes arising hereunder."
       }
+    }
+  },
+  "intellectualProperty": {
+    "title": "Intellectual Property Policy",
+    "subtitle": "Content rights on the Aqora platform",
+    "sections": {
+      "ownership": {
+        "title": "Content Ownership",
+        "text": "Content uploaded by users including photos and listings remains the property of the original owner. Aqora does not claim ownership of user-generated content."
+      },
+      "license": {
+        "title": "License to Display",
+        "text": "By uploading content to the platform, users grant Aqora a limited license to display that content on the platform for real estate advertising purposes only."
+      },
+      "prohibited": {
+        "title": "Prohibited Content",
+        "text": "Users may not upload content they do not own or content that infringes the intellectual property rights of others."
+      },
+      "report": {
+        "title": "Report a Violation",
+        "intro": "If you believe content on the platform infringes your intellectual property rights, contact us at:",
+        "or": "or through the",
+        "complaints": "complaints submission page"
+      },
+      "actions": {
+        "title": "Our Actions",
+        "text": "We will review every report within 7 business days. Infringing content will be removed immediately upon verification."
+      }
+    }
+  },
+  "complaints": {
+    "title": "Submit a Complaint",
+    "subtitle": "We are here to help. Send us your complaint and we will contact you.",
+    "fields": {
+      "name": "Full Name",
+      "phone": "Mobile Number",
+      "email": "Email Address",
+      "emailOptional": "optional",
+      "subject": "Complaint Subject",
+      "message": "Complaint Details"
+    },
+    "placeholders": {
+      "name": "Enter your full name",
+      "phone": "05xxxxxxxx",
+      "email": "name@example.com",
+      "subject": "Enter the complaint subject",
+      "message": "Describe your complaint..."
+    },
+    "submit": "Submit Complaint",
+    "submitting": "Submitting complaint...",
+    "error": "Unable to submit your complaint. Please try again.",
+    "success": {
+      "title": "Your complaint has been received successfully",
+      "number": "Complaint number:",
+      "date": "Submission date:",
+      "followUp": "We will contact you within 3 business days",
+      "another": "Submit another complaint"
     }
   },
   "about": {

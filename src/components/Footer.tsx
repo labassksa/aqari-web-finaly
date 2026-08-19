@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export default async function Footer() {
   const t = await getTranslations("footer");
@@ -73,6 +73,22 @@ export default async function Footer() {
                   className="hover:text-white transition-colors"
                 >
                   الشروط والأحكام
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/intellectual-property"
+                  className="hover:text-white transition-colors"
+                >
+                  {t("intellectualProperty")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/complaints"
+                  className="hover:text-white transition-colors"
+                >
+                  {t("complaints")}
                 </Link>
               </li>
               <li>

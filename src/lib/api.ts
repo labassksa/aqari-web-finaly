@@ -41,6 +41,21 @@ export async function apiRequest<T>(
   return json.data as T;
 }
 
+export type ComplaintSubmission = {
+  name: string;
+  phone: string;
+  email?: string;
+  subject: string;
+  message: string;
+};
+
+export function submitComplaint(data: ComplaintSubmission) {
+  return apiRequest<{ number: string; createdAt: string }>('/complaints', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapHit(hit: any): Listing {
   return {
