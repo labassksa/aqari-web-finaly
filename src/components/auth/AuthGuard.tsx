@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/auth.store';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import { useEffect } from 'react';
 
-export function AuthGuard({ children }: { children: React.ReactNode }) {
+export function AuthGuard({ children, returnTarget }: { children: React.ReactNode; returnTarget?: string }) {
   const { isLoggedIn, _hasHydrated } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
@@ -11,9 +11,10 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!_hasHydrated) return;
     if (!isLoggedIn) {
-      router.replace(`/login?redirect=${encodeURIComponent(pathname)}`);
+      const target = returnTarget ?? pathname;
+      router.replace(`/login?redirect=${encodeURIComponent(target)}`);
     }
-  }, [isLoggedIn, _hasHydrated, pathname, router]);
+  }, [isLoggedIn, _hasHydrated, pathname, returnTarget, router]);
 
   // Still reading localStorage — show spinner, never redirect yet
   if (!_hasHydrated) {

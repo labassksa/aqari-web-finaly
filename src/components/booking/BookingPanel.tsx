@@ -29,16 +29,19 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
   const [guestCount, setGuestCount] = useState<number | undefined>(undefined);
   const [notes, setNotes] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window === "undefined" || window.matchMedia("(min-width: 1024px)").matches,
+  );
   const [showSheet, setShowSheet] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
-    setIsDesktop(mq.matches);
     const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
+
+  if (listing.propertyType === 'event_hall' || listing.listingType !== 'rent_short') return null;
 
   const pricePerNight = parseFloat(listing.totalPrice);
 

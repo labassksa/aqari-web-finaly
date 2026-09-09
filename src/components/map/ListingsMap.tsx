@@ -72,7 +72,8 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
   useEffect(() => {
     if (selectedId && !parsed.some((listing) => listing.id === selectedId)) {
-      setSelectedId(null);
+      const timer = window.setTimeout(() => setSelectedId(null), 0);
+      return () => window.clearTimeout(timer);
     }
   }, [parsed, selectedId]);
 

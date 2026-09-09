@@ -84,8 +84,11 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setOpen(false);
-    setDropdownOpen(false);
+    const timer = window.setTimeout(() => {
+      setOpen(false);
+      setDropdownOpen(false);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [pathname]);
 
   const avatarContent = user?.profilePhoto ? (

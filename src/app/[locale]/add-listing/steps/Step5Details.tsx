@@ -1,115 +1,108 @@
 'use client';
+
+import { INCLUDED_SERVICES, getPropertyTypeGroup } from '@/lib/property-types';
 import { useAddListingStore } from '@/store/add-listing.store';
+import { useTranslations } from 'next-intl';
 
 const FACADE_OPTIONS = [
-  { value: 'north', label: 'شمال' },
-  { value: 'south', label: 'جنوب' },
-  { value: 'east', label: 'شرق' },
-  { value: 'west', label: 'غرب' },
-  { value: 'northeast', label: 'شمال شرق' },
-  { value: 'northwest', label: 'شمال غرب' },
-  { value: 'southeast', label: 'جنوب شرق' },
-  { value: 'southwest', label: 'جنوب غرب' },
-];
+  'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest',
+] as const;
 
-const CHECKBOXES: { key: string; label: string }[] = [
-  { key: 'isFurnished', label: 'مفروش' },
-  { key: 'hasKitchen', label: 'مطبخ' },
-  { key: 'hasExtraUnit', label: 'وحدة إضافية' },
-  { key: 'hasCarEntrance', label: 'مدخل سيارة' },
-  { key: 'hasElevator', label: 'مصعد' },
-];
+const DETAIL_KEYS = {
+  residential: [
+    ['bedrooms'], ['livingRooms'], ['bathrooms'], ['floorNumber'],
+    ['propertyAge', 'years'], ['streetWidth', 'meters'],
+  ],
+  commercial: [
+    ['bathrooms'], ['floorNumber'], ['propertyAge', 'years'], ['streetWidth', 'meters'],
+  ],
+  land: [['streetWidth', 'meters']],
+} as const;
 
-const NUMBER_FIELDS: { key: string; label: string; unit?: string }[] = [
-  { key: 'bedrooms', label: 'غرف النوم' },
-  { key: 'livingRooms', label: 'غرف المعيشة' },
-  { key: 'bathrooms', label: 'دورات المياه' },
-  { key: 'floorNumber', label: 'الطابق' },
-  { key: 'propertyAge', label: 'عمر العقار', unit: 'سنة' },
-  { key: 'streetWidth', label: 'عرض الشارع', unit: 'م' },
-];
+const RESIDENTIAL_FEATURES = [
+  'isFurnished', 'hasKitchen', 'hasExtraUnit', 'hasCarEntrance', 'hasElevator',
+] as const;
 
 export default function Step5Details() {
   const store = useAddListingStore();
+  const t = useTranslations('addListingFlow');
+  const group = getPropertyTypeGroup(store.propertyType);
+  const input = 'w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] bg-white';
 
-  const inp = 'w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] bg-white transition-colors';
+  if (group === 'event_hall') {
+    return (
+      <div className="px-4 py-6 space-y-5">
+        <h2 className="text-base font-bold text-[#222222]">{t('details.eventHall.title')}</h2>
+        <div>
+          <label className="block text-sm font-medium mb-1.5">{t('details.eventHall.capacity')}</label>
+          <input type="number" min={1} value={store.maxGuests ?? ''} onChange={(event) => store.setField('maxGuests', event.target.value ? Number(event.target.value) : null)} className={input} dir="ltr" />
+          {store.validationErrors.maxGuests && <p className="text-xs text-red-500 mt-1">{store.validationErrors.maxGuests}</p>}
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1.5">{t('details.eventHall.halfDayPrice')}</label>
+          <input type="number" min={0} value={store.pricePerHalfDay ?? ''} onChange={(event) => store.setField('pricePerHalfDay', event.target.value ? Number(event.target.value) : null)} className={input} dir="ltr" />
+          <p className="text-xs text-[#717171] mt-1">{t('details.eventHall.halfDayHint')}</p>
+          {store.validationErrors.pricePerHalfDay && <p className="text-xs text-red-500 mt-1">{store.validationErrors.pricePerHalfDay}</p>}
+        </div>
+        <div>
+          <p className="text-sm font-medium mb-2">{t('details.eventHall.services')}</p>
+          <div className="grid grid-cols-2 gap-2">
+            {INCLUDED_SERVICES.map((service) => {
+              const checked = store.includedServices.includes(service);
+              return (
+                <button key={service} type="button" onClick={() => store.toggleIncludedService(service)} className={`flex items-center gap-2 p-3 rounded-xl border-2 text-sm ${checked ? 'border-[#F5A623] bg-orange-50 text-[#F5A623]' : 'border-gray-200 bg-white'}`}>
+                  <span className={`w-5 h-5 rounded border-2 flex items-center justify-center ${checked ? 'bg-[#F5A623] border-[#F5A623] text-white' : 'border-gray-300'}`}>{checked ? '✓' : ''}</span>
+                  {t(`services.${service}`)}
+                </button>
+              );
+            })}
+          </div>
+          {store.validationErrors.includedServices && <p className="text-xs text-red-500 mt-1">{store.validationErrors.includedServices}</p>}
+        </div>
+      </div>
+    );
+  }
+
+  const numberFields = group === 'residential' || group === 'commercial' || group === 'land'
+    ? DETAIL_KEYS[group]
+    : [];
+  const showFacade = group === 'residential' || group === 'commercial' || group === 'land';
 
   return (
     <div className="px-4 py-6 space-y-5">
-      <h2 className="text-base font-bold text-[#222222]">تفاصيل العقار</h2>
-
-      {/* Number inputs grid */}
-      <div className="grid grid-cols-2 gap-3">
-        {NUMBER_FIELDS.map(({ key, label, unit }) => (
-          <div key={key}>
-            <label className="block text-xs font-medium text-[#717171] mb-1">
-              {label}{unit ? ` (${unit})` : ''}
-            </label>
-            <input
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              value={(store as any)[key] ?? ''}
-              onChange={(e) =>
-                store.setField(key, e.target.value ? parseFloat(e.target.value) : null)
-              }
-              className={inp}
-              dir="ltr"
-              type="number"
-              min={0}
-              placeholder="0"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Facade */}
-      <div>
-        <label className="block text-sm font-medium text-[#222222] mb-1.5">الواجهة</label>
-        <select
-          value={store.facade ?? ''}
-          onChange={(e) => store.setField('facade', e.target.value || null)}
-          className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] bg-white transition-colors appearance-none"
-        >
-          <option value="">اختر الواجهة (اختياري)</option>
-          {FACADE_OPTIONS.map((f) => (
-            <option key={f.value} value={f.value}>{f.label}</option>
+      <h2 className="text-base font-bold text-[#222222]">{t('details.title')}</h2>
+      {numberFields.length > 0 ? (
+        <div className="grid grid-cols-2 gap-3">
+          {numberFields.map(([key, unit]) => (
+            <div key={key}>
+              <label className="block text-xs font-medium text-[#717171] mb-1">{t(`details.${key}`)}{unit ? ` (${t(`details.${unit}`)})` : ''}</label>
+              <input value={String(store[key as keyof typeof store] ?? '')} onChange={(event) => store.setField(key, event.target.value ? Number(event.target.value) : null)} className={input} dir="ltr" type="number" min={0} placeholder="0" />
+            </div>
           ))}
-        </select>
-      </div>
-
-      {/* Checkboxes */}
-      <div>
-        <p className="text-sm font-medium text-[#222222] mb-2">مميزات إضافية</p>
-        <div className="grid grid-cols-2 gap-2">
-          {CHECKBOXES.map(({ key, label }) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const checked = !!(store as any)[key];
-            return (
-              <button
-                key={key}
-                onClick={() => store.setField(key, !checked)}
-                className={`flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${
-                  checked
-                    ? 'border-[#F5A623] bg-orange-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 ${
-                  checked ? 'bg-[#F5A623] border-[#F5A623]' : 'border-gray-300'
-                }`}>
-                  {checked && (
-                    <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                      <path d="M1 4L4 7L9 1" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  )}
-                </div>
-                <span className={`text-sm font-medium ${checked ? 'text-[#F5A623]' : 'text-[#444444]'}`}>
-                  {label}
-                </span>
-              </button>
-            );
-          })}
         </div>
-      </div>
+      ) : <p className="text-sm text-[#717171]">{t('details.noExtra')}</p>}
+
+      {showFacade && (
+        <div>
+          <label className="block text-sm font-medium mb-1.5">{t('details.facade')}</label>
+          <select value={store.facade ?? ''} onChange={(event) => store.setField('facade', event.target.value || null)} className={input}>
+            <option value="">{t('details.selectFacade')}</option>
+            {FACADE_OPTIONS.map((facade) => <option key={facade} value={facade}>{t(`details.facades.${facade}`)}</option>)}
+          </select>
+        </div>
+      )}
+
+      {group === 'residential' && (
+        <div>
+          <p className="text-sm font-medium mb-2">{t('details.residentialFeatures')}</p>
+          <div className="grid grid-cols-2 gap-2">
+            {RESIDENTIAL_FEATURES.map((key) => {
+              const checked = Boolean(store[key]);
+              return <button key={key} type="button" onClick={() => store.setField(key, !checked)} className={`p-3 rounded-xl border-2 text-sm ${checked ? 'border-[#F5A623] bg-orange-50 text-[#F5A623]' : 'border-gray-200 bg-white'}`}>{t(`details.features.${key}`)}</button>;
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { Link } from "@/i18n/navigation";
 import EventHallDetailClient, { type HallDetail } from "@/components/event-halls/EventHallDetailClient";
 import { apiRequest } from "@/lib/api";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{ id: string; locale: string }>;
@@ -47,6 +48,7 @@ export default async function EventHallDetailPage({ params }: Props) {
       </>
     );
   }
+  if (data.propertyType !== "event_hall") notFound();
 
   const media: MediaItem[] = Array.isArray(data.__media__) ? data.__media__ : [];
   const photos = media

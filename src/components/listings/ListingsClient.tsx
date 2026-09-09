@@ -38,6 +38,7 @@ interface Props {
   hidePropertyType?: boolean;
   hrefBase?: string;
   showAddButton?: boolean;
+  addHref?: string;
 }
 
 export default function ListingsClient({
@@ -47,6 +48,7 @@ export default function ListingsClient({
   hidePropertyType,
   hrefBase,
   showAddButton = true,
+  addHref = '/add-listing',
 }: Props) {
   const t = useTranslations("listings");
   const [filters, setFilters] = useState<FilterValues>({
@@ -274,7 +276,7 @@ export default function ListingsClient({
       {/* Floating add listing button */}
       {showAddButton && (
         <Link
-          href="/add-listing"
+          href={addHref}
           className="fixed bottom-6 end-5 z-40 flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-5 py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
         aria-label="إضافة إعلان"
         title={t("addListing")}

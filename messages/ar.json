@@ -131,7 +131,7 @@
   },
   "eventHalls": {
     "title": "قاعات المناسبات والاحتفالات",
-    "subtitle": "احجز قاعتك المثالية للأعراس والمناسبات والاحتفالات"
+    "subtitle": "استعرض القاعات وتواصل مباشرة مع المعلن لمعرفة التفاصيل"
   },
   "cta": {
     "title": "جاهز تبدأ؟",
@@ -382,7 +382,7 @@
   },
   "eventHalls": {
     "title": "قاعات المناسبات والاحتفالات",
-    "subtitle": "احجز قاعتك المثالية للأعراس والمناسبات",
+    "subtitle": "استعرض القاعات وتواصل مباشرة مع المعلن لمعرفة التوفر والحجز",
     "capacity": "يتسع لـ {count} ضيف",
     "pricePerDay": "{price} ريال / يوم",
     "pricePerSlot": "{price} ريال / فترة",
@@ -399,6 +399,82 @@
       "decoration": "تزيين",
       "security": "أمن",
       "parking": "مواقف سيارات"
+    }
+  },
+  "addListingFlow": {
+    "title": "إضافة إعلان",
+    "back": "رجوع",
+    "next": "التالي",
+    "review": "مراجعة الإعلان",
+    "category": {
+      "title": "اختر نوع العقار",
+      "loadError": "تعذر تحميل التصنيفات. يرجى المحاولة مرة أخرى.",
+      "presetUnavailable": "التصنيف المطلوب غير متاح حالياً. يرجى المحاولة مرة أخرى.",
+      "retry": "إعادة المحاولة",
+      "types": { "sale": "للبيع", "rent_long": "للإيجار", "rent_short": "إيجار يومي" }
+    },
+    "details": {
+      "title": "تفاصيل العقار",
+      "noExtra": "لا توجد تفاصيل إضافية مطلوبة لهذا النوع.",
+      "bedrooms": "غرف النوم",
+      "livingRooms": "غرف المعيشة",
+      "bathrooms": "دورات المياه",
+      "floorNumber": "الطابق",
+      "propertyAge": "عمر العقار",
+      "streetWidth": "عرض الشارع",
+      "years": "سنة",
+      "meters": "م",
+      "facade": "الواجهة",
+      "selectFacade": "اختر الواجهة (اختياري)",
+      "residentialFeatures": "مميزات سكنية",
+      "facades": { "north": "شمال", "south": "جنوب", "east": "شرق", "west": "غرب", "northeast": "شمال شرق", "northwest": "شمال غرب", "southeast": "جنوب شرق", "southwest": "جنوب غرب" },
+      "features": { "isFurnished": "مفروش", "hasKitchen": "مطبخ", "hasExtraUnit": "وحدة إضافية", "hasCarEntrance": "مدخل سيارة", "hasElevator": "مصعد" },
+      "eventHall": {
+        "title": "تفاصيل قاعة المناسبات",
+        "capacity": "الطاقة الاستيعابية (عدد الضيوف)",
+        "halfDayPrice": "سعر الفترة الصباحية أو المسائية (ريال)",
+        "halfDayHint": "اتركه فارغاً إذا كانت القاعة لليوم الكامل فقط. أدخل سعر اليوم الكامل في خطوة معلومات الإعلان.",
+        "services": "الخدمات المشمولة في السعر"
+      }
+    },
+    "dailyRental": {
+      "title": "إعدادات الإقامة",
+      "subtitle": "تطبق هذه الإعدادات على الإيجار اليومي فقط.",
+      "maxGuests": "الحد الأقصى للضيوف (اختياري)",
+      "minNights": "الحد الأدنى للإقامة (ليالٍ)",
+      "checkInTime": "وقت تسجيل الوصول (اختياري)",
+      "checkOutTime": "وقت تسجيل المغادرة (اختياري)"
+    },
+    "services": { "catering": "تقديم الطعام", "sound_system": "نظام صوتي", "projector": "شاشة عرض", "decoration": "تزيين", "security": "أمن", "parking": "مواقف سيارات" },
+    "features": {
+      "title": "المرافق والمميزات",
+      "subtitle": "اختر المرافق المتوفرة في العقار.",
+      "none": "لا توجد مرافق إضافية لهذا النوع.",
+      "optional": "يمكنك المتابعة بدون اختيار أي مرفق.",
+      "items": { "hasWater": "مياه", "hasElectricity": "كهرباء", "hasSewage": "صرف صحي", "hasPrivateRoof": "سطح خاص", "isInVilla": "داخل فيلا", "hasTwoEntrances": "مدخلان", "hasSpecialEntrance": "مدخل خاص" }
+    },
+    "validation": {
+      "requiredTitle": "عنوان الإعلان مطلوب.",
+      "positivePrice": "أدخل سعراً أكبر من صفر.",
+      "positiveArea": "أدخل مساحة أكبر من صفر.",
+      "requiredCity": "المدينة مطلوبة.",
+      "requiredCoordinates": "حدد موقع العقار على الخريطة.",
+      "mapUnavailable": "الخريطة غير متاحة. أدخل إحداثيات صحيحة يدوياً.",
+      "latitude": "خط العرض",
+      "longitude": "خط الطول",
+      "invalidMinNights": "يجب أن يكون الحد الأدنى ليلة واحدة على الأقل.",
+      "fixFields": "يرجى تصحيح الحقول الموضحة قبل النشر."
+    },
+    "reviewDetails": {
+      "capacity": "الطاقة الاستيعابية",
+      "guests": "ضيف",
+      "halfDayPrice": "سعر الفترة",
+      "includedServices": "الخدمات المشمولة",
+      "maxGuests": "الحد الأقصى للضيوف",
+      "minNights": "الحد الأدنى للإقامة",
+      "nights": "ليالٍ",
+      "checkInTime": "وقت الوصول",
+      "checkOutTime": "وقت المغادرة"
     }
   },
   "booking": {

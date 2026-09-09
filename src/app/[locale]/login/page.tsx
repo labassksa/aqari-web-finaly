@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import { sendOtp } from '@/lib/auth.api';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
@@ -32,6 +33,7 @@ const ARAB_COUNTRIES = [
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState(ARAB_COUNTRIES[0]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [phone, setPhone] = useState('');
@@ -70,7 +72,8 @@ export default function LoginPage() {
     try {
       await sendOtp(fullPhone);
       sessionStorage.setItem('aqar_otp_phone', fullPhone);
-      router.push('/otp');
+      const redirect = searchParams.get('redirect');
+      router.push(`/otp${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'حدث خطأ، حاول مرة أخرى');
     } finally {

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAddListingStore } from '@/store/add-listing.store';
 import SearchableSelect from '@/components/SearchableSelect';
 import { SAUDI_CITIES, getCityByValue } from '@/data/saudi-cities';
+import { useTranslations } from 'next-intl';
 
 const GOOGLE_MAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ?? '';
 const RIYADH = { lat: 24.7136, lng: 46.6753 };
@@ -34,6 +35,7 @@ const CITY_OPTIONS = SAUDI_CITIES.map((c) => ({ value: c.value, label: c.label }
 
 export default function Step6Location() {
   const store = useAddListingStore();
+  const t = useTranslations('addListingFlow.validation');
   const mapRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapInstance = useRef<any>(null);
@@ -160,6 +162,7 @@ export default function Step6Location() {
           placeholder="اختر المدينة"
           searchPlaceholder="ابحث عن مدينة..."
         />
+        {store.validationErrors.city && <p className="text-xs text-red-500 mt-1">{t('requiredCity')}</p>}
       </div>
 
       {/* District */}
@@ -198,18 +201,30 @@ export default function Step6Location() {
 
       {/* Map */}
       {noKey ? (
-        <div className="h-48 bg-gray-100 rounded-2xl flex items-center justify-center text-sm text-[#717171]">
-          خريطة غير متاحة — يرجى إضافة مفتاح Google Maps
+        <div className="bg-gray-100 rounded-2xl p-4 space-y-3">
+          <p className="text-sm text-[#717171] text-center">{t('mapUnavailable')}</p>
+          <div className="grid grid-cols-2 gap-3">
+            <label className="text-xs text-[#717171]">
+              {t('latitude')}
+              <input type="number" min={-90} max={90} step="any" value={store.lat ?? ''} onChange={(event) => store.setField('lat', event.target.value ? Number(event.target.value) : null)} className={`${inp} mt-1`} dir="ltr" />
+            </label>
+            <label className="text-xs text-[#717171]">
+              {t('longitude')}
+              <input type="number" min={-180} max={180} step="any" value={store.lng ?? ''} onChange={(event) => store.setField('lng', event.target.value ? Number(event.target.value) : null)} className={`${inp} mt-1`} dir="ltr" />
+            </label>
+          </div>
+          {store.validationErrors.coordinates && <p className="text-xs text-red-500 text-center">{t('requiredCoordinates')}</p>}
         </div>
       ) : (
         <div>
           <p className="text-xs text-[#717171] mb-2">انقر على الخريطة لتحديد موقع العقار</p>
           <div ref={mapRef} style={{ height: 260, borderRadius: 16, overflow: 'hidden' }} />
-          {store.lat && store.lng && (
+          {store.lat !== null && store.lng !== null && (
             <p className="text-xs text-[#717171] mt-1 text-center" dir="ltr">
               {store.lat.toFixed(5)}, {store.lng.toFixed(5)}
             </p>
           )}
+          {store.validationErrors.coordinates && <p className="text-xs text-red-500 mt-1 text-center">{t('requiredCoordinates')}</p>}
         </div>
       )}
     </div>

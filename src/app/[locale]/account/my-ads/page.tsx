@@ -58,7 +58,10 @@ export default function MyAdsPage() {
     }
   }, []);
 
-  useEffect(() => { load(activeTab); }, [activeTab, load]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => void load(activeTab), 0);
+    return () => window.clearTimeout(timer);
+  }, [activeTab, load]);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {

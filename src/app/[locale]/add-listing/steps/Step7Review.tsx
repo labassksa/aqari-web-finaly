@@ -2,9 +2,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from '@/i18n/navigation';
-import { useAddListingStore } from '@/store/add-listing.store';
-import { submitLicense, createListing } from '@/lib/api';
+import { getStepList, useAddListingStore } from '@/store/add-listing.store';
+import { ApiRequestError, submitLicense, createListing } from '@/lib/api';
+import { getPropertyTypeGroup, sanitizeCategorySpecificFields, sanitizePropertyDetailFields, validateListingSubmission } from '@/lib/property-types';
 import { CheckCircle, AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const LISTING_TYPE_LABEL: Record<string, string> = {
   sale: 'للبيع',
@@ -25,13 +27,26 @@ function Row({ label, value }: { label: string; value?: string | null }) {
 export default function Step7Review() {
   const store = useAddListingStore();
   const router = useRouter();
+  const t = useTranslations('addListingFlow');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async () => {
-    setLoading(true);
     setError('');
+    const validationErrors = validateListingSubmission(store);
+    if (Object.keys(validationErrors).length) {
+      store.setValidationErrors(validationErrors);
+      const steps = getStepList(store.advertiserType, store.propertyType, store.listingType);
+      const firstField = Object.keys(validationErrors)[0];
+      const stepLabel = ['title', 'totalPrice', 'area'].includes(firstField) ? 3 : firstField === 'minNights' ? '5b' : 6;
+      const target = steps.indexOf(stepLabel);
+      if (target >= 0) store.goToStep(target);
+      setError(t('validation.fixFields'));
+      return;
+    }
+
+    setLoading(true);
     try {
       let licenseId: string | null = store.licenseId;
 
@@ -64,7 +79,10 @@ export default function Step7Review() {
         licenseId = licRes.id;
       }
 
-      // Build listing payload
+      const propertyDetails = sanitizePropertyDetailFields(store.propertyType, store);
+      const categoryDetails = sanitizeCategorySpecificFields(store.propertyType, store.listingType, store);
+      const group = getPropertyTypeGroup(store.propertyType);
+
       const listing: Record<string, unknown> = {
         title: store.title,
         categoryId: store.categoryId,
@@ -78,30 +96,12 @@ export default function Step7Review() {
         latitude: store.lat,
         longitude: store.lng,
         description: store.description,
-        usageType: store.isResidential ? 'residential' : 'commercial',
+        usageType: group === 'residential' ? 'residential' : group === 'commercial' ? 'commercial' : undefined,
         commission: store.hasCommission,
         commissionPercent: store.hasCommission ? store.commissionPercent : undefined,
-        bedrooms: store.bedrooms,
-        livingRooms: store.livingRooms,
-        bathrooms: store.bathrooms,
-        floor: store.floorNumber,
-        propertyAge: store.propertyAge,
-        streetWidth: store.streetWidth,
-        facade: store.facade,
-        hasWater: store.hasWater,
-        hasElectricity: store.hasElectricity,
-        hasSewage: store.hasSewage,
-        hasPrivateRoof: store.hasPrivateRoof,
-        isInVilla: store.isInVilla,
-        hasTwoEntrances: store.hasTwoEntrances,
-        hasSpecialEntrance: store.hasSpecialEntrance,
-        isFurnished: store.isFurnished,
-        hasKitchen: store.hasKitchen,
-        hasExtraUnit: store.hasExtraUnit,
-        hasCarEntrance: store.hasCarEntrance,
-        hasElevator: store.hasElevator,
+        ...propertyDetails,
+        ...categoryDetails,
         mediaUrls: store.uploadedUrls,
-        coverPhoto: store.coverPhoto,
         advertiserType: store.advertiserType,
         licenseId: licenseId ?? undefined,
       };
@@ -120,6 +120,24 @@ export default function Step7Review() {
       store.reset();
       setTimeout(() => router.push('/account/my-ads'), 2000);
     } catch (e: unknown) {
+      if (e instanceof ApiRequestError && Object.keys(e.fieldErrors).length) {
+        const normalized = { ...e.fieldErrors };
+        if (normalized.latitude || normalized.longitude) normalized.coordinates = normalized.latitude ?? normalized.longitude;
+        store.setValidationErrors(normalized);
+        const steps = getStepList(store.advertiserType, store.propertyType, store.listingType);
+        const firstField = Object.keys(normalized)[0];
+        const bookingFields = ['minNights', 'maxGuests', 'checkInTime', 'checkOutTime'];
+        const eventHallFields = ['pricePerHalfDay', 'includedServices'];
+        const stepLabel = ['title', 'totalPrice', 'area'].includes(firstField)
+          ? 3
+          : eventHallFields.includes(firstField) || (firstField === 'maxGuests' && store.propertyType === 'event_hall')
+            ? 5
+            : bookingFields.includes(firstField)
+              ? '5b'
+              : 6;
+        const target = steps.indexOf(stepLabel);
+        if (target >= 0) store.goToStep(target);
+      }
       setError(e instanceof Error ? e.message : 'حدث خطأ، يرجى المحاولة مجدداً');
     } finally {
       setLoading(false);
@@ -155,7 +173,7 @@ export default function Step7Review() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     .filter(([key]) => !!(store as any)[key])
     .map(([, label]) => label);
-
+  const group = getPropertyTypeGroup(store.propertyType);
   return (
     <div className="px-4 py-6 space-y-4 pb-32">
       <h2 className="text-base font-bold text-[#222222]">مراجعة الإعلان</h2>
@@ -189,22 +207,41 @@ export default function Step7Review() {
         <Row label="نوع الإعلان" value={store.listingType ? LISTING_TYPE_LABEL[store.listingType] : undefined} />
         <Row label="السعر" value={store.totalPrice ? `${store.totalPrice.toLocaleString('ar-SA')} ريال` : undefined} />
         <Row label="المساحة" value={store.area ? `${store.area} م²` : undefined} />
-        <Row label="الاستخدام" value={store.isResidential ? 'سكني' : 'تجاري'} />
+        <Row label="الاستخدام" value={group === 'residential' ? 'سكني' : group === 'commercial' ? 'تجاري' : undefined} />
         <Row label="المدينة" value={store.city || undefined} />
         <Row label="الحي" value={store.district ?? undefined} />
-        {store.lat && store.lng && (
+        {store.lat !== null && store.lng !== null && (
           <Row label="الإحداثيات" value={`${store.lat.toFixed(4)}, ${store.lng.toFixed(4)}`} />
         )}
       </div>
 
       {/* Details card */}
       <div className="bg-white rounded-2xl p-4 shadow-sm space-y-0">
-        <Row label="غرف النوم" value={store.bedrooms ? String(store.bedrooms) : undefined} />
-        <Row label="دورات المياه" value={store.bathrooms ? String(store.bathrooms) : undefined} />
-        <Row label="غرف المعيشة" value={store.livingRooms ? String(store.livingRooms) : undefined} />
-        <Row label="الطابق" value={store.floorNumber !== null ? String(store.floorNumber) : undefined} />
-        <Row label="عمر العقار" value={store.propertyAge ? `${store.propertyAge} سنة` : undefined} />
-        <Row label="الواجهة" value={store.facade ?? undefined} />
+        {group === 'event_hall' ? (
+          <>
+            <Row label={t('reviewDetails.capacity')} value={store.maxGuests ? `${store.maxGuests} ${t('reviewDetails.guests')}` : undefined} />
+            <Row label={t('reviewDetails.halfDayPrice')} value={store.pricePerHalfDay ? `${store.pricePerHalfDay.toLocaleString('ar-SA')} ريال` : undefined} />
+            <Row label={t('reviewDetails.includedServices')} value={store.includedServices.map((service) => t(`services.${service}`)).join('، ') || undefined} />
+          </>
+        ) : (
+          <>
+            {group === 'residential' && <Row label="غرف النوم" value={store.bedrooms ? String(store.bedrooms) : undefined} />}
+            {(group === 'residential' || group === 'commercial') && <Row label="دورات المياه" value={store.bathrooms ? String(store.bathrooms) : undefined} />}
+            {group === 'residential' && <Row label="غرف المعيشة" value={store.livingRooms ? String(store.livingRooms) : undefined} />}
+            {(group === 'residential' || group === 'commercial') && <Row label="الطابق" value={store.floorNumber !== null ? String(store.floorNumber) : undefined} />}
+            {(group === 'residential' || group === 'commercial') && <Row label="عمر العقار" value={store.propertyAge ? `${store.propertyAge} سنة` : undefined} />}
+            <Row label="عرض الشارع" value={store.streetWidth ? `${store.streetWidth} م` : undefined} />
+            <Row label="الواجهة" value={store.facade ?? undefined} />
+            {store.listingType === 'rent_short' && store.propertyType !== 'event_hall' && (
+              <>
+                <Row label={t('reviewDetails.maxGuests')} value={store.maxGuests ? String(store.maxGuests) : undefined} />
+                <Row label={t('reviewDetails.minNights')} value={`${store.minNights} ${t('reviewDetails.nights')}`} />
+                <Row label={t('reviewDetails.checkInTime')} value={store.checkInTime ?? undefined} />
+                <Row label={t('reviewDetails.checkOutTime')} value={store.checkOutTime ?? undefined} />
+              </>
+            )}
+          </>
+        )}
       </div>
 
       {/* Features */}

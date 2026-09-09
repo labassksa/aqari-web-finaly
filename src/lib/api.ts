@@ -2,6 +2,37 @@ import type { Listing, SearchResponse } from '@/types/listing';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'https://api.aqora.sa/api/v1';
 
+export class ApiRequestError extends Error {
+  readonly fieldErrors: Record<string, string>;
+
+  constructor(message: string, fieldErrors: Record<string, string> = {}) {
+    super(message);
+    this.name = 'ApiRequestError';
+    this.fieldErrors = fieldErrors;
+  }
+}
+
+function parseApiError(payload: unknown): ApiRequestError {
+  const body = payload && typeof payload === 'object' ? payload as Record<string, unknown> : {};
+  const rawMessage = body.message;
+  const messages = Array.isArray(rawMessage)
+    ? rawMessage.map(String)
+    : [typeof rawMessage === 'string' ? rawMessage : 'Something went wrong'];
+  const knownFields = ['title', 'totalPrice', 'area', 'city', 'latitude', 'longitude', 'minNights', 'maxGuests', 'checkInTime', 'checkOutTime', 'pricePerHalfDay', 'includedServices'];
+  const fieldErrors: Record<string, string> = {};
+  const structured = body.errors;
+  if (structured && typeof structured === 'object' && !Array.isArray(structured)) {
+    for (const [field, value] of Object.entries(structured as Record<string, unknown>)) {
+      fieldErrors[field] = Array.isArray(value) ? value.map(String).join('، ') : String(value);
+    }
+  }
+  for (const message of messages) {
+    const field = knownFields.find((candidate) => message.toLowerCase().includes(candidate.toLowerCase()));
+    if (field && !fieldErrors[field]) fieldErrors[field] = message;
+  }
+  return new ApiRequestError(messages.join('، '), fieldErrors);
+}
+
 function getToken(): string | null {
   try {
     const raw = localStorage.getItem('aqar-auth');
@@ -32,10 +63,10 @@ export async function apiRequest<T>(
     headers,
   });
 
-  const json = await res.json();
+  const json = await res.json().catch(() => ({}));
 
   if (!res.ok || json.success === false) {
-    throw new Error(json.message || 'Something went wrong');
+    throw parseApiError(json);
   }
 
   return json.data as T;
@@ -81,6 +112,10 @@ function mapHit(hit: any): Listing {
     createdAt: hit.createdAt ? new Date(hit.createdAt * 1000).toISOString() : undefined,
     maxGuests: hit.maxGuests,
     pricePerHalfDay: hit.pricePerHalfDay != null ? String(hit.pricePerHalfDay) : undefined,
+    includedServices: Array.isArray(hit.includedServices) ? hit.includedServices.map(String) : [],
+    minNights: hit.minNights != null ? Number(hit.minNights) : undefined,
+    checkInTime: hit.checkInTime ? String(hit.checkInTime) : undefined,
+    checkOutTime: hit.checkOutTime ? String(hit.checkOutTime) : undefined,
     lat: hit._geoloc?.lat,
     lng: hit._geoloc?.lng,
     owner: {
@@ -310,6 +345,7 @@ export async function getWallet() {
 export async function getTransactions(params: {
   page?: number;
   limit?: number;
+  type?: 'credit' | 'debit';
   referenceType?: string;
 }) {
   const query = new URLSearchParams(
@@ -459,7 +495,7 @@ export async function getMyBookingsAsGuest(
   page = 1, limit = 20,
 ) {
   return apiRequest<{
-    data: any[];
+    data: Record<string, unknown>[];
     total: number;
     pages: number;
   }>(
@@ -472,7 +508,7 @@ export async function getMyBookingsAsOwner(
   page = 1, limit = 20,
 ) {
   return apiRequest<{
-    data: any[];
+    data: Record<string, unknown>[];
     total: number;
     pages: number;
   }>(

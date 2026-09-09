@@ -1,6 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { completeProfile } from '@/lib/auth.api';
 import { useAuthStore } from '@/store/auth.store';
@@ -20,6 +21,7 @@ type FormValues = {
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { setAuth } = useAuthStore();
 
   const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting } } = useForm<FormValues>({
@@ -58,7 +60,8 @@ export default function RegisterPage() {
         role: res.user.role,
         isVerified: res.user.isVerified,
       });
-      router.replace('/');
+      const redirect = searchParams.get('redirect');
+      router.replace(redirect?.startsWith('/') && !redirect.startsWith('//') ? redirect : '/');
     } catch {
       // Restore original store state if request fails
       if (existing) localStorage.setItem('aqar-auth', existing);

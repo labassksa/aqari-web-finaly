@@ -20,9 +20,12 @@ export default function OtpPage() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem('aqar_otp_phone');
-    if (!stored) { router.replace('/login'); return; }
-    setPhone(stored);
+    const timer = window.setTimeout(() => {
+      const stored = sessionStorage.getItem('aqar_otp_phone');
+      if (!stored) { router.replace('/login'); return; }
+      setPhone(stored);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [router]);
 
   useEffect(() => {
@@ -38,7 +41,8 @@ export default function OtpPage() {
       const res = await verifyOtp(phone, code);
       if (res.isNewUser) {
         sessionStorage.setItem('aqar_temp_token', res.token);
-        router.push('/register');
+        const redirect = searchParams.get('redirect');
+        router.push(`/register${redirect ? `?redirect=${encodeURIComponent(redirect)}` : ''}`);
       } else {
         setAuth(res.token, {
           id: res.user!.id,
@@ -50,8 +54,8 @@ export default function OtpPage() {
           isVerified: res.user!.isVerified,
         });
         connectChatSocket();
-        const redirect = searchParams.get('redirect') || '/';
-        router.replace(redirect);
+        const redirect = searchParams.get('redirect');
+        router.replace(redirect?.startsWith('/') && !redirect.startsWith('//') ? redirect : '/');
       }
     } catch (err: unknown) {
       setShake(true);

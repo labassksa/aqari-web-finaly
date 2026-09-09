@@ -27,6 +27,7 @@ export default async function DailyRentDetailPage({ params }: Props) {
   }
 
   if (!data) notFound();
+  if (data.propertyType === 'event_hall' || data.listingType !== 'rent_short') notFound();
 
   const media: MediaItem[] = Array.isArray(data.__media__) ? data.__media__ : [];
   const photos = media

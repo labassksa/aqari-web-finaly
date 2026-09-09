@@ -72,7 +72,8 @@ export default function EventHallsClient() {
   );
 
   useEffect(() => {
-    fetchListings(1);
+    const timer = window.setTimeout(() => void fetchListings(1), 0);
+    return () => window.clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

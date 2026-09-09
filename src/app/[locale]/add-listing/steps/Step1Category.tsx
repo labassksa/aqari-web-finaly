@@ -2,10 +2,12 @@
 import { useEffect, useState } from 'react';
 import { useAddListingStore } from '@/store/add-listing.store';
 import { getCategories } from '@/lib/api';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   Building2, Home, Landmark, Building, Store, Warehouse,
-  Leaf, Coffee, Mountain, Briefcase, Layers, Tent, LayoutGrid,
+  Leaf, Coffee, Mountain, Briefcase, Layers, Tent, LayoutGrid, PartyPopper, AlertCircle,
 } from 'lucide-react';
+import { findCategoryByPropertyType } from '@/lib/property-types';
 
 const PROPERTY_ICONS: Record<string, React.ReactNode> = {
   apartment:         <Building2  size={26} strokeWidth={1.5} />,
@@ -22,12 +24,7 @@ const PROPERTY_ICONS: Record<string, React.ReactNode> = {
   floor:             <Layers     size={26} strokeWidth={1.5} />,
   camp:              <Tent       size={26} strokeWidth={1.5} />,
   other:             <LayoutGrid size={26} strokeWidth={1.5} />,
-};
-
-const LISTING_TYPE_LABEL: Record<string, string> = {
-  sale: 'للبيع',
-  rent_long: 'للإيجار',
-  rent_short: 'إيجار يومي',
+  event_hall:        <PartyPopper size={26} strokeWidth={1.5} />,
 };
 
 const LISTING_TYPE_STYLE: Record<string, string> = {
@@ -38,33 +35,50 @@ const LISTING_TYPE_STYLE: Record<string, string> = {
 
 interface Category {
   id: string;
+  name: string;
   nameAr: string;
   propertyType: string;
   listingType: string;
   sortOrder: number;
 }
 
-export default function Step1Category() {
+export default function Step1Category({ presetPropertyType }: { presetPropertyType?: string }) {
   const store = useAddListingStore();
+  const t = useTranslations('addListingFlow.category');
+  const locale = useLocale();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const loadCategories = () => {
+    setLoading(true);
+    setError('');
+    return getCategories()
+      .then((data) => {
+        const list = data as Category[];
+        const sorted = list.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        setCategories(sorted);
+        if (presetPropertyType) {
+          const preset = findCategoryByPropertyType(sorted, presetPropertyType);
+          if (!preset) {
+            setError(t('presetUnavailable'));
+            return;
+          }
+          if (store.propertyType !== presetPropertyType || !store.categoryId) store.selectCategory(preset);
+        }
+      })
+      .catch(() => setError(t('loadError')))
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    getCategories()
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((data: any) => {
-        const list = (Array.isArray(data) ? data : data?.data ?? []) as Category[];
-        setCategories(list.sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)));
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    const timeout = window.setTimeout(() => void loadCategories(), 0);
+    return () => window.clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSelect = (cat: Category) => {
-    store.setField('categoryId', cat.id);
-    store.setField('categoryNameAr', cat.nameAr);
-    store.setField('propertyType', cat.propertyType);
-    store.setField('listingType', cat.listingType);
+    store.selectCategory(cat);
   };
 
   if (loading) {
@@ -79,9 +93,19 @@ export default function Step1Category() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="px-4 py-16 flex flex-col items-center gap-4 text-center">
+        <AlertCircle size={42} className="text-red-400" />
+        <p className="text-sm text-[#717171]">{error}</p>
+        <button onClick={() => void loadCategories()} className="px-5 py-2.5 bg-[#F5A623] text-white rounded-xl text-sm font-bold">{t('retry')}</button>
+      </div>
+    );
+  }
+
   return (
     <div className="px-4 py-6">
-      <h2 className="text-base font-bold text-[#222222] mb-4">اختر نوع العقار</h2>
+      <h2 className="text-base font-bold text-[#222222] mb-4">{t('title')}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {categories.map((cat) => {
           const selected = store.categoryId === cat.id;
@@ -100,10 +124,12 @@ export default function Step1Category() {
                 {PROPERTY_ICONS[cat.propertyType] ?? <LayoutGrid size={26} strokeWidth={1.5} />}
               </span>
               <span className={`text-xs font-semibold text-center leading-tight ${selected ? 'text-[#F5A623]' : 'text-[#222222]'}`}>
-                {cat.nameAr}
+                {locale === 'ar' ? cat.nameAr : cat.name}
               </span>
               <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${typeStyle}`}>
-                {LISTING_TYPE_LABEL[cat.listingType] ?? cat.listingType}
+                {cat.listingType === 'sale' || cat.listingType === 'rent_long' || cat.listingType === 'rent_short'
+                  ? t(`types.${cat.listingType}`)
+                  : cat.listingType}
               </span>
             </button>
           );

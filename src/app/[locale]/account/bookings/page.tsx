@@ -8,6 +8,7 @@ import {
   getMyBookingsAsGuest, getMyBookingsAsOwner,
   cancelBooking, confirmBooking, declineBooking, createOrFindChat,
 } from '@/lib/api';
+import { updateBookingStatus } from '@/lib/booking-utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Booking = any;
@@ -60,7 +61,10 @@ export default function BookingsPage() {
     }
   }, []);
 
-  useEffect(() => { load(tab); }, [tab, load]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => void load(tab), 0);
+    return () => window.clearTimeout(timer);
+  }, [tab, load]);
 
   function askConfirm(title: string, message: string, onConfirm: () => void) {
     setConfirmState({ open: true, title, message, onConfirm });
@@ -71,8 +75,8 @@ export default function BookingsPage() {
       setConfirmState((c) => ({ ...c, open: false }));
       setActionLoading(id);
       try {
-        await cancelBooking(id);
-        setBookings((prev) => prev.filter((b) => b.id !== id));
+        const res = await cancelBooking(id);
+        setBookings((prev) => updateBookingStatus(prev, id, res.status || 'cancelled'));
       } catch (e) {
         showToast(e instanceof Error ? e.message : 'حدث خطأ');
       } finally {

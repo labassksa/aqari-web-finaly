@@ -56,7 +56,7 @@ export default function Step0aOwnerInfo() {
       </div>
 
       <p className="text-xs text-[#717171] text-center px-2">
-        بمجرد الضغط على "التالي" ستنتقل لإدخال بيانات الترخيص
+        بمجرد الضغط على &quot;التالي&quot; ستنتقل لإدخال بيانات الترخيص
       </p>
     </div>
   );

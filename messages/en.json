@@ -131,7 +131,7 @@
   },
   "eventHalls": {
     "title": "Event halls and venues",
-    "subtitle": "Book the right venue for weddings, events, and celebrations"
+    "subtitle": "Explore venues and contact the advertiser directly for details"
   },
   "cta": {
     "title": "Ready to Start?",
@@ -382,7 +382,7 @@
   },
   "eventHalls": {
     "title": "Event Halls & Celebration Venues",
-    "subtitle": "Find the perfect venue for weddings and events",
+    "subtitle": "Explore venues and contact the advertiser directly for availability and booking",
     "capacity": "Capacity: {count} guests",
     "pricePerDay": "{price} SAR / day",
     "pricePerSlot": "{price} SAR / slot",
@@ -399,6 +399,82 @@
       "decoration": "Decoration",
       "security": "Security",
       "parking": "Parking"
+    }
+  },
+  "addListingFlow": {
+    "title": "Add listing",
+    "back": "Back",
+    "next": "Next",
+    "review": "Review listing",
+    "category": {
+      "title": "Choose property type",
+      "loadError": "Could not load categories. Please try again.",
+      "presetUnavailable": "The requested category is currently unavailable. Please try again.",
+      "retry": "Try again",
+      "types": { "sale": "For sale", "rent_long": "For rent", "rent_short": "Daily rental" }
+    },
+    "details": {
+      "title": "Property details",
+      "noExtra": "No additional details are needed for this property type.",
+      "bedrooms": "Bedrooms",
+      "livingRooms": "Living rooms",
+      "bathrooms": "Bathrooms",
+      "floorNumber": "Floor",
+      "propertyAge": "Property age",
+      "streetWidth": "Street width",
+      "years": "years",
+      "meters": "m",
+      "facade": "Facade",
+      "selectFacade": "Choose facade (optional)",
+      "residentialFeatures": "Residential features",
+      "facades": { "north": "North", "south": "South", "east": "East", "west": "West", "northeast": "Northeast", "northwest": "Northwest", "southeast": "Southeast", "southwest": "Southwest" },
+      "features": { "isFurnished": "Furnished", "hasKitchen": "Kitchen", "hasExtraUnit": "Extra unit", "hasCarEntrance": "Car entrance", "hasElevator": "Elevator" },
+      "eventHall": {
+        "title": "Event hall details",
+        "capacity": "Capacity (guests)",
+        "halfDayPrice": "Morning or evening price (SAR)",
+        "halfDayHint": "Leave blank when the hall is full-day only. Enter the full-day price in the listing information step.",
+        "services": "Services included in the price"
+      }
+    },
+    "dailyRental": {
+      "title": "Stay settings",
+      "subtitle": "These settings apply only to daily rentals.",
+      "maxGuests": "Maximum guests (optional)",
+      "minNights": "Minimum stay (nights)",
+      "checkInTime": "Check-in time (optional)",
+      "checkOutTime": "Check-out time (optional)"
+    },
+    "services": { "catering": "Catering", "sound_system": "Sound system", "projector": "Projector", "decoration": "Decoration", "security": "Security", "parking": "Parking" },
+    "features": {
+      "title": "Facilities and features",
+      "subtitle": "Choose the facilities available at the property.",
+      "none": "No additional facilities apply to this property type.",
+      "optional": "You can continue without selecting any facility.",
+      "items": { "hasWater": "Water", "hasElectricity": "Electricity", "hasSewage": "Sewage", "hasPrivateRoof": "Private roof", "isInVilla": "Inside a villa", "hasTwoEntrances": "Two entrances", "hasSpecialEntrance": "Private entrance" }
+    },
+    "validation": {
+      "requiredTitle": "Listing title is required.",
+      "positivePrice": "Enter a price greater than zero.",
+      "positiveArea": "Enter an area greater than zero.",
+      "requiredCity": "City is required.",
+      "requiredCoordinates": "Select the property location on the map.",
+      "mapUnavailable": "Map unavailable. Enter valid coordinates manually.",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "invalidMinNights": "Minimum stay must be at least one night.",
+      "fixFields": "Correct the highlighted fields before publishing."
+    },
+    "reviewDetails": {
+      "capacity": "Capacity",
+      "guests": "guests",
+      "halfDayPrice": "Half-day price",
+      "includedServices": "Included services",
+      "maxGuests": "Maximum guests",
+      "minNights": "Minimum stay",
+      "nights": "nights",
+      "checkInTime": "Check-in time",
+      "checkOutTime": "Check-out time"
     }
   },
   "booking": {

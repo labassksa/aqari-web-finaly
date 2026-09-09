@@ -1,9 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { useAddListingStore } from '@/store/add-listing.store';
+import { useTranslations } from 'next-intl';
 
 export default function Step3Info() {
   const store = useAddListingStore();
+  const t = useTranslations('addListingFlow.validation');
   const [priceDisplay, setPriceDisplay] = useState(
     store.totalPrice ? store.totalPrice.toLocaleString('ar-SA') : ''
   );
@@ -33,6 +35,7 @@ export default function Step3Info() {
           placeholder="مثال: شقة للبيع في حي النزهة"
           maxLength={100}
         />
+        {store.validationErrors.title && <p className="text-xs text-red-500 mt-1">{t('requiredTitle')}</p>}
         <p className="text-xs text-[#717171] text-left mt-1">{store.title.length}/100</p>
       </div>
 
@@ -41,13 +44,18 @@ export default function Step3Info() {
         <label className={lbl}>السعر الكلي (ريال) <span className="text-red-500">*</span></label>
         <input
           value={priceDisplay}
-          onChange={(e) => setPriceDisplay(e.target.value)}
+          onChange={(e) => {
+            setPriceDisplay(e.target.value);
+            const value = parseFloat(e.target.value.replace(/[^0-9.]/g, ''));
+            store.setField('totalPrice', Number.isFinite(value) ? value : null);
+          }}
           onBlur={(e) => handlePriceBlur(e.target.value)}
           className={inp}
           placeholder="0"
           dir="ltr"
           inputMode="numeric"
         />
+        {store.validationErrors.totalPrice && <p className="text-xs text-red-500 mt-1">{t('positivePrice')}</p>}
       </div>
 
       {/* Area */}
@@ -63,6 +71,7 @@ export default function Step3Info() {
           type="number"
           min={0}
         />
+        {store.validationErrors.area && <p className="text-xs text-red-500 mt-1">{t('positiveArea')}</p>}
       </div>
 
       {/* Usage type */}

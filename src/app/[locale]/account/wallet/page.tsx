@@ -107,29 +107,41 @@ export default function WalletPage() {
   }, []);
 
   const loadTxs = useCallback(async (pg: number, type: TxType, append = false) => {
-    append ? setLoadingMore(true) : setTxLoading(true);
+    if (append) setLoadingMore(true);
+    else setTxLoading(true);
     try {
       const params: Parameters<typeof getTransactions>[0] = { page: pg, limit: 20 };
-      if (type) params.referenceType = type;
+      if (type) params.type = type;
       const res = await getTransactions(params);
       setTxs((prev) => append ? [...prev, ...(res.data as Tx[] ?? [])] : (res.data as Tx[] ?? []));
       setPage(pg); setPages(res.pages ?? 1);
-    } catch { /* ignore */ } finally { append ? setLoadingMore(false) : setTxLoading(false); }
+    } catch { /* ignore */ } finally {
+      if (append) setLoadingMore(false);
+      else setTxLoading(false);
+    }
   }, []);
 
-  useEffect(() => { loadWallet(); }, [loadWallet]);
-  useEffect(() => { loadTxs(1, filter); }, [filter, loadTxs]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => void loadWallet(), 0);
+    return () => window.clearTimeout(timer);
+  }, [loadWallet]);
+  useEffect(() => {
+    const timer = window.setTimeout(() => void loadTxs(1, filter), 0);
+    return () => window.clearTimeout(timer);
+  }, [filter, loadTxs]);
 
   // Handle post-3DS redirect from MyFatoorah callback
   useEffect(() => {
-    const payment = searchParams.get('payment');
-    if (payment === 'success') {
-      showToast('تمت عملية الدفع بنجاح، سيتم تحديث رصيدك خلال لحظات');
-      // Reload balance after a short delay to let the webhook process
-      setTimeout(() => loadWallet(), 4000);
-    } else if (payment === 'error') {
-      showToast('فشلت عملية الدفع، يرجى المحاولة مرة أخرى');
-    }
+    const timer = window.setTimeout(() => {
+      const payment = searchParams.get('payment');
+      if (payment === 'success') {
+        showToast('تمت عملية الدفع بنجاح، سيتم تحديث رصيدك خلال لحظات');
+        setTimeout(() => loadWallet(), 4000);
+      } else if (payment === 'error') {
+        showToast('فشلت عملية الدفع، يرجى المحاولة مرة أخرى');
+      }
+    }, 0);
+    return () => window.clearTimeout(timer);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

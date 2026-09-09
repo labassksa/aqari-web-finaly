@@ -1,18 +1,22 @@
 'use client';
 import { useAddListingStore } from '@/store/add-listing.store';
+import { getPropertyTypeGroup } from '@/lib/property-types';
+import { useTranslations } from 'next-intl';
 
-const FEATURES: { key: string; label: string }[] = [
-  { key: 'hasWater', label: 'مياه' },
-  { key: 'hasElectricity', label: 'كهرباء' },
-  { key: 'hasSewage', label: 'صرف صحي' },
-  { key: 'hasPrivateRoof', label: 'سطح خاص' },
-  { key: 'isInVilla', label: 'داخل فيلا' },
-  { key: 'hasTwoEntrances', label: 'مدخلان' },
-  { key: 'hasSpecialEntrance', label: 'مدخل خاص' },
-];
+const FEATURES = [
+  'hasWater', 'hasElectricity', 'hasSewage', 'hasPrivateRoof',
+  'isInVilla', 'hasTwoEntrances', 'hasSpecialEntrance',
+] as const;
 
 export default function Step4Features() {
   const store = useAddListingStore();
+  const t = useTranslations('addListingFlow.features');
+  const group = getPropertyTypeGroup(store.propertyType);
+  const visibleFeatures = group === 'land'
+    ? FEATURES.filter((key) => ['hasWater', 'hasElectricity', 'hasSewage'].includes(key))
+    : group === 'residential'
+      ? FEATURES
+      : [];
 
   const toggle = (key: string) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,11 +25,11 @@ export default function Step4Features() {
 
   return (
     <div className="px-4 py-6 space-y-4">
-      <h2 className="text-base font-bold text-[#222222]">المرافق والمميزات</h2>
-      <p className="text-xs text-[#717171]">اختر المرافق المتوفرة في العقار</p>
+      <h2 className="text-base font-bold text-[#222222]">{t('title')}</h2>
+      <p className="text-xs text-[#717171]">{t('subtitle')}</p>
 
       <div className="grid grid-cols-2 gap-2">
-        {FEATURES.map(({ key, label }) => {
+        {visibleFeatures.map((key) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const checked = !!(store as any)[key];
           return (
@@ -48,14 +52,18 @@ export default function Step4Features() {
                 )}
               </div>
               <span className={`text-sm font-medium ${checked ? 'text-[#F5A623]' : 'text-[#444444]'}`}>
-                {label}
+                {t(`items.${key}`)}
               </span>
             </button>
           );
         })}
       </div>
 
-      <p className="text-xs text-[#717171] text-center">يمكنك المتابعة بدون اختيار أي مرفق</p>
+      {visibleFeatures.length === 0 && (
+        <p className="text-sm text-[#717171] text-center py-8">{t('none')}</p>
+      )}
+
+      <p className="text-xs text-[#717171] text-center">{t('optional')}</p>
     </div>
   );
 }

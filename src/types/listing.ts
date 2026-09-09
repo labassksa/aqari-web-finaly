@@ -50,6 +50,10 @@ export interface Listing {
   createdAt?: string;
   maxGuests?: number;
   pricePerHalfDay?: string;
+  includedServices?: string[];
+  minNights?: number;
+  checkInTime?: string;
+  checkOutTime?: string;
 }
 
 export interface SearchParams {
@@ -98,8 +102,4 @@ export interface ListingDetail extends Listing {
   stats?: ListingStats;
   latitude?: string;
   longitude?: string;
-  includedServices?: string[];
-  minNights?: number;
-  checkInTime?: string;
-  checkOutTime?: string;
 }

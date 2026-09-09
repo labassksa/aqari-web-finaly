@@ -23,7 +23,7 @@ export default function EventHallsPage() {
           hideListingType={true}
           hidePropertyType={true}
           hrefBase="/event-halls"
-          showAddButton={false}
+          addHref="/add-listing?propertyType=event_hall"
         />
       </main>
       <Footer />

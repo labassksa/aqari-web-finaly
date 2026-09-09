@@ -51,20 +51,23 @@ export default function AvailabilityCalendar({
 
   useEffect(() => {
     let cancelled = false;
-    setIsLoading(true);
-    getListingCalendar(listingId, currentYear, currentMonth)
-      .then((res) => {
-        if (cancelled) return;
-        setBlockedDates(res.blockedDates.map((b) => b.date));
-      })
-      .catch(() => {
-        if (!cancelled) setBlockedDates([]);
-      })
-      .finally(() => {
-        if (!cancelled) setIsLoading(false);
-      });
+    const timer = window.setTimeout(() => {
+      setIsLoading(true);
+      getListingCalendar(listingId, currentYear, currentMonth)
+        .then((res) => {
+          if (cancelled) return;
+          setBlockedDates(res.blockedDates.map((b) => b.date));
+        })
+        .catch(() => {
+          if (!cancelled) setBlockedDates([]);
+        })
+        .finally(() => {
+          if (!cancelled) setIsLoading(false);
+        });
+    }, 0);
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
     };
   }, [listingId, currentYear, currentMonth]);
 
