@@ -1,6 +1,18 @@
 import { io, Socket } from 'socket.io-client';
 
-const SOCKET_URL = 'https://api.aqora.sa';
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL
+  ?? process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/v1\/?$/, '')
+  ?? 'https://api.aqora.sa';
+
+export interface ChatSocketMessage {
+  id: string;
+  chatId: string;
+  senderId: string;
+  content: string;
+  isRead: boolean;
+  readAt: string | null;
+  createdAt: string;
+}
 
 let chatSocket: Socket | null = null;
 
@@ -17,11 +29,15 @@ function getToken(): string | null {
 export function connectChatSocket(): Socket | null {
   const token = getToken();
   if (!token) return null;
-  if (chatSocket?.connected) return chatSocket;
+  if (chatSocket) {
+    chatSocket.auth = { token };
+    if (!chatSocket.connected) chatSocket.connect();
+    return chatSocket;
+  }
 
   chatSocket = io(`${SOCKET_URL}/chat`, {
     transports: ['websocket'],
-    auth: { token: `Bearer ${token}` },
+    auth: { token },
   });
 
   chatSocket.on('connect', () => console.log('Chat socket connected'));
@@ -48,8 +64,26 @@ export function leaveChat(chatId: string) {
   chatSocket?.emit('leave_chat', chatId);
 }
 
-export function sendChatMessage(chatId: string, content: string) {
-  chatSocket?.emit('send_message', { chatId, content });
+export function sendChatMessage(chatId: string, content: string): Promise<ChatSocketMessage> {
+  return new Promise((resolve, reject) => {
+    const socket = chatSocket;
+    if (!socket?.connected) {
+      reject(new Error('تعذر الاتصال بالمحادثة. تحقق من الإنترنت وحاول مرة أخرى.'));
+      return;
+    }
+
+    socket.timeout(10_000).emit(
+      'send_message',
+      { chatId, content },
+      (error: Error | null, message: ChatSocketMessage) => {
+        if (error) {
+          reject(new Error('تعذر إرسال الرسالة. حاول مرة أخرى.'));
+          return;
+        }
+        resolve(message);
+      },
+    );
+  });
 }
 
 export function emitTyping(chatId: string) {

@@ -104,13 +104,13 @@ export default function ChatPage() {
   const typingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [input, setInput] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
   const lastTypingEmit = useRef(0);
 
   const [showMobileMessages, setShowMobileMessages] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const messagesTopRef = useRef<HTMLDivElement>(null);
-
   // ── Scroll helpers ──────────────────────────────────────────────────────
   const scrollToBottom = useCallback(() => {
     setTimeout(() => messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }), 80);
@@ -179,8 +179,9 @@ export default function ChatPage() {
       }
     };
 
-    const handleTyping = (userId: string) => {
+    const handleTyping = ({ userId, chatId }: { userId: string; chatId: string }) => {
       if (userId === user?.id) return;
+      if (chatId !== activeChatIdRef.current) return;
       setOtherTyping(true);
       if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
       typingTimerRef.current = setTimeout(() => setOtherTyping(false), 3000);
@@ -219,11 +220,26 @@ export default function ChatPage() {
   }, []);
 
   // ── Send message ────────────────────────────────────────────────────────
-  const handleSend = () => {
+  const handleSend = async () => {
     const text = input.trim();
-    if (!text || !activeChat) return;
-    sendChatMessage(activeChat.id, text);
-    setInput('');
+    if (!text || !activeChat || sending) return;
+    setSending(true);
+    setSendError('');
+    try {
+      const message = await sendChatMessage(activeChat.id, text);
+      setMessages((prev) => prev.some((item) => item.id === message.id)
+        ? prev
+        : [...prev, message]);
+      setChats((prev) => prev.map((chat) => chat.id === activeChat.id
+        ? { ...chat, lastMessage: message.content, lastMessageAt: message.createdAt }
+        : chat));
+      setInput('');
+      scrollToBottom();
+    } catch (error) {
+      setSendError(error instanceof Error ? error.message : 'تعذر إرسال الرسالة. حاول مرة أخرى.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -441,17 +457,19 @@ export default function ChatPage() {
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
+                  disabled={sending}
                   placeholder="اكتب رسالة..."
                   className="flex-1 h-11 px-4 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#F5A623]/30 transition-all"
                 />
                 <button
                   onClick={handleSend}
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || sending}
                   className="w-11 h-11 rounded-full bg-[#F5A623] hover:bg-[#E09400] disabled:opacity-50 flex items-center justify-center transition-colors shrink-0"
                 >
                   <Send size={18} className="text-white rotate-180" />
                 </button>
               </div>
+              {sendError && <p className="text-xs text-red-500 mt-2 px-2">{sendError}</p>}
             </div>
           </>
         )}
