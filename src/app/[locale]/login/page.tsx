@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
-import { sendOtp } from '@/lib/auth.api';
+import { sendOtp, getNafathWebSession } from '@/lib/auth.api';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 
@@ -39,7 +39,23 @@ export default function LoginPage() {
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [nafathLoading, setNafathLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const nafathLinkPending = searchParams.get('nafath') === 'link';
+
+  async function loginWithNafath() {
+    setError('');
+    setNafathLoading(true);
+    try {
+      const redirect = searchParams.get('redirect');
+      if (redirect) sessionStorage.setItem('aqar_nafath_redirect', redirect);
+      const { url } = await getNafathWebSession('ar');
+      window.location.assign(url);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'تعذر الاتصال بنفاذ، حاول مرة أخرى');
+      setNafathLoading(false);
+    }
+  }
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -92,6 +108,12 @@ export default function LoginPage() {
           <h1 className="mt-4 text-xl font-bold text-[#222222]">تسجيل الدخول</h1>
           <p className="mt-1 text-sm text-[#717171]">أدخل رقم جوالك للمتابعة</p>
         </div>
+
+        {nafathLinkPending && (
+          <div className="mb-5 rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-800 text-center">
+            تم التحقق من هويتك عبر نفاذ. أدخل رقم جوالك لمرة واحدة فقط لربط هويتك بحسابك.
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
@@ -167,6 +189,32 @@ export default function LoginPage() {
             )}
           </button>
         </form>
+
+        {!nafathLinkPending && (
+          <>
+            <div className="my-6 flex items-center gap-3 text-xs text-[#717171]">
+              <span className="h-px flex-1 bg-gray-200" />
+              أو
+              <span className="h-px flex-1 bg-gray-200" />
+            </div>
+
+            <button
+              type="button"
+              onClick={loginWithNafath}
+              disabled={nafathLoading}
+              className="w-full h-12 border border-[#11998E] text-[#11998E] hover:bg-[#11998E]/5 disabled:opacity-60 font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
+            >
+              {nafathLoading ? (
+                <>
+                  <span className="animate-spin rounded-full h-4 w-4 border-2 border-[#11998E] border-t-transparent" />
+                  جاري التحويل إلى نفاذ...
+                </>
+              ) : (
+                'الدخول عبر نفاذ'
+              )}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

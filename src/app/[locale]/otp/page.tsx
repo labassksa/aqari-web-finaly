@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
-import { verifyOtp, sendOtp } from '@/lib/auth.api';
+import { verifyOtp, sendOtp, linkNafath } from '@/lib/auth.api';
 import { useAuthStore } from '@/store/auth.store';
 import { connectChatSocket } from '@/lib/socket';
 
@@ -39,6 +39,16 @@ export default function OtpPage() {
     setError('');
     try {
       const res = await verifyOtp(phone, code);
+      const pendingNafath = sessionStorage.getItem('aqar_nafath_link');
+      if (pendingNafath) {
+        sessionStorage.removeItem('aqar_nafath_link');
+        try {
+          await linkNafath(pendingNafath, res.token);
+        } catch (linkErr: unknown) {
+          // The phone login still succeeds; only the Nafath link failed.
+          console.warn('Nafath link failed', linkErr);
+        }
+      }
       if (res.isNewUser) {
         sessionStorage.setItem('aqar_temp_token', res.token);
         const redirect = searchParams.get('redirect');

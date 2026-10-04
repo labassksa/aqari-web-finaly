@@ -57,3 +57,20 @@ export async function getMe() {
     isVerified: boolean;
   }>('/auth/me', {}, true);
 }
+
+/** Nafath Web login: URL of the Nafath page to send the browser to. */
+export async function getNafathWebSession(lang: 'ar' | 'en' = 'ar') {
+  return apiRequest<{ url: string }>(`/auth/nafath/web/session?lang=${lang}`);
+}
+
+/** Attach a Nafath-verified national ID (linkToken) to the account owning `token`. */
+export async function linkNafath(linkToken: string, token: string) {
+  return apiRequest<{ user: { id: string; isVerified: boolean } }>(
+    '/auth/nafath/link',
+    {
+      method: 'POST',
+      body: JSON.stringify({ linkToken }),
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+}
