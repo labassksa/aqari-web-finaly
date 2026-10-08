@@ -21,6 +21,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useAuthStore } from "@/store/auth.store";
+import { DAILY_RENTS_ENABLED } from "@/lib/features";
 import Image from "next/image";
 
 const navLinks = [
@@ -30,7 +31,7 @@ const navLinks = [
   { key: "eventHalls", href: "/event-halls", icon: PartyPopper, kind: "primary" },
   { key: "about", href: "/about", icon: Info, kind: "secondary" },
   { key: "contact", href: "/contact", icon: Phone, kind: "secondary" },
-];
+].filter((link) => link.key !== "dailyRents" || DAILY_RENTS_ENABLED);
 
 const accountLinks = [
   { key: "myAds", href: "/account/my-ads", icon: LayoutDashboard },

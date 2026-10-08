@@ -9,6 +9,7 @@ import {
   cancelBooking, confirmBooking, declineBooking, createOrFindChat,
 } from '@/lib/api';
 import { updateBookingStatus } from '@/lib/booking-utils';
+import { DAILY_RENTS_ENABLED } from '@/lib/features';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Booking = any;
@@ -179,12 +180,14 @@ export default function BookingsPage() {
         <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
           <Calendar size={64} className="text-gray-300" strokeWidth={1.2} />
           <h3 className="text-xl font-bold text-[#222222]">لا توجد حجوزات بعد</h3>
-          <Link
-            href="/daily-rents"
-            className="mt-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
-          >
-            استعرض الإيجار اليومي
-          </Link>
+          {DAILY_RENTS_ENABLED && (
+            <Link
+              href="/daily-rents"
+              className="mt-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
+            >
+              استعرض الإيجار اليومي
+            </Link>
+          )}
         </div>
       )}
 
