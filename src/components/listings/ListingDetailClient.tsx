@@ -9,6 +9,7 @@ import DescriptionClient from "@/components/listings/DescriptionClient";
 import { ListingDetailSkeleton } from "@/components/listings/ListingSkeleton";
 import type { ListingDetail, Listing } from "@/types/listing";
 import { formatPrice, formatListingType, formatAdNumber, timeAgo } from "@/lib/format";
+import { getAdLicenseNumber } from "@/lib/ad-licenses";
 import { apiRequest, toggleFavorite, getSimilarListings, startChat } from "@/lib/api";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/i18n/navigation";
@@ -18,6 +19,7 @@ import {
   MessageCircle, AlertCircle, Heart, Eye, Users, Bookmark,
   ChevronRight, Share2, Check, Clock,
   Droplets, Zap, ArrowUpDown, Sofa, ChefHat, Car, Waves, Dumbbell, ShieldCheck, Wind,
+  BadgeCheck,
 } from "lucide-react";
 
 function WhatsAppIcon({ size = 18 }: { size?: number }) {
@@ -214,6 +216,8 @@ export default function ListingDetailClient({ id }: { id: string }) {
 
   if (!listing) return <ListingDetailSkeleton />;
 
+  const adLicenseNumber = getAdLicenseNumber(listing.id);
+
   const enabledFeatures = listing.features
     ? Object.entries(listing.features).filter(([, v]) => v === true)
     : [];
@@ -331,6 +335,16 @@ export default function ListingDetailClient({ id }: { id: string }) {
                   {listing.district ? ` · ${listing.district}` : ""}
                   {listing.category ? ` · ${listing.category}` : ""}
                 </p>
+
+                {adLicenseNumber && (
+                  <p className="mt-2 flex items-center gap-1.5 text-sm text-[#717171]">
+                    <BadgeCheck size={14} className="text-[#11998E] shrink-0" />
+                    رقم ترخيص الإعلان:
+                    <span dir="ltr" className="font-semibold text-[#222222]">
+                      {adLicenseNumber}
+                    </span>
+                  </p>
+                )}
 
                 {/* Price (mobile only — desktop shows in sidebar) */}
                 <div className="lg:hidden mt-4">
