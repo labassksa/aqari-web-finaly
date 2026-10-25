@@ -73,7 +73,7 @@ export default function Step0bLicenseOwner() {
               onClick={() => store.setField('ownershipDocumentType', t.value)}
               className={`flex-1 py-2.5 rounded-xl border-2 text-xs font-medium transition-all ${
                 store.ownershipDocumentType === t.value
-                  ? 'border-primary bg-primary-soft text-primary'
+                  ? 'border-primary bg-primary-soft text-accent-text'
                   : 'border-line bg-white text-muted'
               }`}
             >
@@ -93,7 +93,7 @@ export default function Step0bLicenseOwner() {
               onClick={() => handleIdTypeChange(t.value)}
               className={`flex-1 py-2.5 rounded-xl border-2 text-[11px] font-medium transition-all leading-tight ${
                 store.propertyOwnerIdType === t.value
-                  ? 'border-primary bg-primary-soft text-primary'
+                  ? 'border-primary bg-primary-soft text-accent-text'
                   : 'border-line bg-white text-muted'
               }`}
             >

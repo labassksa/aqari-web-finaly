@@ -256,7 +256,7 @@ export default function Navbar() {
                   aria-current={active ? "page" : undefined}
                   className={`flex items-center gap-2 rounded-xl border px-3 py-3 text-sm font-bold transition-colors ${
                     active
-                      ? "border-primary bg-primary-soft text-primary"
+                      ? "border-primary bg-primary-soft text-accent-text"
                       : "border-line text-muted hover:border-primary/40"
                   }`}
                   onClick={() => setOpen(false)}

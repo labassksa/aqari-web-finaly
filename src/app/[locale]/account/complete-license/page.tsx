@@ -137,7 +137,7 @@ export default function CompleteLicensePage() {
           <div className="flex gap-3">
             {(['owner', 'agent'] as AdvertiserType[]).map((t) => (
               <label key={t} className={`flex-1 flex items-center justify-center gap-2 border rounded-xl py-3 cursor-pointer transition-all text-sm font-medium ${
-                advertiserType === t ? 'border-primary bg-primary-soft text-primary' : 'border-line text-muted'
+                advertiserType === t ? 'border-primary bg-primary-soft text-accent-text' : 'border-line text-muted'
               }`}>
                 <input type="radio" value={t} {...register('advertiserType')} className="hidden" />
                 {t === 'owner' ? 'مالك' : 'وكيل'}
@@ -172,7 +172,7 @@ export default function CompleteLicensePage() {
               { value: 'unified_number', label: 'رقم موحد' },
             ] as { value: IdType; label: string }[]).map((t) => (
               <label key={t.value} className={`flex-1 flex items-center justify-center border rounded-xl py-2.5 cursor-pointer transition-all text-xs font-medium text-center ${
-                idType === t.value ? 'border-primary bg-primary-soft text-primary' : 'border-line text-muted'
+                idType === t.value ? 'border-primary bg-primary-soft text-accent-text' : 'border-line text-muted'
               }`}>
                 <input type="radio" value={t.value} {...register('propertyOwnerIdType')} className="hidden" />
                 {t.label}

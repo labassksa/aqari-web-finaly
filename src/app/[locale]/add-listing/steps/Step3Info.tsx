@@ -87,7 +87,7 @@ export default function Step3Info() {
               onClick={() => store.setField('isResidential', opt.value)}
               className={`flex-1 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
                 store.isResidential === opt.value
-                  ? 'border-primary bg-primary-soft text-primary'
+                  ? 'border-primary bg-primary-soft text-accent-text'
                   : 'border-line bg-white text-muted'
               }`}
             >

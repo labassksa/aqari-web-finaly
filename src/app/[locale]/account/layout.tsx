@@ -32,7 +32,7 @@ function AccountNav() {
               href={href}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                 active
-                  ? 'bg-primary-soft text-primary'
+                  ? 'bg-primary-soft text-accent-text'
                   : 'text-muted hover:bg-surface hover:text-ink'
               }`}
             >
@@ -62,7 +62,7 @@ function AccountNav() {
                 key={href}
                 href={href}
                 className={`flex-1 flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-medium transition-colors ${
-                  active ? 'text-primary' : 'text-muted'
+                  active ? 'text-accent-text' : 'text-muted'
                 }`}
               >
                 <Icon size={20} strokeWidth={active ? 2.5 : 1.5} />

@@ -51,7 +51,7 @@ export default function Step4Features() {
                   </svg>
                 )}
               </div>
-              <span className={`text-sm font-medium ${checked ? 'text-primary' : 'text-ink'}`}>
+              <span className={`text-sm font-medium ${checked ? 'text-accent-text' : 'text-ink'}`}>
                 {t(`items.${key}`)}
               </span>
             </button>

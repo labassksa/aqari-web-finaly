@@ -72,7 +72,7 @@ export default function Step0cLicenseBroker() {
               onClick={() => store.setField('brokerOwnerIdType', t.value)}
               className={`flex-1 py-2.5 rounded-xl border-2 text-sm font-medium transition-all ${
                 store.brokerOwnerIdType === t.value
-                  ? 'border-primary bg-primary-soft text-primary'
+                  ? 'border-primary bg-primary-soft text-accent-text'
                   : 'border-line bg-white text-muted'
               }`}
             >

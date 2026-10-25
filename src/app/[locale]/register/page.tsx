@@ -123,7 +123,7 @@ export default function RegisterPage() {
                   onClick={() => setValue('role', r.value)}
                   className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border text-sm font-medium transition-all ${
                     selectedRole === r.value
-                      ? 'border-primary bg-primary-soft text-primary'
+                      ? 'border-primary bg-primary-soft text-accent-text'
                       : 'border-line text-muted hover:border-secondary'
                   }`}
                 >

@@ -130,7 +130,7 @@ export default function ProfilePage() {
                   onClick={() => setValue('role', r.value, { shouldDirty: true })}
                   className={`flex items-center gap-3 p-3.5 rounded-xl border-2 text-sm font-medium transition-all ${
                     active
-                      ? 'border-primary bg-primary-soft text-primary'
+                      ? 'border-primary bg-primary-soft text-accent-text'
                       : 'border-line bg-white text-muted hover:border-secondary'
                   }`}
                 >

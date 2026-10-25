@@ -50,7 +50,7 @@ export default function Step5Details() {
             {INCLUDED_SERVICES.map((service) => {
               const checked = store.includedServices.includes(service);
               return (
-                <button key={service} type="button" onClick={() => store.toggleIncludedService(service)} className={`flex items-center gap-2 p-3 rounded-xl border-2 text-sm ${checked ? 'border-primary bg-primary-soft text-primary' : 'border-line bg-white'}`}>
+                <button key={service} type="button" onClick={() => store.toggleIncludedService(service)} className={`flex items-center gap-2 p-3 rounded-xl border-2 text-sm ${checked ? 'border-primary bg-primary-soft text-accent-text' : 'border-line bg-white'}`}>
                   <span className={`w-5 h-5 rounded border-2 flex items-center justify-center ${checked ? 'bg-primary border-primary text-white' : 'border-line'}`}>{checked ? '✓' : ''}</span>
                   {t(`services.${service}`)}
                 </button>
@@ -98,7 +98,7 @@ export default function Step5Details() {
           <div className="grid grid-cols-2 gap-2">
             {RESIDENTIAL_FEATURES.map((key) => {
               const checked = Boolean(store[key]);
-              return <button key={key} type="button" onClick={() => store.setField(key, !checked)} className={`p-3 rounded-xl border-2 text-sm ${checked ? 'border-primary bg-primary-soft text-primary' : 'border-line bg-white'}`}>{t(`details.features.${key}`)}</button>;
+              return <button key={key} type="button" onClick={() => store.setField(key, !checked)} className={`p-3 rounded-xl border-2 text-sm ${checked ? 'border-primary bg-primary-soft text-accent-text' : 'border-line bg-white'}`}>{t(`details.features.${key}`)}</button>;
             })}
           </div>
         </div>

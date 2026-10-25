@@ -359,7 +359,7 @@ export default function WalletPage() {
                 <div className="flex gap-2">
                   {[100, 500, 1000, 5000].map((amt) => (
                     <button key={amt} onClick={() => setTopUpAmount(String(amt))}
-                      className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all ${topUpAmount === String(amt) ? 'border-primary bg-primary-soft text-primary' : 'border-line text-muted hover:border-secondary'}`}
+                      className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all ${topUpAmount === String(amt) ? 'border-primary bg-primary-soft text-accent-text' : 'border-line text-muted hover:border-secondary'}`}
                     >{amt.toLocaleString('ar-SA')}</button>
                   ))}
                 </div>

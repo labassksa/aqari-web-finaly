@@ -158,7 +158,7 @@ export default function OtpPage() {
           {countdown > 0 ? (
             <span>إعادة الإرسال بعد {countdown}s</span>
           ) : (
-            <button onClick={resend} className="text-primary font-medium hover:underline">
+            <button onClick={resend} className="text-accent-text font-medium hover:underline">
               إعادة إرسال الرمز
             </button>
           )}
