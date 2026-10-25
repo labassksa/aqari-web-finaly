@@ -394,7 +394,7 @@ export default function EventHallDetailClient({ hall, photos }: Props) {
                         <div className="flex items-center gap-2">
                           <p className="font-bold text-ink">{hall.owner.name}</p>
                           {ROLE_LABELS[hall.owner.role] && (
-                            <span className="text-xs bg-primary-soft text-primary border border-secondary/40 font-semibold px-2 py-0.5 rounded-full">
+                            <span className="text-xs bg-primary-soft text-accent-text border border-secondary/40 font-semibold px-2 py-0.5 rounded-full">
                               {ROLE_LABELS[hall.owner.role]}
                             </span>
                           )}

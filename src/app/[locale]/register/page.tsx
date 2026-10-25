@@ -71,7 +71,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-canvas flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-lg p-8">
         <div className="text-center mb-8">
           <span className="text-4xl font-black text-primary">أقورا</span>

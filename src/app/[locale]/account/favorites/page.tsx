@@ -139,7 +139,7 @@ export default function FavoritesPage() {
                   )}
 
                   {l.isGolden && (
-                    <span className="absolute top-3 start-3 bg-yellow-400 text-yellow-900 text-[11px] font-bold px-2 py-0.5 rounded-full">⭐ ذهبي</span>
+                    <span className="absolute top-3 start-3 bg-secondary text-on-secondary text-[11px] font-bold px-2 py-0.5 rounded-full">⭐ ذهبي</span>
                   )}
 
                   {/* Unfavorite button */}

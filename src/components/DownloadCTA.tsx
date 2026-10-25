@@ -13,7 +13,7 @@ export default async function DownloadCTA() {
         <h2 className="text-3xl sm:text-5xl font-black text-white mb-4">
           {t("title")}
         </h2>
-        <p className="text-lg sm:text-xl text-white/85 mb-12 max-w-xl mx-auto leading-relaxed">
+        <p className="text-lg sm:text-xl text-white mb-12 max-w-xl mx-auto leading-relaxed">
           {t("subtitle")}
         </p>
 

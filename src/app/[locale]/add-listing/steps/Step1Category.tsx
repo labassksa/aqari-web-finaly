@@ -123,7 +123,7 @@ export default function Step1Category({ presetPropertyType }: { presetPropertyTy
               <span className={selected ? 'text-primary' : 'text-muted'}>
                 {PROPERTY_ICONS[cat.propertyType] ?? <LayoutGrid size={26} strokeWidth={1.5} />}
               </span>
-              <span className={`text-xs font-semibold text-center leading-tight ${selected ? 'text-primary' : 'text-ink'}`}>
+              <span className={`text-xs font-semibold text-center leading-tight ${selected ? 'text-accent-text' : 'text-ink'}`}>
                 {locale === 'ar' ? cat.nameAr : cat.name}
               </span>
               <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${typeStyle}`}>

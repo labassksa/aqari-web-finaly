@@ -86,7 +86,7 @@ function AddListingInner({ presetPropertyType }: Pick<Props, 'presetPropertyType
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col min-h-screen bg-canvas" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="sticky top-0 z-20 bg-white shadow-sm">
         <div className="flex items-center px-4 h-14 max-w-2xl mx-auto w-full">
           <button onClick={handleBack} className="p-2 rounded-xl hover:bg-surface" aria-label={t('back')}>

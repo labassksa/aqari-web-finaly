@@ -65,7 +65,7 @@ export default function Step0Role() {
                 <span className={selected ? 'text-primary' : 'text-muted'}>
                   {role.icon}
                 </span>
-                <span className={`text-xs font-semibold leading-tight ${selected ? 'text-primary' : 'text-ink'}`}>
+                <span className={`text-xs font-semibold leading-tight ${selected ? 'text-accent-text' : 'text-ink'}`}>
                   {role.label}
                 </span>
               </button>

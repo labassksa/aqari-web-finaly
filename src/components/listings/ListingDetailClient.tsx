@@ -474,7 +474,7 @@ export default function ListingDetailClient({ id }: { id: string }) {
                             {listing.__owner__?.name ?? listing.owner?.name}
                           </p>
                           {ownerRole && ROLE_LABELS[ownerRole] && (
-                            <span className="text-xs bg-primary-soft text-primary border border-secondary/40 font-semibold px-2 py-0.5 rounded-full">
+                            <span className="text-xs bg-primary-soft text-accent-text border border-secondary/40 font-semibold px-2 py-0.5 rounded-full">
                               {ROLE_LABELS[ownerRole]}
                             </span>
                           )}

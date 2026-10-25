@@ -271,7 +271,7 @@ export default function ChatPage() {
 
   return (
     <div
-      className="flex overflow-hidden bg-surface"
+      className="flex overflow-hidden bg-canvas"
       style={{ height: 'calc(100dvh - 64px)' }}
       dir="rtl"
     >

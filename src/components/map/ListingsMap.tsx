@@ -149,7 +149,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
                 ${selected?.id === l.id
                   ? 'bg-ink text-white border-primary scale-110 z-20'
                   : l.isGolden
-                    ? 'bg-yellow-400 text-yellow-950 border-white ring-2 ring-yellow-200'
+                    ? 'bg-secondary text-on-secondary border-white ring-2 ring-secondary/40'
                     : 'bg-primary text-white border-white'
                 }
               `}
@@ -211,10 +211,10 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
                 </p>
                 <div className="mt-2 flex items-center gap-1.5">
                   {selected.isGolden && (
-                    <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-[10px] font-bold text-yellow-800">ذهبي</span>
+                    <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-bold text-on-secondary">ذهبي</span>
                   )}
                   {selected.isPromoted && (
-                    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">مميز</span>
+                    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-accent-text">مميز</span>
                   )}
                 </div>
               </div>

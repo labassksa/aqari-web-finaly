@@ -135,7 +135,7 @@ export default function SearchableSelect({
                   onClick={() => select(opt)}
                   className={`w-full text-right px-4 py-2.5 text-sm transition-colors ${
                     opt.value === value
-                      ? 'bg-primary-soft text-primary font-semibold'
+                      ? 'bg-primary-soft text-accent-text font-semibold'
                       : 'text-ink hover:bg-surface'
                   }`}
                 >

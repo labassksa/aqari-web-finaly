@@ -88,7 +88,7 @@ function AccountNav() {
 export default function AccountLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthGuard>
-      <div className="min-h-screen flex flex-col bg-surface">
+      <div className="min-h-screen flex flex-col bg-canvas">
         <Navbar />
         <div className="flex flex-1">
           <AccountNav />

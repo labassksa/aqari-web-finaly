@@ -75,7 +75,7 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
         {/* Golden / promoted badge — photo overlay only for status */}
         <div className="absolute top-2.5 start-2.5 flex flex-col gap-1">
           {listing.isGolden && (
-            <span className="inline-flex items-center gap-1 bg-warning text-accent-text text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+            <span className="inline-flex items-center gap-1 bg-secondary text-on-secondary text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
               ذهبي
             </span>
           )}

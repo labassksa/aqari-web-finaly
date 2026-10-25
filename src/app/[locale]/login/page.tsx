@@ -98,7 +98,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface flex items-center justify-center px-4">
+    <div className="min-h-screen bg-canvas flex items-center justify-center px-4">
       <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-lg p-8">
         {/* Logo */}
         <div className="text-center mb-8">

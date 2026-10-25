@@ -130,7 +130,7 @@ Rewrites `className` color utilities in `src/**/*.{ts,tsx}`. Every variant prefi
 | `text-[#E09400]` | `accent-text` |
 | `[#222222]`, `[#111111]`, `[#444444]` | `ink` |
 | `[#717171]` | `muted` |
-| `bg-[#F9F9F9]`, `bg-gray-50`, `bg-gray-100` | `bg-surface` |
+| `bg-[#F9F9F9]`, `bg-gray-50`, `bg-gray-100` | `bg-surface` (page-level wrappers → `bg-canvas`; grouped sections/inputs → `bg-surface`) |
 | `bg-gray-200` | `bg-line` |
 | `border-gray-{100,200,300}`, `divide-gray-*` | `line` |
 | `text-gray-{300,400}` | `text-hint` |

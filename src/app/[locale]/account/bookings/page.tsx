@@ -268,7 +268,7 @@ export default function BookingsPage() {
                         <button
                           onClick={() => handleConfirmBooking(booking.id)}
                           disabled={busy}
-                          className="bg-success hover:bg-success/90 text-white rounded-lg px-4 py-1 text-sm transition-colors disabled:opacity-60"
+                          className="bg-success hover:brightness-90 text-white rounded-lg px-4 py-1 text-sm transition-colors disabled:opacity-60"
                         >
                           تأكيد
                         </button>
@@ -343,7 +343,7 @@ export default function BookingsPage() {
               <button
                 onClick={handleDecline}
                 disabled={actionLoading === declineTarget}
-                className="flex-1 py-2.5 bg-error hover:bg-error/90 rounded-xl text-sm font-bold text-white transition-colors disabled:opacity-60"
+                className="flex-1 py-2.5 bg-error hover:brightness-90 rounded-xl text-sm font-bold text-white transition-colors disabled:opacity-60"
               >
                 رفض الحجز
               </button>
