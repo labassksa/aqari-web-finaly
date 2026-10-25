@@ -20,7 +20,7 @@ export function AuthGuard({ children, returnTarget }: { children: React.ReactNod
   if (!_hasHydrated) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#F5A623] border-t-transparent" />
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function AuthGuard({ children, returnTarget }: { children: React.ReactNod
   if (!isLoggedIn) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#F5A623] border-t-transparent" />
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
       </div>
     );
   }

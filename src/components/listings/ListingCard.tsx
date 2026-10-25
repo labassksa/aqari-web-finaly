@@ -12,8 +12,8 @@ import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "@/i18n/navigation";
 
 const TYPE_STYLE: Record<string, string> = {
-  sale:       "bg-blue-50 text-blue-700",
-  rent_long:  "bg-emerald-50 text-emerald-700",
+  sale:       "bg-info/10 text-info",
+  rent_long:  "bg-success-soft text-success",
   rent_short: "bg-violet-50 text-violet-700",
 };
 
@@ -48,16 +48,16 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
     } catch { /* silent */ } finally { setFavLoading(false); }
   }
 
-  const typeStyle = TYPE_STYLE[listing.listingType] ?? "bg-gray-50 text-gray-600";
+  const typeStyle = TYPE_STYLE[listing.listingType] ?? "bg-surface text-muted";
 
   return (
     <Link
       onClick={cacheListing}
       href={`/${locale}${resolvedHrefBase}/${listing.id}`}
-      className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden flex flex-col"
+      className="group bg-white rounded-2xl border border-line shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden flex flex-col"
     >
       {/* Photo */}
-      <div className="relative aspect-[3/2] bg-gray-100 overflow-hidden">
+      <div className="relative aspect-[3/2] bg-surface overflow-hidden">
         {listing.coverPhoto ? (
           <Image
             src={listing.coverPhoto}
@@ -67,20 +67,20 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
             unoptimized
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-            <Building2 size={40} className="text-gray-300" strokeWidth={1.5} />
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface to-line">
+            <Building2 size={40} className="text-hint" strokeWidth={1.5} />
           </div>
         )}
 
         {/* Golden / promoted badge — photo overlay only for status */}
         <div className="absolute top-2.5 start-2.5 flex flex-col gap-1">
           {listing.isGolden && (
-            <span className="inline-flex items-center gap-1 bg-amber-400 text-amber-900 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+            <span className="inline-flex items-center gap-1 bg-warning text-accent-text text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
               ذهبي
             </span>
           )}
           {listing.isPromoted && !listing.isGolden && (
-            <span className="inline-flex items-center gap-1 bg-[#F5A623] text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+            <span className="inline-flex items-center gap-1 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
               مميز
             </span>
           )}
@@ -94,7 +94,7 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
             className="absolute top-2.5 end-2.5 w-8 h-8 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow-sm transition-all"
             aria-label="المفضلة"
           >
-            <Heart size={14} className={favorited ? "fill-red-500 text-red-500" : "text-gray-400"} />
+            <Heart size={14} className={favorited ? "fill-error text-error" : "text-hint"} />
           </button>
         )}
       </div>
@@ -103,13 +103,13 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
       <div className="p-4 flex flex-col gap-1.5 flex-1">
 
         {/* Location */}
-        <p className="text-xs text-[#717171] truncate">
+        <p className="text-xs text-muted truncate">
           {listing.city}{listing.district ? ` · ${listing.district}` : ""}
           {listing.category ? ` · ${listing.category}` : ""}
         </p>
 
         {/* Title */}
-        <h3 className="text-sm font-semibold text-[#222222] line-clamp-2 leading-snug">
+        <h3 className="text-sm font-semibold text-ink line-clamp-2 leading-snug">
           {listing.title}
         </h3>
 
@@ -117,18 +117,18 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
         <div className="flex items-center justify-between gap-2 mt-1">
           {isEventHall ? (
             <div>
-              <p className="text-base font-black text-[#222222]">
+              <p className="text-base font-black text-ink">
                 {parseFloat(listing.price).toLocaleString()} ريال{" "}
-                <span className="text-xs font-normal text-gray-400">/ يوم</span>
+                <span className="text-xs font-normal text-hint">/ يوم</span>
               </p>
               {listing.pricePerHalfDay && (
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-hint mt-0.5">
                   ({parseFloat(listing.pricePerHalfDay).toLocaleString()} ريال / فترة)
                 </p>
               )}
             </div>
           ) : (
-            <p className="text-base font-black text-[#222222]">{formatPrice(listing.price)}</p>
+            <p className="text-base font-black text-ink">{formatPrice(listing.price)}</p>
           )}
           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ${typeStyle}`}>
             {formatListingType(listing.listingType)}
@@ -138,7 +138,7 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
         {/* Specs */}
         {isEventHall ? (
           listing.maxGuests && (
-            <div className="flex items-center gap-3 text-xs text-[#717171] mt-0.5">
+            <div className="flex items-center gap-3 text-xs text-muted mt-0.5">
               <span className="flex items-center gap-1">
                 <Users size={11} /> يتسع لـ {listing.maxGuests} ضيف
               </span>
@@ -146,7 +146,7 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
           )
         ) : (
           (listing.area || listing.bedrooms || listing.bathrooms) && (
-            <div className="flex items-center gap-3 text-xs text-[#717171] mt-0.5">
+            <div className="flex items-center gap-3 text-xs text-muted mt-0.5">
               {listing.area && (
                 <span className="flex items-center gap-1">
                   <Maximize2 size={11} />
@@ -164,13 +164,13 @@ export default function ListingCard({ listing, showFavorite = true, hrefBase = "
         )}
 
         {/* Footer: ad number + timestamp */}
-        <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-50">
+        <div className="flex items-center justify-between mt-auto pt-2 border-t border-surface">
           {listing.adNumber
-            ? <p className="text-[10px] text-gray-300">{formatAdNumber(listing.adNumber)}</p>
+            ? <p className="text-[10px] text-hint">{formatAdNumber(listing.adNumber)}</p>
             : <span />
           }
           {listing.createdAt && (
-            <span className="flex items-center gap-1 text-[10px] text-gray-300">
+            <span className="flex items-center gap-1 text-[10px] text-hint">
               <Clock size={10} /> {timeAgo(listing.createdAt)}
             </span>
           )}

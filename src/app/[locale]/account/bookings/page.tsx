@@ -17,9 +17,9 @@ type Tab = 'guest' | 'owner';
 
 const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
   pending:   { label: 'في الانتظار', className: 'bg-yellow-100 text-yellow-700' },
-  confirmed: { label: 'مؤكد',        className: 'bg-green-100 text-green-700' },
-  cancelled: { label: 'ملغي',        className: 'bg-red-100 text-red-700' },
-  completed: { label: 'مكتمل',       className: 'bg-gray-100 text-gray-600' },
+  confirmed: { label: 'مؤكد',        className: 'bg-success-soft text-success' },
+  cancelled: { label: 'ملغي',        className: 'bg-error-soft text-error' },
+  completed: { label: 'مكتمل',       className: 'bg-surface text-muted' },
 };
 
 interface ConfirmState {
@@ -132,14 +132,14 @@ export default function BookingsPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
-      <h1 className="text-2xl font-black text-[#222222] mb-6">حجوزاتي</h1>
+      <h1 className="text-2xl font-black text-ink mb-6">حجوزاتي</h1>
 
       {/* Tabs */}
-      <div className="flex gap-2 border-b border-gray-100 mb-6">
+      <div className="flex gap-2 border-b border-line mb-6">
         <button
           onClick={() => setTab('guest')}
           className={`px-4 py-2.5 text-sm font-bold border-b-2 -mb-px transition-colors ${
-            tab === 'guest' ? 'border-[#F5A623] text-[#F5A623]' : 'border-transparent text-gray-500 hover:text-[#222222]'
+            tab === 'guest' ? 'border-primary text-primary' : 'border-transparent text-muted hover:text-ink'
           }`}
         >
           حجوزاتي
@@ -147,7 +147,7 @@ export default function BookingsPage() {
         <button
           onClick={() => setTab('owner')}
           className={`px-4 py-2.5 text-sm font-bold border-b-2 -mb-px transition-colors ${
-            tab === 'owner' ? 'border-[#F5A623] text-[#F5A623]' : 'border-transparent text-gray-500 hover:text-[#222222]'
+            tab === 'owner' ? 'border-primary text-primary' : 'border-transparent text-muted hover:text-ink'
           }`}
         >
           طلبات الحجز
@@ -156,7 +156,7 @@ export default function BookingsPage() {
 
       {/* Error */}
       {error && (
-        <div className="text-red-500 text-sm bg-red-50 rounded-xl px-4 py-3 mb-4">{error}</div>
+        <div className="text-error text-sm bg-error-soft rounded-xl px-4 py-3 mb-4">{error}</div>
       )}
 
       {/* Loading */}
@@ -164,11 +164,11 @@ export default function BookingsPage() {
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="bg-white rounded-xl p-4 animate-pulse flex gap-3">
-              <div className="w-24 h-[72px] rounded-lg bg-gray-200 shrink-0" />
+              <div className="w-24 h-[72px] rounded-lg bg-line shrink-0" />
               <div className="flex-1 space-y-2">
-                <div className="h-4 bg-gray-200 rounded w-3/4" />
-                <div className="h-3 bg-gray-200 rounded w-1/2" />
-                <div className="h-3 bg-gray-200 rounded w-1/3" />
+                <div className="h-4 bg-line rounded w-3/4" />
+                <div className="h-3 bg-line rounded w-1/2" />
+                <div className="h-3 bg-line rounded w-1/3" />
               </div>
             </div>
           ))}
@@ -178,12 +178,12 @@ export default function BookingsPage() {
       {/* Empty states */}
       {!loading && !error && bookings.length === 0 && tab === 'guest' && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
-          <Calendar size={64} className="text-gray-300" strokeWidth={1.2} />
-          <h3 className="text-xl font-bold text-[#222222]">لا توجد حجوزات بعد</h3>
+          <Calendar size={64} className="text-hint" strokeWidth={1.2} />
+          <h3 className="text-xl font-bold text-ink">لا توجد حجوزات بعد</h3>
           {DAILY_RENTS_ENABLED && (
             <Link
               href="/daily-rents"
-              className="mt-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
+              className="mt-2 bg-primary hover:bg-primary-hover text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
             >
               استعرض الإيجار اليومي
             </Link>
@@ -193,7 +193,7 @@ export default function BookingsPage() {
 
       {!loading && !error && bookings.length === 0 && tab === 'owner' && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
-          <p className="text-[#717171]">لا توجد طلبات حجز بعد</p>
+          <p className="text-muted">لا توجد طلبات حجز بعد</p>
         </div>
       )}
 
@@ -201,46 +201,46 @@ export default function BookingsPage() {
       {!loading && !error && bookings.length > 0 && (
         <div className="space-y-3">
           {bookings.map((booking: Booking) => {
-            const statusCfg = STATUS_CONFIG[booking.status] ?? { label: booking.status, className: 'bg-gray-100 text-gray-600' };
+            const statusCfg = STATUS_CONFIG[booking.status] ?? { label: booking.status, className: 'bg-surface text-muted' };
             const cover = booking.listing?.coverPhoto;
             const busy = actionLoading === booking.id;
 
             return (
-              <div key={booking.id} className="relative flex gap-3 bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+              <div key={booking.id} className="relative flex gap-3 bg-white rounded-xl shadow-sm border border-line p-4">
                 {/* Status badge */}
                 <span className={`absolute top-3 end-3 text-[11px] font-semibold px-2.5 py-1 rounded-full ${statusCfg.className}`}>
                   {statusCfg.label}
                 </span>
 
                 {/* Cover photo */}
-                <div className="relative w-24 h-[72px] rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                <div className="relative w-24 h-[72px] rounded-lg overflow-hidden bg-surface shrink-0">
                   {cover ? (
                     <Image src={cover} alt={booking.listing?.title ?? ''} fill className="object-cover" unoptimized />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                      <Building2 size={22} className="text-gray-300" />
+                    <div className="w-full h-full flex items-center justify-center bg-surface">
+                      <Building2 size={22} className="text-hint" />
                     </div>
                   )}
                 </div>
 
                 {/* Content */}
                 <div className="flex-1 min-w-0 pe-16">
-                  <p className="font-bold text-[#222222] text-sm leading-snug line-clamp-1">
+                  <p className="font-bold text-ink text-sm leading-snug line-clamp-1">
                     {booking.listing?.title}
                   </p>
-                  <p className="text-xs text-[#717171] mt-1" dir="ltr">
+                  <p className="text-xs text-muted mt-1" dir="ltr">
                     {formatDate(booking.checkInDate)} — {formatDate(booking.checkOutDate)}
                     <span dir="rtl"> · {booking.nights} ليالٍ</span>
                   </p>
-                  <p className="font-bold text-[#F5A623] text-sm mt-1">
+                  <p className="font-bold text-primary text-sm mt-1">
                     {parseFloat(booking.totalPrice).toLocaleString()} ريال
                   </p>
 
                   {tab === 'owner' && booking.guestCount != null && (
-                    <p className="text-xs text-gray-400 mt-1">عدد الضيوف: {booking.guestCount}</p>
+                    <p className="text-xs text-hint mt-1">عدد الضيوف: {booking.guestCount}</p>
                   )}
                   {tab === 'owner' && booking.notes && (
-                    <p className="text-xs text-gray-400 italic mt-0.5">{booking.notes}</p>
+                    <p className="text-xs text-hint italic mt-0.5">{booking.notes}</p>
                   )}
 
                   {/* Actions */}
@@ -249,7 +249,7 @@ export default function BookingsPage() {
                       <button
                         onClick={() => handleCancel(booking.id)}
                         disabled={busy}
-                        className="text-red-500 border border-red-200 rounded-lg px-3 py-1 text-sm hover:bg-red-50 transition-colors disabled:opacity-60"
+                        className="text-error border border-error/30 rounded-lg px-3 py-1 text-sm hover:bg-error-soft transition-colors disabled:opacity-60"
                       >
                         إلغاء الطلب
                       </button>
@@ -257,7 +257,7 @@ export default function BookingsPage() {
                     {tab === 'guest' && booking.status === 'confirmed' && (
                       <button
                         onClick={() => handleChat(booking.listing?.ownerId, booking.listingId)}
-                        className="bg-[#F5A623] hover:bg-[#E09400] text-white rounded-lg px-3 py-1 text-sm transition-colors"
+                        className="bg-primary hover:bg-primary-hover text-white rounded-lg px-3 py-1 text-sm transition-colors"
                       >
                         محادثة المضيف
                       </button>
@@ -268,14 +268,14 @@ export default function BookingsPage() {
                         <button
                           onClick={() => handleConfirmBooking(booking.id)}
                           disabled={busy}
-                          className="bg-[#22C55E] hover:bg-[#16A34A] text-white rounded-lg px-4 py-1 text-sm transition-colors disabled:opacity-60"
+                          className="bg-success hover:bg-success text-white rounded-lg px-4 py-1 text-sm transition-colors disabled:opacity-60"
                         >
                           تأكيد
                         </button>
                         <button
                           onClick={() => setDeclineTarget(booking.id)}
                           disabled={busy}
-                          className="border border-red-300 text-red-500 rounded-lg px-4 py-1 text-sm hover:bg-red-50 transition-colors disabled:opacity-60"
+                          className="border border-error/30 text-error rounded-lg px-4 py-1 text-sm hover:bg-error-soft transition-colors disabled:opacity-60"
                         >
                           رفض
                         </button>
@@ -284,7 +284,7 @@ export default function BookingsPage() {
                     {tab === 'owner' && booking.status === 'confirmed' && (
                       <button
                         onClick={() => handleChat(booking.guestId ?? booking.guest?.id, booking.listingId)}
-                        className="bg-[#F5A623] hover:bg-[#E09400] text-white rounded-lg px-3 py-1 text-sm transition-colors"
+                        className="bg-primary hover:bg-primary-hover text-white rounded-lg px-3 py-1 text-sm transition-colors"
                       >
                         محادثة الضيف
                       </button>
@@ -301,18 +301,18 @@ export default function BookingsPage() {
       {confirmState.open && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl" dir="rtl">
-            <h3 className="text-lg font-bold text-[#222222] mb-2">{confirmState.title}</h3>
-            <p className="text-sm text-[#717171] mb-6">{confirmState.message}</p>
+            <h3 className="text-lg font-bold text-ink mb-2">{confirmState.title}</h3>
+            <p className="text-sm text-muted mb-6">{confirmState.message}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmState((c) => ({ ...c, open: false }))}
-                className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-[#717171] hover:bg-gray-50 transition-colors"
+                className="flex-1 py-2.5 border border-line rounded-xl text-sm font-medium text-muted hover:bg-surface transition-colors"
               >
                 إلغاء
               </button>
               <button
                 onClick={confirmState.onConfirm}
-                className="flex-1 py-2.5 bg-[#F5A623] hover:bg-[#E09400] rounded-xl text-sm font-bold text-white transition-colors"
+                className="flex-1 py-2.5 bg-primary hover:bg-primary-hover rounded-xl text-sm font-bold text-white transition-colors"
               >
                 تأكيد
               </button>
@@ -325,25 +325,25 @@ export default function BookingsPage() {
       {declineTarget && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl" dir="rtl">
-            <h3 className="text-lg font-bold text-[#222222] mb-4">رفض طلب الحجز</h3>
+            <h3 className="text-lg font-bold text-ink mb-4">رفض طلب الحجز</h3>
             <textarea
               value={declineReason}
               onChange={(e) => setDeclineReason(e.target.value)}
               placeholder="يمكنك كتابة سبب الرفض..."
               rows={3}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#F5A623] outline-none resize-none mb-4"
+              className="w-full border border-line rounded-xl px-3 py-2 text-sm focus:border-primary outline-none resize-none mb-4"
             />
             <div className="flex gap-3">
               <button
                 onClick={() => { setDeclineTarget(null); setDeclineReason(''); }}
-                className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-[#717171] hover:bg-gray-50 transition-colors"
+                className="flex-1 py-2.5 border border-line rounded-xl text-sm font-medium text-muted hover:bg-surface transition-colors"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleDecline}
                 disabled={actionLoading === declineTarget}
-                className="flex-1 py-2.5 bg-red-500 hover:bg-red-600 rounded-xl text-sm font-bold text-white transition-colors disabled:opacity-60"
+                className="flex-1 py-2.5 bg-error hover:bg-error rounded-xl text-sm font-bold text-white transition-colors disabled:opacity-60"
               >
                 رفض الحجز
               </button>
@@ -355,7 +355,7 @@ export default function BookingsPage() {
       {/* Toast */}
       {toast && (
         <div className="fixed bottom-6 start-4 end-4 z-50 flex justify-center pointer-events-none">
-          <div className="bg-[#222222] text-white text-sm font-medium px-5 py-3 rounded-xl shadow-lg">{toast}</div>
+          <div className="bg-ink text-white text-sm font-medium px-5 py-3 rounded-xl shadow-lg">{toast}</div>
         </div>
       )}
     </div>

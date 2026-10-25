@@ -9,12 +9,12 @@ export default function DescriptionClient({ text }: { text: string }) {
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-[#222222] mb-3">عن العقار</h2>
-      <p className="text-[#717171] leading-relaxed text-sm whitespace-pre-wrap">{displayed}</p>
+      <h2 className="text-lg font-bold text-ink mb-3">عن العقار</h2>
+      <p className="text-muted leading-relaxed text-sm whitespace-pre-wrap">{displayed}</p>
       {isLong && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-2 text-[#F5A623] font-semibold text-sm hover:text-[#E09400] transition-colors"
+          className="mt-2 text-primary font-semibold text-sm hover:text-accent-text transition-colors"
         >
           {expanded ? "عرض أقل" : "عرض المزيد"}
         </button>

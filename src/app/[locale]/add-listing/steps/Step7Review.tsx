@@ -17,9 +17,9 @@ const LISTING_TYPE_LABEL: Record<string, string> = {
 function Row({ label, value }: { label: string; value?: string | null }) {
   if (!value) return null;
   return (
-    <div className="flex items-start justify-between gap-2 py-2 border-b border-gray-50 last:border-0">
-      <span className="text-xs text-[#717171] shrink-0">{label}</span>
-      <span className="text-xs font-medium text-[#222222] text-left">{value}</span>
+    <div className="flex items-start justify-between gap-2 py-2 border-b border-surface last:border-0">
+      <span className="text-xs text-muted shrink-0">{label}</span>
+      <span className="text-xs font-medium text-ink text-left">{value}</span>
     </div>
   );
 }
@@ -147,11 +147,11 @@ export default function Step7Review() {
   if (success) {
     return (
       <div className="flex flex-col items-center justify-center px-4 py-16 gap-4 text-center min-h-[50vh]">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-          <CheckCircle size={32} className="text-green-500" />
+        <div className="w-16 h-16 bg-success-soft rounded-full flex items-center justify-center">
+          <CheckCircle size={32} className="text-success" />
         </div>
-        <h2 className="text-lg font-bold text-[#222222]">{success}</h2>
-        <p className="text-sm text-[#717171]">جاري التوجيه لإعلاناتك...</p>
+        <h2 className="text-lg font-bold text-ink">{success}</h2>
+        <p className="text-sm text-muted">جاري التوجيه لإعلاناتك...</p>
       </div>
     );
   }
@@ -176,23 +176,23 @@ export default function Step7Review() {
   const group = getPropertyTypeGroup(store.propertyType);
   return (
     <div className="px-4 py-6 space-y-4 pb-32">
-      <h2 className="text-base font-bold text-[#222222]">مراجعة الإعلان</h2>
+      <h2 className="text-base font-bold text-ink">مراجعة الإعلان</h2>
 
       {/* Photos */}
       {store.uploadedUrls.length > 0 && (
         <div>
-          <p className="text-xs font-medium text-[#717171] mb-2">الصور ({store.uploadedUrls.length})</p>
+          <p className="text-xs font-medium text-muted mb-2">الصور ({store.uploadedUrls.length})</p>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {store.uploadedUrls.slice(0, 4).map((url, i) => (
-              <div key={url} className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+              <div key={url} className="relative w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-surface">
                 <Image src={url} alt="" fill className="object-cover" unoptimized />
                 {i === 0 && (
-                  <span className="absolute bottom-1 start-1 bg-[#F5A623] text-white text-[9px] font-bold px-1 py-0.5 rounded">غلاف</span>
+                  <span className="absolute bottom-1 start-1 bg-primary text-white text-[9px] font-bold px-1 py-0.5 rounded">غلاف</span>
                 )}
               </div>
             ))}
             {store.uploadedUrls.length > 4 && (
-              <div className="w-20 h-20 rounded-xl bg-gray-100 shrink-0 flex items-center justify-center text-xs text-[#717171]">
+              <div className="w-20 h-20 rounded-xl bg-surface shrink-0 flex items-center justify-center text-xs text-muted">
                 +{store.uploadedUrls.length - 4}
               </div>
             )}
@@ -247,10 +247,10 @@ export default function Step7Review() {
       {/* Features */}
       {hasFeatures && (
         <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <p className="text-xs font-medium text-[#717171] mb-2">المرافق والمميزات</p>
+          <p className="text-xs font-medium text-muted mb-2">المرافق والمميزات</p>
           <div className="flex flex-wrap gap-1.5">
             {activeFeatures.map((f) => (
-              <span key={f} className="text-xs bg-orange-50 text-[#F5A623] px-2.5 py-1 rounded-full font-medium">
+              <span key={f} className="text-xs bg-primary-soft text-primary px-2.5 py-1 rounded-full font-medium">
                 {f}
               </span>
             ))}
@@ -260,39 +260,39 @@ export default function Step7Review() {
 
       {/* License status */}
       <div className="bg-white rounded-2xl p-4 shadow-sm">
-        <p className="text-xs font-medium text-[#717171] mb-1">الترخيص</p>
+        <p className="text-xs font-medium text-muted mb-1">الترخيص</p>
         {store.licenseId ? (
-          <p className="text-xs text-green-600 font-medium">✓ تم التحقق من الترخيص</p>
+          <p className="text-xs text-success font-medium">✓ تم التحقق من الترخيص</p>
         ) : store.skipLicenseInfo ? (
-          <p className="text-xs text-orange-600 font-medium">⚠ سيتم حفظ الإعلان كمسودة</p>
+          <p className="text-xs text-accent-text font-medium">⚠ سيتم حفظ الإعلان كمسودة</p>
         ) : (store.advertiserType === 'owner' || store.advertiserType === 'agent') ? (
-          <p className="text-xs text-blue-600 font-medium">سيتم إرسال بيانات الترخيص للمراجعة</p>
+          <p className="text-xs text-info font-medium">سيتم إرسال بيانات الترخيص للمراجعة</p>
         ) : (
-          <p className="text-xs text-gray-500">لا يوجد ترخيص</p>
+          <p className="text-xs text-muted">لا يوجد ترخيص</p>
         )}
       </div>
 
       {/* Error */}
       {error && (
-        <div className="flex items-start gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-600">
+        <div className="flex items-start gap-2 bg-error-soft border border-error/30 rounded-xl px-4 py-3 text-sm text-error">
           <AlertCircle size={16} className="shrink-0 mt-0.5" />
           {error}
         </div>
       )}
 
       {/* Submit bottom bar */}
-      <div className="fixed bottom-0 start-0 end-0 z-20 bg-white border-t border-gray-100 px-4 py-3 shadow-lg">
+      <div className="fixed bottom-0 start-0 end-0 z-20 bg-white border-t border-line px-4 py-3 shadow-lg">
         <div className="flex gap-3 max-w-2xl mx-auto">
           <button
             onClick={() => store.prevStep()}
-            className="flex-1 h-12 border border-gray-200 rounded-xl text-sm font-medium text-[#717171] hover:bg-gray-50"
+            className="flex-1 h-12 border border-line rounded-xl text-sm font-medium text-muted hover:bg-surface"
           >
             رجوع
           </button>
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="flex-1 h-12 bg-[#F5A623] hover:bg-[#E09400] disabled:opacity-60 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2"
+            className="flex-1 h-12 bg-primary hover:bg-primary-hover disabled:opacity-60 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2"
           >
             {loading && <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />}
             نشر الإعلان

@@ -95,7 +95,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
   if (!apiKey) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center bg-gray-50 text-[#717171] gap-2">
+      <div className="w-full h-full flex flex-col items-center justify-center bg-surface text-muted gap-2">
         <span className="text-4xl">🗺️</span>
         <p className="text-sm">أضف NEXT_PUBLIC_GOOGLE_MAPS_KEY لتفعيل الخريطة</p>
       </div>
@@ -104,7 +104,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
   if (loadError) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-50 text-[#717171] text-sm">
+      <div className="w-full h-full flex items-center justify-center bg-surface text-muted text-sm">
         تعذّر تحميل الخريطة
       </div>
     );
@@ -112,8 +112,8 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
   if (!isLoaded) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-50">
-        <span className="animate-spin rounded-full h-8 w-8 border-2 border-[#F5A623] border-t-transparent" />
+      <div className="w-full h-full flex items-center justify-center bg-surface">
+        <span className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
       </div>
     );
   }
@@ -147,10 +147,10 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
                 px-2.5 py-1 rounded-full text-xs font-black shadow-md whitespace-nowrap
                 border-2 transition-transform hover:scale-110
                 ${selected?.id === l.id
-                  ? 'bg-[#222222] text-white border-[#F5A623] scale-110 z-20'
+                  ? 'bg-ink text-white border-primary scale-110 z-20'
                   : l.isGolden
                     ? 'bg-yellow-400 text-yellow-950 border-white ring-2 ring-yellow-200'
-                    : 'bg-[#F5A623] text-white border-white'
+                    : 'bg-primary text-white border-white'
                 }
               `}
               style={{ transform: 'translate(-50%, -50%)' }}
@@ -167,7 +167,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10">
           <button
             onClick={handleSearchHere}
-            className="bg-white shadow-md rounded-full px-4 py-2 text-sm font-semibold text-[#222222] hover:bg-gray-50 transition-colors border border-gray-200"
+            className="bg-white shadow-md rounded-full px-4 py-2 text-sm font-semibold text-ink hover:bg-surface transition-colors border border-line"
           >
             البحث في هذه المنطقة
           </button>
@@ -176,9 +176,9 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
       {selected && (
         <div className="absolute inset-x-3 bottom-3 z-20 sm:inset-x-auto sm:start-4 sm:bottom-20 sm:w-80" dir="rtl">
-          <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl">
+          <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-2xl">
             <div className="flex gap-3 p-3">
-              <div className="relative h-24 w-28 shrink-0 overflow-hidden rounded-xl bg-gray-100">
+              <div className="relative h-24 w-28 shrink-0 overflow-hidden rounded-xl bg-surface">
                 {selected.coverPhoto ? (
                   <Image
                     src={selected.coverPhoto}
@@ -188,7 +188,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
                     sizes="112px"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center text-gray-300">
+                  <div className="flex h-full w-full items-center justify-center text-hint">
                     <MapPin size={28} />
                   </div>
                 )}
@@ -196,17 +196,17 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
               <div className="min-w-0 flex-1">
                 <div className="mb-1 flex items-start justify-between gap-2">
-                  <p className="line-clamp-2 text-sm font-black leading-snug text-[#222222]">{selected.title}</p>
+                  <p className="line-clamp-2 text-sm font-black leading-snug text-ink">{selected.title}</p>
                   <button
                     onClick={() => setSelectedId(null)}
-                    className="shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-[#222222]"
+                    className="shrink-0 rounded-full p-1 text-hint hover:bg-surface hover:text-ink"
                     aria-label="إغلاق"
                   >
                     <X size={15} />
                   </button>
                 </div>
-                <p className="text-base font-black text-[#F5A623]">{formatPrice(selected.price)}</p>
-                <p className="mt-0.5 line-clamp-1 text-xs text-[#717171]">
+                <p className="text-base font-black text-primary">{formatPrice(selected.price)}</p>
+                <p className="mt-0.5 line-clamp-1 text-xs text-muted">
                   {[selected.city, selected.district].filter(Boolean).join('، ')}
                 </p>
                 <div className="mt-2 flex items-center gap-1.5">
@@ -214,7 +214,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
                     <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-[10px] font-bold text-yellow-800">ذهبي</span>
                   )}
                   {selected.isPromoted && (
-                    <span className="rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-bold text-[#F5A623]">مميز</span>
+                    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">مميز</span>
                   )}
                 </div>
               </div>
@@ -222,7 +222,7 @@ export default function ListingsMap({ listings, onSearchArea, hrefBase = '/listi
 
             <Link
               href={`${hrefBase}/${selected.id}`}
-              className="block w-full bg-[#F5A623] px-4 py-2.5 text-center text-sm font-bold text-white transition-colors hover:bg-[#E09400]"
+              className="block w-full bg-primary px-4 py-2.5 text-center text-sm font-bold text-white transition-colors hover:bg-primary-hover"
             >
               عرض التفاصيل
             </Link>

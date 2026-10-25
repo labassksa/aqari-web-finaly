@@ -176,10 +176,10 @@ export default function ListingsClient({
 
       {/* Map view */}
       {view === "map" && (
-        <div style={{ height: "calc(100dvh - 128px)" }} className="bg-gray-100">
+        <div style={{ height: "calc(100dvh - 128px)" }} className="bg-surface">
           <Suspense fallback={
             <div className="w-full h-full flex items-center justify-center">
-              <span className="animate-spin rounded-full h-8 w-8 border-2 border-[#F5A623] border-t-transparent" />
+              <span className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
             </div>
           }>
             <ListingsMap listings={listings} onSearchArea={handleGeoSearch} hrefBase={hrefBase ?? "/listings"} />
@@ -189,18 +189,18 @@ export default function ListingsClient({
 
       {/* List view */}
       {view === "list" && (
-        <div className="flex-1 bg-[#F9F9F9]">
+        <div className="flex-1 bg-surface">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
             {error && (
               <div className="flex flex-col items-center justify-center py-20 gap-4">
-                <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center">
-                  <AlertCircle size={28} className="text-red-400" />
+                <div className="w-14 h-14 bg-error-soft rounded-2xl flex items-center justify-center">
+                  <AlertCircle size={28} className="text-error" />
                 </div>
-                <p className="text-[#717171] text-center">{error}</p>
+                <p className="text-muted text-center">{error}</p>
                 <button
                   onClick={() => fetchListings(page)}
-                  className="px-6 py-2.5 bg-[#F5A623] text-white font-semibold rounded-xl text-sm hover:bg-[#E09400] transition-colors"
+                  className="px-6 py-2.5 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover transition-colors"
                 >
                   {t("retry")}
                 </button>
@@ -216,8 +216,8 @@ export default function ListingsClient({
             {!loading && !error && listings.length === 0 && (
               <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
                 <span className="text-6xl">🏠</span>
-                <h3 className="text-xl font-bold text-[#222222]">{t("noResultsTitle")}</h3>
-                <p className="text-[#717171] max-w-sm">
+                <h3 className="text-xl font-bold text-ink">{t("noResultsTitle")}</h3>
+                <p className="text-muted max-w-sm">
                   {t("noResultsBody")}
                 </p>
               </div>
@@ -236,7 +236,7 @@ export default function ListingsClient({
                     <button
                       onClick={() => goToPage(page - 1)}
                       disabled={page === 1}
-                      className="p-2 rounded-xl border border-gray-200 disabled:opacity-40 hover:border-[#F5A623] hover:text-[#F5A623] transition-all"
+                      className="p-2 rounded-xl border border-line disabled:opacity-40 hover:border-primary hover:text-primary transition-all"
                     >
                       <ChevronRight size={18} />
                     </button>
@@ -249,8 +249,8 @@ export default function ListingsClient({
                           onClick={() => goToPage(pageNum)}
                           className={`w-10 h-10 rounded-xl text-sm font-semibold transition-all ${
                             page === pageNum
-                              ? "bg-[#F5A623] text-white shadow-md"
-                              : "border border-gray-200 text-gray-600 hover:border-[#F5A623] hover:text-[#F5A623]"
+                              ? "bg-primary text-white shadow-md"
+                              : "border border-line text-muted hover:border-primary hover:text-primary"
                           }`}
                         >
                           {pageNum}
@@ -261,7 +261,7 @@ export default function ListingsClient({
                     <button
                       onClick={() => goToPage(page + 1)}
                       disabled={page === totalPages}
-                      className="p-2 rounded-xl border border-gray-200 disabled:opacity-40 hover:border-[#F5A623] hover:text-[#F5A623] transition-all"
+                      className="p-2 rounded-xl border border-line disabled:opacity-40 hover:border-primary hover:text-primary transition-all"
                     >
                       <ChevronLeft size={18} />
                     </button>
@@ -277,7 +277,7 @@ export default function ListingsClient({
       {showAddButton && (
         <Link
           href={addHref}
-          className="fixed bottom-6 end-5 z-40 flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-5 py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
+          className="fixed bottom-6 end-5 z-40 flex items-center gap-2 bg-primary hover:bg-primary-hover text-white font-bold px-5 py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition-all active:scale-95"
         aria-label="إضافة إعلان"
         title={t("addListing")}
       >

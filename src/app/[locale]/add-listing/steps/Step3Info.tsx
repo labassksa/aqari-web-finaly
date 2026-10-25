@@ -10,8 +10,8 @@ export default function Step3Info() {
     store.totalPrice ? store.totalPrice.toLocaleString('ar-SA') : ''
   );
 
-  const inp = 'w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] transition-colors bg-white';
-  const lbl = 'block text-sm font-medium text-[#222222] mb-1.5';
+  const inp = 'w-full px-4 py-3 border border-line rounded-xl text-sm focus:outline-none focus:border-primary transition-colors bg-white';
+  const lbl = 'block text-sm font-medium text-ink mb-1.5';
 
   const handlePriceBlur = (raw: string) => {
     const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
@@ -23,11 +23,11 @@ export default function Step3Info() {
 
   return (
     <div className="px-4 py-6 space-y-5">
-      <h2 className="text-base font-bold text-[#222222]">معلومات الإعلان</h2>
+      <h2 className="text-base font-bold text-ink">معلومات الإعلان</h2>
 
       {/* Title */}
       <div>
-        <label className={lbl}>عنوان الإعلان <span className="text-red-500">*</span></label>
+        <label className={lbl}>عنوان الإعلان <span className="text-error">*</span></label>
         <input
           value={store.title}
           onChange={(e) => store.setField('title', e.target.value)}
@@ -35,13 +35,13 @@ export default function Step3Info() {
           placeholder="مثال: شقة للبيع في حي النزهة"
           maxLength={100}
         />
-        {store.validationErrors.title && <p className="text-xs text-red-500 mt-1">{t('requiredTitle')}</p>}
-        <p className="text-xs text-[#717171] text-left mt-1">{store.title.length}/100</p>
+        {store.validationErrors.title && <p className="text-xs text-error mt-1">{t('requiredTitle')}</p>}
+        <p className="text-xs text-muted text-left mt-1">{store.title.length}/100</p>
       </div>
 
       {/* Price */}
       <div>
-        <label className={lbl}>السعر الكلي (ريال) <span className="text-red-500">*</span></label>
+        <label className={lbl}>السعر الكلي (ريال) <span className="text-error">*</span></label>
         <input
           value={priceDisplay}
           onChange={(e) => {
@@ -55,12 +55,12 @@ export default function Step3Info() {
           dir="ltr"
           inputMode="numeric"
         />
-        {store.validationErrors.totalPrice && <p className="text-xs text-red-500 mt-1">{t('positivePrice')}</p>}
+        {store.validationErrors.totalPrice && <p className="text-xs text-error mt-1">{t('positivePrice')}</p>}
       </div>
 
       {/* Area */}
       <div>
-        <label className={lbl}>المساحة (م²) <span className="text-red-500">*</span></label>
+        <label className={lbl}>المساحة (م²) <span className="text-error">*</span></label>
         <input
           value={store.area ?? ''}
           onChange={(e) => store.setField('area', e.target.value ? parseFloat(e.target.value) : null)}
@@ -71,7 +71,7 @@ export default function Step3Info() {
           type="number"
           min={0}
         />
-        {store.validationErrors.area && <p className="text-xs text-red-500 mt-1">{t('positiveArea')}</p>}
+        {store.validationErrors.area && <p className="text-xs text-error mt-1">{t('positiveArea')}</p>}
       </div>
 
       {/* Usage type */}
@@ -87,8 +87,8 @@ export default function Step3Info() {
               onClick={() => store.setField('isResidential', opt.value)}
               className={`flex-1 py-3 rounded-xl border-2 text-sm font-medium transition-all ${
                 store.isResidential === opt.value
-                  ? 'border-[#F5A623] bg-orange-50 text-[#F5A623]'
-                  : 'border-gray-200 bg-white text-[#717171]'
+                  ? 'border-primary bg-primary-soft text-primary'
+                  : 'border-line bg-white text-muted'
               }`}
             >
               {opt.label}
@@ -98,13 +98,13 @@ export default function Step3Info() {
       </div>
 
       {/* Commission toggle */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
+      <div className="bg-white rounded-xl border border-line p-4">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-[#222222]">عمولة البيع/الإيجار</span>
+          <span className="text-sm font-medium text-ink">عمولة البيع/الإيجار</span>
           <button
             onClick={() => store.setField('hasCommission', !store.hasCommission)}
             className={`relative w-11 h-6 rounded-full transition-colors ${
-              store.hasCommission ? 'bg-[#F5A623]' : 'bg-gray-200'
+              store.hasCommission ? 'bg-primary' : 'bg-line'
             }`}
           >
             <span className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all ${
@@ -114,7 +114,7 @@ export default function Step3Info() {
         </div>
         {store.hasCommission && (
           <div className="mt-3">
-            <label className="block text-xs text-[#717171] mb-1.5">نسبة العمولة (%)</label>
+            <label className="block text-xs text-muted mb-1.5">نسبة العمولة (%)</label>
             <input
               value={store.commissionPercent ?? ''}
               onChange={(e) => store.setField('commissionPercent', e.target.value ? parseFloat(e.target.value) : null)}
@@ -140,7 +140,7 @@ export default function Step3Info() {
           placeholder="أضف وصفاً تفصيلياً للعقار..."
           maxLength={2000}
         />
-        <p className="text-xs text-[#717171] text-left mt-1">{(store.description ?? '').length}/2000</p>
+        <p className="text-xs text-muted text-left mt-1">{(store.description ?? '').length}/2000</p>
       </div>
     </div>
   );

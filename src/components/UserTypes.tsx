@@ -13,10 +13,10 @@ export default async function UserTypes() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-black text-[#222222] mb-4">
+          <h2 className="text-3xl sm:text-4xl font-black text-ink mb-4">
             {t("title")}
           </h2>
-          <p className="text-lg text-[#717171]">{t("subtitle")}</p>
+          <p className="text-lg text-muted">{t("subtitle")}</p>
         </div>
 
         {/* User type cards */}
@@ -26,15 +26,15 @@ export default async function UserTypes() {
             return (
               <div
                 key={key}
-                className="group flex flex-col items-center text-center p-6 rounded-2xl border border-gray-100 hover:border-[#F5A623]/50 hover:bg-[#F5A623]/5 transition-all cursor-default"
+                className="group flex flex-col items-center text-center p-6 rounded-2xl border border-line hover:border-primary/50 hover:bg-primary/5 transition-all cursor-default"
               >
-                <div className="w-16 h-16 rounded-2xl bg-[#F5A623]/10 flex items-center justify-center mb-4 group-hover:bg-[#F5A623]/20 transition-colors">
-                  <Icon size={28} className="text-[#F5A623]" />
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                  <Icon size={28} className="text-primary" />
                 </div>
-                <h3 className="text-base font-bold text-[#222222] mb-2">
+                <h3 className="text-base font-bold text-ink mb-2">
                   {t(`${key}.title`)}
                 </h3>
-                <p className="text-sm text-[#717171] leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {t(`${key}.desc`)}
                 </p>
               </div>

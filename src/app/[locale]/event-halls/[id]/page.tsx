@@ -32,14 +32,14 @@ export default async function EventHallDetailPage({ params }: Props) {
       <>
         <Navbar />
         <main className="min-h-screen flex-1 flex flex-col items-center justify-center py-32 px-4 text-center">
-          <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-5">
-            <AlertCircle size={28} className="text-red-400" />
+          <div className="w-16 h-16 bg-error-soft rounded-2xl flex items-center justify-center mb-5">
+            <AlertCircle size={28} className="text-error" />
           </div>
-          <h1 className="text-xl font-bold text-[#222222] mb-3">تعذّر تحميل القاعة</h1>
-          <p className="text-[#717171] mb-8 max-w-sm text-sm">يرجى العودة للقائمة والمحاولة مجدداً.</p>
+          <h1 className="text-xl font-bold text-ink mb-3">تعذّر تحميل القاعة</h1>
+          <p className="text-muted mb-8 max-w-sm text-sm">يرجى العودة للقائمة والمحاولة مجدداً.</p>
           <Link
             href="/event-halls"
-            className="bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-8 py-3 rounded-2xl transition-colors"
+            className="bg-primary hover:bg-primary-hover text-white font-bold px-8 py-3 rounded-2xl transition-colors"
           >
             تصفح القاعات
           </Link>

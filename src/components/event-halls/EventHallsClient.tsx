@@ -84,43 +84,43 @@ export default function EventHallsClient() {
   }
 
   return (
-    <div className="flex-1 bg-[#F9F9F9]">
+    <div className="flex-1 bg-surface">
       {/* Filter panel */}
-      <div className="bg-white border-b border-gray-100 py-5 px-4">
+      <div className="bg-white border-b border-line py-5 px-4">
         <div className="max-w-7xl mx-auto flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1">
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">المدينة</label>
+              <label className="block text-xs font-semibold text-muted mb-1.5">المدينة</label>
               <input
                 type="text"
                 value={filters.city}
                 onChange={(e) => setFilters((f) => ({ ...f, city: e.target.value }))}
                 placeholder="ابحث بالمدينة..."
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#F5A623] outline-none"
+                className="w-full border border-line rounded-xl px-3 py-2 text-sm focus:border-primary outline-none"
               />
             </div>
             <div className="flex gap-2 items-end">
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">من (ريال)</label>
+                <label className="block text-xs font-semibold text-muted mb-1.5">من (ريال)</label>
                 <input
                   type="number"
                   value={filters.priceFrom}
                   onChange={(e) => setFilters((f) => ({ ...f, priceFrom: e.target.value }))}
-                  className="w-28 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#F5A623] outline-none"
+                  className="w-28 border border-line rounded-xl px-3 py-2 text-sm focus:border-primary outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">إلى (ريال)</label>
+                <label className="block text-xs font-semibold text-muted mb-1.5">إلى (ريال)</label>
                 <input
                   type="number"
                   value={filters.priceTo}
                   onChange={(e) => setFilters((f) => ({ ...f, priceTo: e.target.value }))}
-                  className="w-28 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#F5A623] outline-none"
+                  className="w-28 border border-line rounded-xl px-3 py-2 text-sm focus:border-primary outline-none"
                 />
               </div>
               <button
                 onClick={() => fetchListings(1)}
-                className="h-[38px] px-5 flex items-center gap-1.5 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold rounded-xl text-sm transition-colors"
+                className="h-[38px] px-5 flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-sm transition-colors"
               >
                 <Search size={15} /> بحث
               </button>
@@ -128,7 +128,7 @@ export default function EventHallsClient() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1.5">الطاقة الاستيعابية</label>
+            <label className="block text-xs font-semibold text-muted mb-1.5">الطاقة الاستيعابية</label>
             <div className="flex flex-wrap gap-2">
               {CAPACITY_OPTIONS.map((opt) => (
                 <button
@@ -136,8 +136,8 @@ export default function EventHallsClient() {
                   onClick={() => setFilters((f) => ({ ...f, minCapacity: opt.value }))}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                     filters.minCapacity === opt.value
-                      ? "bg-[#F5A623] border-[#F5A623] text-white"
-                      : "border-gray-200 text-gray-600"
+                      ? "bg-primary border-primary text-white"
+                      : "border-line text-muted"
                   }`}
                 >
                   {opt.label}
@@ -152,13 +152,13 @@ export default function EventHallsClient() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {error && (
           <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center">
-              <AlertCircle size={28} className="text-red-400" />
+            <div className="w-14 h-14 bg-error-soft rounded-2xl flex items-center justify-center">
+              <AlertCircle size={28} className="text-error" />
             </div>
-            <p className="text-[#717171] text-center">{error}</p>
+            <p className="text-muted text-center">{error}</p>
             <button
               onClick={() => fetchListings(page)}
-              className="px-6 py-2.5 bg-[#F5A623] text-white font-semibold rounded-xl text-sm hover:bg-[#E09400] transition-colors"
+              className="px-6 py-2.5 bg-primary text-white font-semibold rounded-xl text-sm hover:bg-primary-hover transition-colors"
             >
               إعادة المحاولة
             </button>
@@ -176,8 +176,8 @@ export default function EventHallsClient() {
         {!loading && !error && listings.length === 0 && (
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
             <span className="text-6xl">🎊</span>
-            <h3 className="text-xl font-bold text-[#222222]">لا توجد نتائج</h3>
-            <p className="text-[#717171] max-w-sm">
+            <h3 className="text-xl font-bold text-ink">لا توجد نتائج</h3>
+            <p className="text-muted max-w-sm">
               لم نجد قاعات تطابق بحثك. جرّب تغيير الفلاتر.
             </p>
           </div>
@@ -185,7 +185,7 @@ export default function EventHallsClient() {
 
         {!loading && !error && listings.length > 0 && (
           <>
-            <p className="text-sm text-gray-500 mb-4">{total.toLocaleString("ar-SA")} نتيجة</p>
+            <p className="text-sm text-muted mb-4">{total.toLocaleString("ar-SA")} نتيجة</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {listings.map((listing) => (
                 <ListingCard key={listing.id} listing={listing} hrefBase="/event-halls" />
@@ -197,7 +197,7 @@ export default function EventHallsClient() {
                 <button
                   onClick={() => goToPage(page - 1)}
                   disabled={page === 1}
-                  className="p-2 rounded-xl border border-gray-200 disabled:opacity-40 hover:border-[#F5A623] hover:text-[#F5A623] transition-all"
+                  className="p-2 rounded-xl border border-line disabled:opacity-40 hover:border-primary hover:text-primary transition-all"
                 >
                   <ChevronRight size={18} />
                 </button>
@@ -210,8 +210,8 @@ export default function EventHallsClient() {
                       onClick={() => goToPage(pageNum)}
                       className={`w-10 h-10 rounded-xl text-sm font-semibold transition-all ${
                         page === pageNum
-                          ? "bg-[#F5A623] text-white shadow-md"
-                          : "border border-gray-200 text-gray-600 hover:border-[#F5A623] hover:text-[#F5A623]"
+                          ? "bg-primary text-white shadow-md"
+                          : "border border-line text-muted hover:border-primary hover:text-primary"
                       }`}
                     >
                       {pageNum}
@@ -222,7 +222,7 @@ export default function EventHallsClient() {
                 <button
                   onClick={() => goToPage(page + 1)}
                   disabled={page === totalPages}
-                  className="p-2 rounded-xl border border-gray-200 disabled:opacity-40 hover:border-[#F5A623] hover:text-[#F5A623] transition-all"
+                  className="p-2 rounded-xl border border-line disabled:opacity-40 hover:border-primary hover:text-primary transition-all"
                 >
                   <ChevronLeft size={18} />
                 </button>

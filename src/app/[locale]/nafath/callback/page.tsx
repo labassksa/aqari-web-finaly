@@ -68,22 +68,22 @@ export default function NafathCallbackPage() {
   }, [router, setToken, setUser, logout]);
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-surface flex items-center justify-center px-4">
       <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-lg p-8 text-center">
-        <span className="text-4xl font-black text-[#F5A623]">أقورا</span>
+        <span className="text-4xl font-black text-primary">أقورا</span>
         {error ? (
           <>
-            <p className="mt-6 text-red-500 text-sm">{error}</p>
+            <p className="mt-6 text-error text-sm">{error}</p>
             <button
               onClick={() => router.replace('/login')}
-              className="mt-6 w-full h-12 bg-[#F5A623] hover:bg-[#E09400] text-white font-semibold rounded-xl transition-colors"
+              className="mt-6 w-full h-12 bg-primary hover:bg-primary-hover text-white font-semibold rounded-xl transition-colors"
             >
               العودة لتسجيل الدخول
             </button>
           </>
         ) : (
-          <div className="mt-6 flex flex-col items-center gap-3 text-sm text-[#717171]">
-            <span className="animate-spin rounded-full h-6 w-6 border-2 border-[#F5A623] border-t-transparent" />
+          <div className="mt-6 flex flex-col items-center gap-3 text-sm text-muted">
+            <span className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent" />
             جاري إكمال الدخول عبر نفاذ...
           </div>
         )}

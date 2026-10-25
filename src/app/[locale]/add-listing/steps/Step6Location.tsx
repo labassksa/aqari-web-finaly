@@ -44,8 +44,8 @@ export default function Step6Location() {
   const [mapReady, setMapReady] = useState(false);
   const [noKey] = useState(!GOOGLE_MAPS_KEY);
 
-  const inp = 'w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] transition-colors bg-white';
-  const lbl = 'block text-sm font-medium text-[#222222] mb-1.5';
+  const inp = 'w-full px-4 py-3 border border-line rounded-xl text-sm focus:outline-none focus:border-primary transition-colors bg-white';
+  const lbl = 'block text-sm font-medium text-ink mb-1.5';
 
   // District options for the selected city
   const districtOptions = store.city
@@ -80,7 +80,7 @@ export default function Step6Location() {
 
       // Overlay pin
       const div = document.createElement('div');
-      div.innerHTML = `<div style="width:28px;height:28px;background:#F5A623;border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:translate(-50%,-50%);cursor:pointer"></div>`;
+      div.innerHTML = `<div style="width:28px;height:28px;background:var(--color-primary);border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:translate(-50%,-50%);cursor:pointer"></div>`;
       const overlay = new window.google.maps.OverlayView();
       overlay.onAdd = function () {
         this.getPanes().overlayMouseTarget.appendChild(div);
@@ -148,12 +148,12 @@ export default function Step6Location() {
 
   return (
     <div className="px-4 py-6 space-y-4">
-      <h2 className="text-base font-bold text-[#222222]">موقع العقار</h2>
+      <h2 className="text-base font-bold text-ink">موقع العقار</h2>
 
       {/* City */}
       <div>
         <label className={lbl}>
-          المدينة <span className="text-red-500">*</span>
+          المدينة <span className="text-error">*</span>
         </label>
         <SearchableSelect
           options={CITY_OPTIONS}
@@ -162,7 +162,7 @@ export default function Step6Location() {
           placeholder="اختر المدينة"
           searchPlaceholder="ابحث عن مدينة..."
         />
-        {store.validationErrors.city && <p className="text-xs text-red-500 mt-1">{t('requiredCity')}</p>}
+        {store.validationErrors.city && <p className="text-xs text-error mt-1">{t('requiredCity')}</p>}
       </div>
 
       {/* District */}
@@ -201,30 +201,30 @@ export default function Step6Location() {
 
       {/* Map */}
       {noKey ? (
-        <div className="bg-gray-100 rounded-2xl p-4 space-y-3">
-          <p className="text-sm text-[#717171] text-center">{t('mapUnavailable')}</p>
+        <div className="bg-surface rounded-2xl p-4 space-y-3">
+          <p className="text-sm text-muted text-center">{t('mapUnavailable')}</p>
           <div className="grid grid-cols-2 gap-3">
-            <label className="text-xs text-[#717171]">
+            <label className="text-xs text-muted">
               {t('latitude')}
               <input type="number" min={-90} max={90} step="any" value={store.lat ?? ''} onChange={(event) => store.setField('lat', event.target.value ? Number(event.target.value) : null)} className={`${inp} mt-1`} dir="ltr" />
             </label>
-            <label className="text-xs text-[#717171]">
+            <label className="text-xs text-muted">
               {t('longitude')}
               <input type="number" min={-180} max={180} step="any" value={store.lng ?? ''} onChange={(event) => store.setField('lng', event.target.value ? Number(event.target.value) : null)} className={`${inp} mt-1`} dir="ltr" />
             </label>
           </div>
-          {store.validationErrors.coordinates && <p className="text-xs text-red-500 text-center">{t('requiredCoordinates')}</p>}
+          {store.validationErrors.coordinates && <p className="text-xs text-error text-center">{t('requiredCoordinates')}</p>}
         </div>
       ) : (
         <div>
-          <p className="text-xs text-[#717171] mb-2">انقر على الخريطة لتحديد موقع العقار</p>
+          <p className="text-xs text-muted mb-2">انقر على الخريطة لتحديد موقع العقار</p>
           <div ref={mapRef} style={{ height: 260, borderRadius: 16, overflow: 'hidden' }} />
           {store.lat !== null && store.lng !== null && (
-            <p className="text-xs text-[#717171] mt-1 text-center" dir="ltr">
+            <p className="text-xs text-muted mt-1 text-center" dir="ltr">
               {store.lat.toFixed(5)}, {store.lng.toFixed(5)}
             </p>
           )}
-          {store.validationErrors.coordinates && <p className="text-xs text-red-500 mt-1 text-center">{t('requiredCoordinates')}</p>}
+          {store.validationErrors.coordinates && <p className="text-xs text-error mt-1 text-center">{t('requiredCoordinates')}</p>}
         </div>
       )}
     </div>

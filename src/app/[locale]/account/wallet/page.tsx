@@ -222,10 +222,10 @@ export default function WalletPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-      <h1 className="text-2xl font-black text-[#222222]">المحفظة</h1>
+      <h1 className="text-2xl font-black text-ink">المحفظة</h1>
 
       {/* Balance card */}
-      <div className="rounded-2xl shadow-lg p-6 text-white" style={{ background: 'linear-gradient(135deg, #F5A623 0%, #E09400 100%)' }}>
+      <div className="rounded-2xl shadow-lg p-6 text-white" style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%)' }}>
         <p className="text-sm font-medium opacity-80 mb-1">الرصيد المتاح</p>
         {walletLoading
           ? <div className="h-10 w-40 bg-white/20 rounded-xl animate-pulse mt-1" />
@@ -239,17 +239,17 @@ export default function WalletPage() {
       {(heldBalance > 0 || pendingEarnings > 0) && (
         <div className="grid gap-3 sm:grid-cols-2">
           {heldBalance > 0 && (
-            <div className="bg-white rounded-xl border border-gray-100 px-4 py-3 shadow-sm">
-              <p className="text-xs font-medium text-[#717171] mb-1">محجوز للحجوزات</p>
-              <p className="text-lg font-black text-[#222222]">
+            <div className="bg-white rounded-xl border border-line px-4 py-3 shadow-sm">
+              <p className="text-xs font-medium text-muted mb-1">محجوز للحجوزات</p>
+              <p className="text-lg font-black text-ink">
                 {heldBalance.toLocaleString('ar-SA', { minimumFractionDigits: 2 })} ريال
               </p>
             </div>
           )}
           {pendingEarnings > 0 && (
-            <div className="bg-white rounded-xl border border-gray-100 px-4 py-3 shadow-sm">
-              <p className="text-xs font-medium text-[#717171] mb-1">أرباح حجوزات قيد الانتظار</p>
-              <p className="text-lg font-black text-[#222222]">
+            <div className="bg-white rounded-xl border border-line px-4 py-3 shadow-sm">
+              <p className="text-xs font-medium text-muted mb-1">أرباح حجوزات قيد الانتظار</p>
+              <p className="text-lg font-black text-ink">
                 {pendingEarnings.toLocaleString('ar-SA', { minimumFractionDigits: 2 })} ريال
               </p>
             </div>
@@ -260,18 +260,18 @@ export default function WalletPage() {
       {/* Top-up button */}
       <button
         onClick={() => setTopUpOpen(true)}
-        className="w-full h-12 border-2 border-[#F5A623] text-[#F5A623] font-bold rounded-xl text-sm hover:bg-orange-50 transition-colors"
+        className="w-full h-12 border-2 border-primary text-primary font-bold rounded-xl text-sm hover:bg-primary-soft transition-colors"
       >
         شحن المحفظة
       </button>
 
       {/* Transactions */}
       <div>
-        <h2 className="text-base font-bold text-[#222222] mb-3">سجل المعاملات</h2>
+        <h2 className="text-base font-bold text-ink mb-3">سجل المعاملات</h2>
         <div className="flex gap-2 mb-4">
           {([['', 'الكل'], ['credit', 'إيداع'], ['debit', 'سحب']] as [TxType, string][]).map(([val, label]) => (
             <button key={val} onClick={() => setFilter(val)}
-              className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${filter === val ? 'bg-[#F5A623] border-[#F5A623] text-white' : 'border-gray-200 text-[#717171] hover:border-gray-300 bg-white'}`}
+              className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${filter === val ? 'bg-primary border-primary text-white' : 'border-line text-muted hover:border-line bg-white'}`}
             >{label}</button>
           ))}
         </div>
@@ -280,17 +280,17 @@ export default function WalletPage() {
           <div className="space-y-3">
             {[1,2,3,4].map((i) => (
               <div key={i} className="flex items-center gap-3 bg-white rounded-xl p-4 animate-pulse">
-                <div className="w-10 h-10 rounded-full bg-gray-200 shrink-0" />
-                <div className="flex-1 space-y-1.5"><div className="h-3 bg-gray-200 rounded w-3/4" /><div className="h-3 bg-gray-200 rounded w-1/2" /></div>
-                <div className="h-4 bg-gray-200 rounded w-16" />
+                <div className="w-10 h-10 rounded-full bg-line shrink-0" />
+                <div className="flex-1 space-y-1.5"><div className="h-3 bg-line rounded w-3/4" /><div className="h-3 bg-line rounded w-1/2" /></div>
+                <div className="h-4 bg-line rounded w-16" />
               </div>
             ))}
           </div>
         ) : txs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 gap-3 text-center">
             <span className="text-5xl">💳</span>
-            <p className="text-base font-bold text-[#222222]">لا توجد معاملات بعد</p>
-            <p className="text-sm text-[#717171]">معاملاتك المالية ستظهر هنا</p>
+            <p className="text-base font-bold text-ink">لا توجد معاملات بعد</p>
+            <p className="text-sm text-muted">معاملاتك المالية ستظهر هنا</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -299,17 +299,17 @@ export default function WalletPage() {
               const amount = parseFloat(String(tx.amount ?? 0));
               return (
                 <div key={tx.id ?? i} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isCredit ? 'bg-green-100' : 'bg-red-100'}`}>
-                    {isCredit ? <ArrowUpCircle size={20} className="text-green-500" /> : <ArrowDownCircle size={20} className="text-red-500" />}
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${isCredit ? 'bg-success-soft' : 'bg-error-soft'}`}>
+                    {isCredit ? <ArrowUpCircle size={20} className="text-success" /> : <ArrowDownCircle size={20} className="text-error" />}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-[#222222] line-clamp-1">{tx.description ?? tx.referenceType ?? (isCredit ? 'إيداع' : 'سحب')}</p>
+                    <p className="text-sm font-semibold text-ink line-clamp-1">{tx.description ?? tx.referenceType ?? (isCredit ? 'إيداع' : 'سحب')}</p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <p className="text-xs text-[#717171]">{formatDate(tx.createdAt ?? tx.date ?? '')}</p>
-                      {tx.referenceType && <span className="text-[10px] bg-gray-100 text-[#717171] px-1.5 py-0.5 rounded-full">{REF_LABEL[tx.referenceType] ?? tx.referenceType}</span>}
+                      <p className="text-xs text-muted">{formatDate(tx.createdAt ?? tx.date ?? '')}</p>
+                      {tx.referenceType && <span className="text-[10px] bg-surface text-muted px-1.5 py-0.5 rounded-full">{REF_LABEL[tx.referenceType] ?? tx.referenceType}</span>}
                     </div>
                   </div>
-                  <p className={`text-sm font-black shrink-0 ${isCredit ? 'text-green-600' : 'text-red-500'}`}>
+                  <p className={`text-sm font-black shrink-0 ${isCredit ? 'text-success' : 'text-error'}`}>
                     {isCredit ? '+' : '-'}{amount.toFixed(2)} ريال
                   </p>
                 </div>
@@ -317,9 +317,9 @@ export default function WalletPage() {
             })}
             {page < pages && (
               <button onClick={() => loadTxs(page + 1, filter, true)} disabled={loadingMore}
-                className="w-full h-11 border border-gray-200 rounded-xl text-sm font-medium text-[#717171] hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 mt-2"
+                className="w-full h-11 border border-line rounded-xl text-sm font-medium text-muted hover:bg-surface transition-colors flex items-center justify-center gap-2 mt-2"
               >
-                {loadingMore && <span className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-[#F5A623]" />}
+                {loadingMore && <span className="animate-spin rounded-full h-4 w-4 border-2 border-line border-t-primary" />}
                 تحميل المزيد
               </button>
             )}
@@ -333,13 +333,13 @@ export default function WalletPage() {
           <div className="bg-white rounded-2xl w-full max-w-sm shadow-xl overflow-hidden" dir="rtl">
 
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-              <h3 className="text-base font-bold text-[#222222]">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-line">
+              <h3 className="text-base font-bold text-ink">
                 {step === 'amount' ? 'شحن المحفظة' : step === 'card' ? 'بيانات البطاقة' : 'جاري التحويل…'}
               </h3>
               {step !== 'redirecting' && (
-                <button onClick={closeModal} className="p-1.5 rounded-lg hover:bg-gray-100">
-                  <X size={18} className="text-[#717171]" />
+                <button onClick={closeModal} className="p-1.5 rounded-lg hover:bg-surface">
+                  <X size={18} className="text-muted" />
                 </button>
               )}
             </div>
@@ -348,26 +348,26 @@ export default function WalletPage() {
             {step === 'amount' && (
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-[#222222] mb-1.5">المبلغ (ريال)</label>
+                  <label className="block text-sm font-medium text-ink mb-1.5">المبلغ (ريال)</label>
                   <input
                     type="number" value={topUpAmount} onChange={(e) => setTopUpAmount(e.target.value)}
                     min={100} placeholder="الحد الأدنى 100 ريال"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] transition-colors bg-white"
+                    className="w-full px-4 py-3 border border-line rounded-xl text-sm focus:outline-none focus:border-primary transition-colors bg-white"
                     dir="ltr"
                   />
                 </div>
                 <div className="flex gap-2">
                   {[100, 500, 1000, 5000].map((amt) => (
                     <button key={amt} onClick={() => setTopUpAmount(String(amt))}
-                      className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all ${topUpAmount === String(amt) ? 'border-[#F5A623] bg-orange-50 text-[#F5A623]' : 'border-gray-200 text-[#717171] hover:border-gray-300'}`}
+                      className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all ${topUpAmount === String(amt) ? 'border-primary bg-primary-soft text-primary' : 'border-line text-muted hover:border-line'}`}
                     >{amt.toLocaleString('ar-SA')}</button>
                   ))}
                 </div>
-                {cardError && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg">{cardError}</p>}
+                {cardError && <p className="text-error text-xs bg-error-soft px-3 py-2 rounded-lg">{cardError}</p>}
                 <button
                   onClick={handleContinueToCard}
                   disabled={mfLoading || !topUpAmount || parseFloat(topUpAmount) < 100}
-                  className="w-full h-12 bg-[#F5A623] hover:bg-[#E09400] disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+                  className="w-full h-12 bg-primary hover:bg-primary-hover disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
                 >
                   {mfLoading ? <Loader2 size={18} className="animate-spin" /> : <><CreditCard size={16} /> متابعة للدفع</>}
                 </button>
@@ -378,25 +378,25 @@ export default function WalletPage() {
             {step === 'card' && (
               <div className="p-5 space-y-4">
                 {/* Amount banner */}
-                <div className="flex items-center gap-3 bg-orange-50 rounded-xl px-4 py-3">
-                  <div className="w-9 h-9 rounded-xl bg-[#F5A623]/20 flex items-center justify-center shrink-0">
-                    <CreditCard size={18} className="text-[#F5A623]" />
+                <div className="flex items-center gap-3 bg-primary-soft rounded-xl px-4 py-3">
+                  <div className="w-9 h-9 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
+                    <CreditCard size={18} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-[#717171]">شحن المحفظة</p>
-                    <p className="text-base font-black text-[#222222]">{parseFloat(topUpAmount).toLocaleString('ar-SA')} ريال</p>
+                    <p className="text-xs text-muted">شحن المحفظة</p>
+                    <p className="text-base font-black text-ink">{parseFloat(topUpAmount).toLocaleString('ar-SA')} ريال</p>
                   </div>
                 </div>
 
                 {/* MyFatoorah card form container */}
                 <div ref={cardRef} id="mf-card-view" className="min-h-[240px]" />
 
-                {cardError && <p className="text-red-500 text-xs bg-red-50 px-3 py-2 rounded-lg">{cardError}</p>}
+                {cardError && <p className="text-error text-xs bg-error-soft px-3 py-2 rounded-lg">{cardError}</p>}
 
                 <button
                   onClick={handlePay}
                   disabled={mfLoading}
-                  className="w-full h-12 bg-[#F5A623] hover:bg-[#E09400] disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+                  className="w-full h-12 bg-primary hover:bg-primary-hover disabled:opacity-60 text-white font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
                 >
                   {mfLoading
                     ? <><Loader2 size={18} className="animate-spin" /> جاري المعالجة…</>
@@ -409,9 +409,9 @@ export default function WalletPage() {
             {/* ── Redirecting step ── */}
             {step === 'redirecting' && (
               <div className="p-8 flex flex-col items-center gap-4 text-center">
-                <Loader2 size={40} className="animate-spin text-[#F5A623]" />
-                <p className="text-base font-bold text-[#222222]">جاري التحويل لبوابة الدفع…</p>
-                <p className="text-sm text-[#717171]">ستتم إعادة توجيهك تلقائياً إلى صفحة الدفع الآمنة</p>
+                <Loader2 size={40} className="animate-spin text-primary" />
+                <p className="text-base font-bold text-ink">جاري التحويل لبوابة الدفع…</p>
+                <p className="text-sm text-muted">ستتم إعادة توجيهك تلقائياً إلى صفحة الدفع الآمنة</p>
               </div>
             )}
           </div>
@@ -421,7 +421,7 @@ export default function WalletPage() {
       {/* Toast */}
       {toast && (
         <div className="fixed bottom-6 start-4 end-4 z-50 flex justify-center pointer-events-none">
-          <div className="bg-[#222222] text-white text-sm font-medium px-5 py-3 rounded-xl shadow-lg">{toast}</div>
+          <div className="bg-ink text-white text-sm font-medium px-5 py-3 rounded-xl shadow-lg">{toast}</div>
         </div>
       )}
     </div>

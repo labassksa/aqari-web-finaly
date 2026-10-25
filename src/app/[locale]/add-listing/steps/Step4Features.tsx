@@ -25,8 +25,8 @@ export default function Step4Features() {
 
   return (
     <div className="px-4 py-6 space-y-4">
-      <h2 className="text-base font-bold text-[#222222]">{t('title')}</h2>
-      <p className="text-xs text-[#717171]">{t('subtitle')}</p>
+      <h2 className="text-base font-bold text-ink">{t('title')}</h2>
+      <p className="text-xs text-muted">{t('subtitle')}</p>
 
       <div className="grid grid-cols-2 gap-2">
         {visibleFeatures.map((key) => {
@@ -38,12 +38,12 @@ export default function Step4Features() {
               onClick={() => toggle(key)}
               className={`flex items-center gap-3 p-3.5 rounded-xl border-2 transition-all ${
                 checked
-                  ? 'border-[#F5A623] bg-orange-50'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? 'border-primary bg-primary-soft'
+                  : 'border-line bg-white hover:border-line'
               }`}
             >
               <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
-                checked ? 'bg-[#F5A623] border-[#F5A623]' : 'border-gray-300 bg-white'
+                checked ? 'bg-primary border-primary' : 'border-line bg-white'
               }`}>
                 {checked && (
                   <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -51,7 +51,7 @@ export default function Step4Features() {
                   </svg>
                 )}
               </div>
-              <span className={`text-sm font-medium ${checked ? 'text-[#F5A623]' : 'text-[#444444]'}`}>
+              <span className={`text-sm font-medium ${checked ? 'text-primary' : 'text-ink'}`}>
                 {t(`items.${key}`)}
               </span>
             </button>
@@ -60,10 +60,10 @@ export default function Step4Features() {
       </div>
 
       {visibleFeatures.length === 0 && (
-        <p className="text-sm text-[#717171] text-center py-8">{t('none')}</p>
+        <p className="text-sm text-muted text-center py-8">{t('none')}</p>
       )}
 
-      <p className="text-xs text-[#717171] text-center">{t('optional')}</p>
+      <p className="text-xs text-muted text-center">{t('optional')}</p>
     </div>
   );
 }

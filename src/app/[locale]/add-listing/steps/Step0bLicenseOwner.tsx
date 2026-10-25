@@ -24,8 +24,8 @@ export default function Step0bLicenseOwner() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [confirm, setConfirm] = useState<ConfirmModal>({ open: false });
 
-  const inp = 'w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#F5A623] transition-colors bg-white';
-  const lbl = 'block text-sm font-medium text-[#222222] mb-1.5';
+  const inp = 'w-full px-4 py-3 border border-line rounded-xl text-sm focus:outline-none focus:border-primary transition-colors bg-white';
+  const lbl = 'block text-sm font-medium text-ink mb-1.5';
 
   const handleIdTypeChange = (val: string) => {
     store.setField('propertyOwnerIdType', val);
@@ -73,8 +73,8 @@ export default function Step0bLicenseOwner() {
               onClick={() => store.setField('ownershipDocumentType', t.value)}
               className={`flex-1 py-2.5 rounded-xl border-2 text-xs font-medium transition-all ${
                 store.ownershipDocumentType === t.value
-                  ? 'border-[#F5A623] bg-orange-50 text-[#F5A623]'
-                  : 'border-gray-200 bg-white text-[#717171]'
+                  ? 'border-primary bg-primary-soft text-primary'
+                  : 'border-line bg-white text-muted'
               }`}
             >
               {t.label}
@@ -85,7 +85,7 @@ export default function Step0bLicenseOwner() {
 
       {/* Owner ID type */}
       <div>
-        <p className={lbl}>نوع هوية المالك <span className="text-red-500">*</span></p>
+        <p className={lbl}>نوع هوية المالك <span className="text-error">*</span></p>
         <div className="flex gap-2">
           {ID_TYPES.map((t) => (
             <button
@@ -93,8 +93,8 @@ export default function Step0bLicenseOwner() {
               onClick={() => handleIdTypeChange(t.value)}
               className={`flex-1 py-2.5 rounded-xl border-2 text-[11px] font-medium transition-all leading-tight ${
                 store.propertyOwnerIdType === t.value
-                  ? 'border-[#F5A623] bg-orange-50 text-[#F5A623]'
-                  : 'border-gray-200 bg-white text-[#717171]'
+                  ? 'border-primary bg-primary-soft text-primary'
+                  : 'border-line bg-white text-muted'
               }`}
             >
               {t.label}
@@ -107,7 +107,7 @@ export default function Step0bLicenseOwner() {
       {store.propertyOwnerIdType === 'national_id' && (
         <>
           <div>
-            <label className={lbl}>رقم الهوية الوطنية للمالك <span className="text-red-500">*</span></label>
+            <label className={lbl}>رقم الهوية الوطنية للمالك <span className="text-error">*</span></label>
             <input
               value={store.ownerNationalIdNumber ?? ''}
               onChange={(e) => store.setField('ownerNationalIdNumber', e.target.value)}
@@ -115,10 +115,10 @@ export default function Step0bLicenseOwner() {
               placeholder="10 أرقام"
               dir="ltr"
             />
-            {errors.ownerNationalIdNumber && <p className="text-red-500 text-xs mt-1">{errors.ownerNationalIdNumber}</p>}
+            {errors.ownerNationalIdNumber && <p className="text-error text-xs mt-1">{errors.ownerNationalIdNumber}</p>}
           </div>
           <div>
-            <label className={lbl}>تاريخ ميلاد المالك <span className="text-red-500">*</span></label>
+            <label className={lbl}>تاريخ ميلاد المالك <span className="text-error">*</span></label>
             <div className="flex gap-3">
               <input
                 type="date"
@@ -132,12 +132,12 @@ export default function Step0bLicenseOwner() {
                   type="checkbox"
                   checked={store.isHijriCalendar}
                   onChange={(e) => store.setField('isHijriCalendar', e.target.checked)}
-                  className="accent-[#F5A623] w-4 h-4"
+                  className="accent-primary w-4 h-4"
                 />
-                <span className="text-sm text-[#717171]">هجري</span>
+                <span className="text-sm text-muted">هجري</span>
               </label>
             </div>
-            {errors.propertyOwnerBirthDate && <p className="text-red-500 text-xs mt-1">{errors.propertyOwnerBirthDate}</p>}
+            {errors.propertyOwnerBirthDate && <p className="text-error text-xs mt-1">{errors.propertyOwnerBirthDate}</p>}
           </div>
           <div>
             <label className={lbl}>رقم جوال المالك</label>
@@ -154,46 +154,46 @@ export default function Step0bLicenseOwner() {
 
       {store.propertyOwnerIdType === 'commercial_registration' && (
         <div>
-          <label className={lbl}>رقم السجل التجاري للمنشأة <span className="text-red-500">*</span></label>
+          <label className={lbl}>رقم السجل التجاري للمنشأة <span className="text-error">*</span></label>
           <input
             value={store.ownerCommercialRegNumber ?? ''}
             onChange={(e) => store.setField('ownerCommercialRegNumber', e.target.value)}
             className={inp}
             dir="ltr"
           />
-          {errors.ownerCommercialRegNumber && <p className="text-red-500 text-xs mt-1">{errors.ownerCommercialRegNumber}</p>}
+          {errors.ownerCommercialRegNumber && <p className="text-error text-xs mt-1">{errors.ownerCommercialRegNumber}</p>}
         </div>
       )}
 
       {store.propertyOwnerIdType === 'unified_700' && (
         <div>
-          <label className={lbl}>الرقم الموحد 700 للمنشأة <span className="text-red-500">*</span></label>
+          <label className={lbl}>الرقم الموحد 700 للمنشأة <span className="text-error">*</span></label>
           <input
             value={store.ownerUnifiedNumber ?? ''}
             onChange={(e) => store.setField('ownerUnifiedNumber', e.target.value)}
             className={inp}
             dir="ltr"
           />
-          {errors.ownerUnifiedNumber && <p className="text-red-500 text-xs mt-1">{errors.ownerUnifiedNumber}</p>}
+          {errors.ownerUnifiedNumber && <p className="text-error text-xs mt-1">{errors.ownerUnifiedNumber}</p>}
         </div>
       )}
 
       {/* Deed number (always) */}
       <div>
-        <label className={lbl}>رقم الصك أو رقم العقار أو رقم السجل العيني <span className="text-red-500">*</span></label>
+        <label className={lbl}>رقم الصك أو رقم العقار أو رقم السجل العيني <span className="text-error">*</span></label>
         <input
           value={store.ownershipDocumentNumber ?? ''}
           onChange={(e) => store.setField('ownershipDocumentNumber', e.target.value)}
           className={inp}
           dir="ltr"
         />
-        {errors.ownershipDocumentNumber && <p className="text-red-500 text-xs mt-1">{errors.ownershipDocumentNumber}</p>}
+        {errors.ownershipDocumentNumber && <p className="text-error text-xs mt-1">{errors.ownershipDocumentNumber}</p>}
       </div>
 
       {/* Multiple owners */}
       <div>
         <label className={lbl}>رقم هوية أحد الملاك</label>
-        <p className="text-xs text-[#717171] mb-1.5">في حال وجود ملاك متعددين</p>
+        <p className="text-xs text-muted mb-1.5">في حال وجود ملاك متعددين</p>
         <input
           value={store.oneOfOwnersNationalId ?? ''}
           onChange={(e) => store.setField('oneOfOwnersNationalId', e.target.value)}
@@ -205,30 +205,30 @@ export default function Step0bLicenseOwner() {
 
       {/* Agent fields */}
       {store.advertiserType === 'agent' && (
-        <div className="border border-orange-200 bg-orange-50 rounded-2xl p-4 space-y-4">
-          <p className="text-sm font-semibold text-[#F5A623]">بيانات الوكيل</p>
+        <div className="border border-secondary/60 bg-primary-soft rounded-2xl p-4 space-y-4">
+          <p className="text-sm font-semibold text-primary">بيانات الوكيل</p>
           <div>
-            <label className={lbl}>رقم الوكالة الرسمية <span className="text-red-500">*</span></label>
+            <label className={lbl}>رقم الوكالة الرسمية <span className="text-error">*</span></label>
             <input
               value={store.powerOfAttorneyNumber ?? ''}
               onChange={(e) => store.setField('powerOfAttorneyNumber', e.target.value)}
               className={inp}
               dir="ltr"
             />
-            {errors.powerOfAttorneyNumber && <p className="text-red-500 text-xs mt-1">{errors.powerOfAttorneyNumber}</p>}
+            {errors.powerOfAttorneyNumber && <p className="text-error text-xs mt-1">{errors.powerOfAttorneyNumber}</p>}
           </div>
           <div>
-            <label className={lbl}>رقم الهوية الوطنية للوكيل <span className="text-red-500">*</span></label>
+            <label className={lbl}>رقم الهوية الوطنية للوكيل <span className="text-error">*</span></label>
             <input
               value={store.agentNationalIdNumber ?? ''}
               onChange={(e) => store.setField('agentNationalIdNumber', e.target.value)}
               className={inp}
               dir="ltr"
             />
-            {errors.agentNationalIdNumber && <p className="text-red-500 text-xs mt-1">{errors.agentNationalIdNumber}</p>}
+            {errors.agentNationalIdNumber && <p className="text-error text-xs mt-1">{errors.agentNationalIdNumber}</p>}
           </div>
           <div>
-            <label className={lbl}>تاريخ ميلاد الوكيل <span className="text-red-500">*</span></label>
+            <label className={lbl}>تاريخ ميلاد الوكيل <span className="text-error">*</span></label>
             <input
               type="date"
               value={store.agentBirthDate ?? ''}
@@ -236,7 +236,7 @@ export default function Step0bLicenseOwner() {
               className={inp}
               dir="ltr"
             />
-            {errors.agentBirthDate && <p className="text-red-500 text-xs mt-1">{errors.agentBirthDate}</p>}
+            {errors.agentBirthDate && <p className="text-error text-xs mt-1">{errors.agentBirthDate}</p>}
           </div>
           <div>
             <label className={lbl}>رقم جوال الوكيل</label>
@@ -252,17 +252,17 @@ export default function Step0bLicenseOwner() {
       )}
 
       {/* Bottom buttons (self-managed) */}
-      <div className="fixed bottom-0 start-0 end-0 z-20 bg-white border-t border-gray-100 px-4 py-3 shadow-lg">
+      <div className="fixed bottom-0 start-0 end-0 z-20 bg-white border-t border-line px-4 py-3 shadow-lg">
         <div className="max-w-2xl mx-auto space-y-2">
           <button
             onClick={handleContinue}
-            className="w-full h-12 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold rounded-xl text-sm transition-colors"
+            className="w-full h-12 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-sm transition-colors"
           >
             استمرار
           </button>
           <button
             onClick={() => setConfirm({ open: true })}
-            className="w-full h-11 text-[#717171] text-sm font-medium hover:text-[#222222] transition-colors"
+            className="w-full h-11 text-muted text-sm font-medium hover:text-ink transition-colors"
           >
             إدخال البيانات لاحقاً
           </button>
@@ -273,21 +273,21 @@ export default function Step0bLicenseOwner() {
       {confirm.open && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
-            <h3 className="text-base font-bold text-[#222222] mb-2">تخطي بيانات الترخيص؟</h3>
-            <p className="text-sm text-[#717171] mb-6">
+            <h3 className="text-base font-bold text-ink mb-2">تخطي بيانات الترخيص؟</h3>
+            <p className="text-sm text-muted mb-6">
               لن يتم نشر إعلانك حتى تكتمل بيانات الترخيص.
               سيتم حفظ إعلانك كمسودة.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirm({ open: false })}
-                className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-[#717171]"
+                className="flex-1 py-2.5 border border-line rounded-xl text-sm font-medium text-muted"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleSkipConfirm}
-                className="flex-1 py-2.5 bg-[#F5A623] rounded-xl text-sm font-bold text-white"
+                className="flex-1 py-2.5 bg-primary rounded-xl text-sm font-bold text-white"
               >
                 تخطي
               </button>

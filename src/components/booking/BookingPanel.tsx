@@ -81,10 +81,10 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
 
   if (isSuccess) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 text-center" dir="rtl">
-        <div className="text-5xl text-green-500 mb-3">✅</div>
-        <h3 className="text-lg font-bold text-[#222222] mb-2">تم إرسال طلب الحجز</h3>
-        <p className="text-sm text-gray-500 leading-relaxed mb-6">
+      <div className="bg-white rounded-2xl shadow-lg border border-line p-6 text-center" dir="rtl">
+        <div className="text-5xl text-success mb-3">✅</div>
+        <h3 className="text-lg font-bold text-ink mb-2">تم إرسال طلب الحجز</h3>
+        <p className="text-sm text-muted leading-relaxed mb-6">
           سيتم إشعارك عند تأكيد المضيف.
           <br />
           عند التأكيد سيتم حجز مبلغ الحجز
@@ -94,13 +94,13 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
         <div className="flex flex-col gap-3">
           <button
             onClick={() => router.push("/account/bookings")}
-            className="w-full h-12 rounded-xl border border-[#F5A623] text-[#F5A623] font-bold hover:bg-orange-50 transition-colors"
+            className="w-full h-12 rounded-xl border border-primary text-primary font-bold hover:bg-primary-soft transition-colors"
           >
             عرض حجوزاتي
           </button>
           <button
             onClick={handleMessageHost}
-            className="w-full h-12 rounded-xl bg-[#F5A623] text-white font-bold hover:bg-[#E09400] transition-colors"
+            className="w-full h-12 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover transition-colors"
           >
             محادثة المضيف
           </button>
@@ -113,10 +113,10 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
     <>
       {/* Price header */}
       <div className="flex items-baseline gap-1 mb-4">
-        <span className="text-2xl font-bold text-[#222222]">
+        <span className="text-2xl font-bold text-ink">
           {pricePerNight.toLocaleString("ar-SA")} ريال
         </span>
-        <span className="text-sm text-gray-400">/ ليلة</span>
+        <span className="text-sm text-hint">/ ليلة</span>
       </div>
 
       {/* Calendar */}
@@ -134,23 +134,23 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
 
       {/* Booking summary */}
       {checkInDate && checkOutDate && (
-        <div className="bg-gray-50 rounded-xl p-4 mt-4 space-y-2">
+        <div className="bg-surface rounded-xl p-4 mt-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">تسجيل الوصول</span>
-            <span className="text-[#222222] font-medium">
+            <span className="text-muted">تسجيل الوصول</span>
+            <span className="text-ink font-medium">
               {format(new Date(checkInDate), "dd MMM yyyy", { locale: arSA })}
             </span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-500">تسجيل المغادرة</span>
-            <span className="text-[#222222] font-medium">
+            <span className="text-muted">تسجيل المغادرة</span>
+            <span className="text-ink font-medium">
               {format(new Date(checkOutDate), "dd MMM yyyy", { locale: arSA })}
             </span>
           </div>
-          <hr className="border-gray-200" />
+          <hr className="border-line" />
           <div className="flex justify-between text-sm font-bold">
-            <span className="text-[#222222]">المجموع</span>
-            <span className="text-[#222222]">{totalPrice.toLocaleString()} ريال</span>
+            <span className="text-ink">المجموع</span>
+            <span className="text-ink">{totalPrice.toLocaleString()} ريال</span>
           </div>
         </div>
       )}
@@ -158,7 +158,7 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
       <button
         onClick={handleBookClick}
         disabled={!checkInDate || !checkOutDate || isSubmitting}
-        className="w-full h-12 rounded-xl bg-[#F5A623] text-white font-bold mt-4 hover:bg-[#E09400] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center"
+        className="w-full h-12 rounded-xl bg-primary text-white font-bold mt-4 hover:bg-primary-hover transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center"
       >
         {isSubmitting ? (
           <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
@@ -167,7 +167,7 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
         )}
       </button>
 
-      <p className="text-xs text-gray-400 text-center mt-3 leading-relaxed">
+      <p className="text-xs text-hint text-center mt-3 leading-relaxed">
         لا يتم الدفع الآن — سيتم حجز المبلغ
         <br />
         من محفظتك عند تأكيد المضيف
@@ -178,7 +178,7 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
   return (
     <>
       {isDesktop ? (
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6" dir="rtl">
+        <div className="bg-white rounded-2xl shadow-lg border border-line p-6" dir="rtl">
           {panelBody}
         </div>
       ) : (
@@ -186,13 +186,13 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
           {/* Mobile sticky bar — tap anywhere to open the full booking sheet */}
           <button
             onClick={() => setShowSheet(true)}
-            className="fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-100 shadow-lg px-4 py-3 flex items-center justify-between"
+            className="fixed bottom-0 inset-x-0 z-40 bg-white border-t border-line shadow-lg px-4 py-3 flex items-center justify-between"
             dir="ltr"
           >
-            <span className="text-sm font-bold text-[#222222]" dir="rtl">
-              {pricePerNight.toLocaleString("ar-SA")} ريال <span className="font-normal text-gray-400">/ ليلة</span>
+            <span className="text-sm font-bold text-ink" dir="rtl">
+              {pricePerNight.toLocaleString("ar-SA")} ريال <span className="font-normal text-hint">/ ليلة</span>
             </span>
-            <span className="bg-[#F5A623] text-white font-bold px-6 py-2.5 rounded-xl text-sm">
+            <span className="bg-primary text-white font-bold px-6 py-2.5 rounded-xl text-sm">
               احجز الآن
             </span>
           </button>
@@ -208,7 +208,7 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
                 dir="rtl"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="w-10 h-1.5 bg-gray-200 rounded-full mx-auto mb-4" />
+                <div className="w-10 h-1.5 bg-line rounded-full mx-auto mb-4" />
                 {panelBody}
               </div>
             </div>
@@ -223,66 +223,66 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
             className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl max-h-[90vh] overflow-y-auto"
             dir="rtl"
           >
-            <h3 className="text-lg font-bold text-[#222222] mb-4">تأكيد الحجز</h3>
+            <h3 className="text-lg font-bold text-ink mb-4">تأكيد الحجز</h3>
 
             <div className="space-y-1.5 text-sm mb-4">
-              <p className="font-bold text-[#222222]">{listing.title}</p>
-              <div className="flex justify-between text-gray-600">
+              <p className="font-bold text-ink">{listing.title}</p>
+              <div className="flex justify-between text-muted">
                 <span>تسجيل الوصول</span>
                 <span>
                   {checkInDate && format(new Date(checkInDate), "dd MMM yyyy", { locale: arSA })}
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-muted">
                 <span>تسجيل المغادرة</span>
                 <span>
                   {checkOutDate && format(new Date(checkOutDate), "dd MMM yyyy", { locale: arSA })}
                 </span>
               </div>
-              <div className="flex justify-between text-gray-600">
+              <div className="flex justify-between text-muted">
                 <span>عدد الليالي</span>
                 <span>{nights}</span>
               </div>
-              <div className="flex justify-between font-bold text-[#222222]">
+              <div className="flex justify-between font-bold text-ink">
                 <span>المجموع</span>
                 <span>{totalPrice.toLocaleString()} ريال</span>
               </div>
             </div>
 
             <div className="mb-3">
-              <label className="block text-sm font-medium text-gray-600 mb-1">عدد الضيوف</label>
+              <label className="block text-sm font-medium text-muted mb-1">عدد الضيوف</label>
               <input
                 type="number"
                 min={1}
                 max={listing.maxGuests ?? undefined}
                 value={guestCount ?? ""}
                 onChange={(e) => setGuestCount(e.target.value ? Number(e.target.value) : undefined)}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#F5A623] outline-none"
+                className="w-full border border-line rounded-xl px-3 py-2 text-sm focus:border-primary outline-none"
               />
               {listing.maxGuests && (
-                <p className="text-xs text-gray-400 mt-1">الحد الأقصى {listing.maxGuests} ضيف</p>
+                <p className="text-xs text-hint mt-1">الحد الأقصى {listing.maxGuests} ضيف</p>
               )}
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600 mb-1">ملاحظات للمضيف</label>
+              <label className="block text-sm font-medium text-muted mb-1">ملاحظات للمضيف</label>
               <textarea
                 maxLength={500}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="أي طلبات خاصة..."
                 rows={3}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-[#F5A623] outline-none resize-none"
+                className="w-full border border-line rounded-xl px-3 py-2 text-sm focus:border-primary outline-none resize-none"
               />
             </div>
 
-            <div className="bg-[#FFF8EC] border border-[#F5A623] rounded-xl p-3 text-xs text-[#222222] leading-relaxed">
+            <div className="bg-primary-soft border border-primary rounded-xl p-3 text-xs text-ink leading-relaxed">
               سيتم حجز مبلغ الحجز من محفظتك
               <br />
               فقط بعد تأكيد المضيف للطلب
             </div>
 
-            {errorMessage && <p className="text-sm text-red-500 mt-2">{errorMessage}</p>}
+            {errorMessage && <p className="text-sm text-error mt-2">{errorMessage}</p>}
 
             <div className="flex gap-3 mt-4">
               <button
@@ -290,14 +290,14 @@ export default function BookingPanel({ listing, onBookingSuccess }: Props) {
                   setShowModal(false);
                   setErrorMessage(null);
                 }}
-                className="flex-1 h-11 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors"
+                className="flex-1 h-11 rounded-xl border border-line text-muted font-medium hover:bg-surface transition-colors"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleConfirm}
                 disabled={isSubmitting}
-                className="flex-1 h-11 rounded-xl bg-[#F5A623] text-white font-bold hover:bg-[#E09400] transition-colors disabled:opacity-60 flex items-center justify-center"
+                className="flex-1 h-11 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover transition-colors disabled:opacity-60 flex items-center justify-center"
               >
                 {isSubmitting ? (
                   <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />

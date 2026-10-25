@@ -17,12 +17,12 @@ const STATUS_TABS = [
 ];
 
 const STATUS_CONFIG: Record<string, { label: string; className: string }> = {
-  published:   { label: 'منشور',         className: 'bg-green-100 text-green-700' },
+  published:   { label: 'منشور',         className: 'bg-success-soft text-success' },
   pending:     { label: 'قيد المراجعة', className: 'bg-yellow-100 text-yellow-700' },
-  paused_temp: { label: 'موقوف مؤقتاً', className: 'bg-orange-100 text-orange-700' },
-  paused:      { label: 'موقوف',         className: 'bg-orange-100 text-orange-700' },
-  draft:       { label: 'مسودة',         className: 'bg-gray-100 text-gray-600' },
-  expired:     { label: 'منتهي',         className: 'bg-red-100 text-red-600' },
+  paused_temp: { label: 'موقوف مؤقتاً', className: 'bg-primary-soft text-accent-text' },
+  paused:      { label: 'موقوف',         className: 'bg-primary-soft text-accent-text' },
+  draft:       { label: 'مسودة',         className: 'bg-surface text-muted' },
+  expired:     { label: 'منتهي',         className: 'bg-error-soft text-error' },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,10 +109,10 @@ export default function MyAdsPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-black text-[#222222]">إعلاناتي</h1>
+        <h1 className="text-2xl font-black text-ink">إعلاناتي</h1>
         <Link
           href="/add-listing"
-          className="flex items-center gap-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-colors"
+          className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white font-bold px-4 py-2.5 rounded-xl text-sm transition-colors"
         >
           <Plus size={16} /> إضافة إعلان جديد
         </Link>
@@ -126,8 +126,8 @@ export default function MyAdsPage() {
             onClick={() => setActiveTab(t.value)}
             className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all ${
               activeTab === t.value
-                ? 'bg-[#F5A623] border-[#F5A623] text-white'
-                : 'border-gray-200 text-[#717171] hover:border-gray-300 bg-white'
+                ? 'bg-primary border-primary text-white'
+                : 'border-line text-muted hover:border-line bg-white'
             }`}
           >
             {t.label}
@@ -137,7 +137,7 @@ export default function MyAdsPage() {
 
       {/* Error */}
       {error && (
-        <div className="flex items-center gap-2 text-red-500 text-sm bg-red-50 rounded-xl px-4 py-3 mb-4">
+        <div className="flex items-center gap-2 text-error text-sm bg-error-soft rounded-xl px-4 py-3 mb-4">
           <AlertCircle size={16} /> {error}
         </div>
       )}
@@ -147,11 +147,11 @@ export default function MyAdsPage() {
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="bg-white rounded-2xl p-4 animate-pulse flex gap-4">
-              <div className="w-[120px] h-[80px] rounded-lg bg-gray-200 shrink-0" />
+              <div className="w-[120px] h-[80px] rounded-lg bg-line shrink-0" />
               <div className="flex-1 space-y-2">
-                <div className="h-3 bg-gray-200 rounded w-24" />
-                <div className="h-4 bg-gray-200 rounded w-3/4" />
-                <div className="h-3 bg-gray-200 rounded w-1/2" />
+                <div className="h-3 bg-line rounded w-24" />
+                <div className="h-4 bg-line rounded w-3/4" />
+                <div className="h-3 bg-line rounded w-1/2" />
               </div>
             </div>
           ))}
@@ -162,13 +162,13 @@ export default function MyAdsPage() {
       {!loading && !error && listings.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
           <span className="text-6xl">📋</span>
-          <h3 className="text-xl font-bold text-[#222222]">لا توجد إعلانات</h3>
-          <p className="text-[#717171] text-sm">
+          <h3 className="text-xl font-bold text-ink">لا توجد إعلانات</h3>
+          <p className="text-muted text-sm">
             {activeTab ? 'لا توجد إعلانات بهذه الحالة' : 'لم تضف أي إعلان بعد'}
           </p>
           <Link
             href="/add-listing"
-            className="mt-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
+            className="mt-2 bg-primary hover:bg-primary-hover text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
           >
             أضف إعلانك الأول
           </Link>
@@ -179,7 +179,7 @@ export default function MyAdsPage() {
       {!loading && !error && listings.length > 0 && (
         <div className="space-y-3" ref={menuRef}>
           {listings.map((listing: MyListing) => {
-            const statusCfg = STATUS_CONFIG[listing.status] ?? { label: listing.status, className: 'bg-gray-100 text-gray-600' };
+            const statusCfg = STATUS_CONFIG[listing.status] ?? { label: listing.status, className: 'bg-surface text-muted' };
             const cover = coverOf(listing);
             const isDraft = listing.status === 'draft';
 
@@ -192,29 +192,29 @@ export default function MyAdsPage() {
               >
                 <div className="flex items-center gap-4 p-4">
                   {/* Cover photo */}
-                  <div className="relative w-[120px] h-[80px] rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                  <div className="relative w-[120px] h-[80px] rounded-lg overflow-hidden bg-surface shrink-0">
                     {cover ? (
                       <Image src={cover} alt={listing.title ?? ''} fill className="object-cover" unoptimized />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-2xl text-gray-300">🏠</div>
+                      <div className="w-full h-full flex items-center justify-center text-2xl text-hint">🏠</div>
                     )}
                   </div>
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     {listing.adNumber && (
-                      <p className="text-[11px] text-gray-400 mb-0.5">{formatAdNumber(listing.adNumber)}</p>
+                      <p className="text-[11px] text-hint mb-0.5">{formatAdNumber(listing.adNumber)}</p>
                     )}
-                    <p className="font-bold text-[#222222] text-sm leading-snug line-clamp-1">{listing.title}</p>
-                    <p className="text-xs text-[#717171] mt-0.5">
+                    <p className="font-bold text-ink text-sm leading-snug line-clamp-1">{listing.title}</p>
+                    <p className="text-xs text-muted mt-0.5">
                       {listing.city}{listing.category ? ` · ${listing.category?.nameAr ?? listing.category}` : ''}
                     </p>
                     <div className="flex items-center gap-3 mt-1.5">
-                      <span className="text-sm font-black text-[#F5A623]">
+                      <span className="text-sm font-black text-primary">
                         {formatPrice(String(listing.totalPrice ?? listing.price ?? 0))}
                       </span>
                       {listing.area && (
-                        <span className="text-xs text-[#717171]">
+                        <span className="text-xs text-muted">
                           {parseFloat(String(listing.area))} م²
                         </span>
                       )}
@@ -230,18 +230,18 @@ export default function MyAdsPage() {
                     <div className="relative">
                       <button
                         onClick={() => setOpenMenu(openMenu === listing.id ? null : listing.id)}
-                        className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 transition-colors"
+                        className="p-1.5 rounded-lg hover:bg-surface text-hint transition-colors"
                       >
                         <MoreVertical size={16} />
                       </button>
 
                       {openMenu === listing.id && (
-                        <div className="absolute end-0 top-8 w-44 bg-white border border-gray-100 rounded-xl shadow-lg z-10 py-1" dir="rtl">
+                        <div className="absolute end-0 top-8 w-44 bg-white border border-line rounded-xl shadow-lg z-10 py-1" dir="rtl">
                           <a
                             href={`/listings/${listing.id}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#222222] hover:bg-gray-50"
+                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-ink hover:bg-surface"
                             onClick={() => setOpenMenu(null)}
                           >
                             <ExternalLink size={14} /> عرض الإعلان
@@ -249,14 +249,14 @@ export default function MyAdsPage() {
                           {listing.status === 'published' && (
                             <button
                               onClick={() => handlePause(listing.id)}
-                              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-orange-600 hover:bg-orange-50"
+                              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-accent-text hover:bg-primary-soft"
                             >
                               <PauseCircle size={14} /> إيقاف مؤقت
                             </button>
                           )}
                           <button
                             onClick={() => handleDelete(listing.id)}
-                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-error hover:bg-error-soft"
                           >
                             <Trash2 size={14} /> حذف
                           </button>
@@ -268,14 +268,14 @@ export default function MyAdsPage() {
 
                 {/* Draft warning banner */}
                 {isDraft && (
-                  <div className="border-t border-orange-100 bg-orange-50 px-4 py-3 flex items-center justify-between gap-3">
-                    <p className="text-xs text-orange-700 flex items-center gap-1.5">
+                  <div className="border-t border-secondary/40 bg-primary-soft px-4 py-3 flex items-center justify-between gap-3">
+                    <p className="text-xs text-accent-text flex items-center gap-1.5">
                       <span>⚠️</span>
                       أكمل بيانات الترخيص لنشر هذا الإعلان
                     </p>
                     <Link
                       href={`/account/complete-license?listingId=${listing.id}`}
-                      className="shrink-0 text-xs font-bold text-[#F5A623] border border-[#F5A623] px-3 py-1.5 rounded-lg hover:bg-orange-50 transition-colors"
+                      className="shrink-0 text-xs font-bold text-primary border border-primary px-3 py-1.5 rounded-lg hover:bg-primary-soft transition-colors"
                     >
                       إكمال الترخيص
                     </Link>
@@ -291,18 +291,18 @@ export default function MyAdsPage() {
       {confirm.open && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl" dir="rtl">
-            <h3 className="text-lg font-bold text-[#222222] mb-2">{confirm.title}</h3>
-            <p className="text-sm text-[#717171] mb-6">{confirm.message}</p>
+            <h3 className="text-lg font-bold text-ink mb-2">{confirm.title}</h3>
+            <p className="text-sm text-muted mb-6">{confirm.message}</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirm((c) => ({ ...c, open: false }))}
-                className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-medium text-[#717171] hover:bg-gray-50 transition-colors"
+                className="flex-1 py-2.5 border border-line rounded-xl text-sm font-medium text-muted hover:bg-surface transition-colors"
               >
                 إلغاء
               </button>
               <button
                 onClick={confirm.onConfirm}
-                className="flex-1 py-2.5 bg-red-500 hover:bg-red-600 rounded-xl text-sm font-bold text-white transition-colors"
+                className="flex-1 py-2.5 bg-error hover:bg-error rounded-xl text-sm font-bold text-white transition-colors"
               >
                 تأكيد
               </button>

@@ -23,16 +23,16 @@ export default async function ComplaintsPage() {
     <PageShell>
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24">
         <header className="mb-10">
-          <h1 className="mb-3 text-4xl font-black text-[#222222]">
+          <h1 className="mb-3 text-4xl font-black text-ink">
             {t("title")}
           </h1>
-          <p className="text-base leading-relaxed text-[#717171]">
+          <p className="text-base leading-relaxed text-muted">
             {t("subtitle")}
           </p>
-          <div className="mt-4 h-1 w-16 rounded-full bg-[#F5A623]" />
+          <div className="mt-4 h-1 w-16 rounded-full bg-primary" />
         </header>
 
-        <div className="rounded-2xl border border-gray-100 bg-[#F9F9F9] p-6 shadow-sm sm:p-8">
+        <div className="rounded-2xl border border-line bg-surface p-6 shadow-sm sm:p-8">
           <ComplaintForm />
         </div>
       </div>

@@ -65,8 +65,8 @@ export default function PhotoGallery({ photos, title }: Props) {
 
   if (count === 0) {
     return (
-      <div className="w-full aspect-[16/9] sm:aspect-[2/1] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-        <Building2 size={64} className="text-gray-300" strokeWidth={1} />
+      <div className="w-full aspect-[16/9] sm:aspect-[2/1] bg-gradient-to-br from-surface to-line flex items-center justify-center">
+        <Building2 size={64} className="text-hint" strokeWidth={1} />
       </div>
     );
   }
@@ -75,7 +75,7 @@ export default function PhotoGallery({ photos, title }: Props) {
     <>
       {/* ── Inline swipeable gallery ───────────────────────────────────── */}
       <div
-        className="relative w-full aspect-[16/9] sm:aspect-[2/1] bg-gray-100 overflow-hidden select-none cursor-pointer group"
+        className="relative w-full aspect-[16/9] sm:aspect-[2/1] bg-surface overflow-hidden select-none cursor-pointer group"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         onClick={handleMainClick}

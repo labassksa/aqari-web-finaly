@@ -163,26 +163,26 @@ export default function AvailabilityCalendar({
   const leadingBlanks = getDay(new Date(currentYear, currentMonth - 1, 1));
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+    <div className="bg-white rounded-2xl border border-line shadow-sm p-4">
       {/* Header */}
       <div className="flex items-center justify-between mb-4" dir="ltr">
         <button
           type="button"
           onClick={goToPrevMonth}
           disabled={isAtCurrentMonth}
-          className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-lg text-muted hover:bg-surface disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           aria-label="الشهر السابق"
         >
           <ChevronLeft size={18} />
         </button>
-        <span className="text-sm font-bold text-[#222222]" dir="rtl">
+        <span className="text-sm font-bold text-ink" dir="rtl">
           {MONTH_NAMES[currentMonth - 1]} {currentYear}
         </span>
         <button
           type="button"
           onClick={goToNextMonth}
           disabled={isAtMaxMonth}
-          className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="p-2 rounded-lg text-muted hover:bg-surface disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           aria-label="الشهر التالي"
         >
           <ChevronRight size={18} />
@@ -192,7 +192,7 @@ export default function AvailabilityCalendar({
       {isLoading ? (
         <div className="grid grid-cols-7 gap-1">
           {Array.from({ length: 35 }).map((_, i) => (
-            <div key={i} className="aspect-square rounded-full bg-gray-100 animate-pulse" />
+            <div key={i} className="aspect-square rounded-full bg-surface animate-pulse" />
           ))}
         </div>
       ) : (
@@ -200,7 +200,7 @@ export default function AvailabilityCalendar({
           {/* Day headers */}
           <div className="grid grid-cols-7 gap-1 mb-1" dir="rtl">
             {DAY_HEADERS.map((d, i) => (
-              <div key={i} className="text-center text-xs font-semibold text-gray-400 py-1">
+              <div key={i} className="text-center text-xs font-semibold text-hint py-1">
                 {d}
               </div>
             ))}
@@ -230,20 +230,20 @@ export default function AvailabilityCalendar({
               let stateClasses = "";
               let clickable = false;
               if (isPast) {
-                stateClasses = "text-gray-300 cursor-not-allowed";
+                stateClasses = "text-hint cursor-not-allowed";
               } else if (isBlocked) {
-                stateClasses = "bg-red-100 text-red-400 line-through cursor-not-allowed";
+                stateClasses = "bg-error-soft text-error line-through cursor-not-allowed";
               } else if (isCheckIn) {
-                stateClasses = "bg-[#F5A623] text-white rounded-l-full";
+                stateClasses = "bg-primary text-white rounded-l-full";
                 clickable = true;
               } else if (isCheckOut) {
-                stateClasses = "bg-[#F5A623] text-white rounded-r-full";
+                stateClasses = "bg-primary text-white rounded-r-full";
                 clickable = true;
               } else if (isInRange) {
-                stateClasses = "bg-orange-100 cursor-pointer";
+                stateClasses = "bg-primary-soft cursor-pointer";
                 clickable = true;
               } else {
-                stateClasses = "bg-white hover:bg-orange-50 cursor-pointer";
+                stateClasses = "bg-white hover:bg-primary-soft cursor-pointer";
                 clickable = true;
               }
 
@@ -266,22 +266,22 @@ export default function AvailabilityCalendar({
       )}
 
       {errorMessage && (
-        <p className="mt-3 text-sm text-red-500 font-medium">{errorMessage}</p>
+        <p className="mt-3 text-sm text-error font-medium">{errorMessage}</p>
       )}
 
       <div className="mt-3">
         {checkInDate && checkOutDate ? (
-          <p className="text-[#F5A623] font-bold">
+          <p className="text-primary font-bold">
             {`${nights} ليالٍ · ${totalPrice.toLocaleString("ar-SA")} ريال`}
           </p>
         ) : checkInDate ? (
-          <p className="text-gray-500">اختر تاريخ المغادرة</p>
+          <p className="text-muted">اختر تاريخ المغادرة</p>
         ) : (
-          <p className="text-gray-500">اختر تاريخ الوصول</p>
+          <p className="text-muted">اختر تاريخ الوصول</p>
         )}
       </div>
 
-      <div className="flex items-center gap-4 mt-4 text-xs text-gray-500">
+      <div className="flex items-center gap-4 mt-4 text-xs text-muted">
         <span>⬜ متاح</span>
         <span>🟥 محجوز</span>
         <span>🟧 محدد</span>

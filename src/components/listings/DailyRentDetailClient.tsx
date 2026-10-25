@@ -42,8 +42,8 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 const TYPE_STYLE: Record<string, string> = {
-  sale: "bg-blue-50 text-blue-700 border border-blue-100",
-  rent_long: "bg-emerald-50 text-emerald-700 border border-emerald-100",
+  sale: "bg-info/10 text-info border border-info/20",
+  rent_long: "bg-success-soft text-success border border-success/20",
   rent_short: "bg-violet-50 text-violet-700 border border-violet-100",
 };
 
@@ -83,7 +83,7 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
     : [];
   const ownerRole = listing.__owner__?.role;
   const stats = listing.stats;
-  const typeStyle = TYPE_STYLE[listing.listingType] ?? "bg-gray-50 text-gray-600 border border-gray-100";
+  const typeStyle = TYPE_STYLE[listing.listingType] ?? "bg-surface text-muted border border-line";
   const bookingListing = {
     ...listing,
     totalPrice: listing.price,
@@ -95,12 +95,12 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
   if (!listing.id) {
     return (
       <main className="flex-1 flex flex-col items-center justify-center py-32 px-4 text-center">
-        <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-5">
-          <AlertCircle size={28} className="text-red-400" />
+        <div className="w-16 h-16 bg-error-soft rounded-2xl flex items-center justify-center mb-5">
+          <AlertCircle size={28} className="text-error" />
         </div>
-        <h1 className="text-xl font-bold text-[#222222] mb-3">تعذّر تحميل العقار</h1>
-        <p className="text-[#717171] mb-8 max-w-sm text-sm">يرجى العودة للقائمة والمحاولة مجدداً.</p>
-        <Link href="/daily-rents" className="bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-8 py-3 rounded-2xl transition-colors">
+        <h1 className="text-xl font-bold text-ink mb-3">تعذّر تحميل العقار</h1>
+        <p className="text-muted mb-8 max-w-sm text-sm">يرجى العودة للقائمة والمحاولة مجدداً.</p>
+        <Link href="/daily-rents" className="bg-primary hover:bg-primary-hover text-white font-bold px-8 py-3 rounded-2xl transition-colors">
           تصفح الإيجار اليومي
         </Link>
       </main>
@@ -112,13 +112,13 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
       <main className="min-h-screen bg-white pb-24 lg:pb-8">
 
         {/* Breadcrumb */}
-        <div className="bg-[#F9F9F9] border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-1.5 text-xs text-[#717171]">
-            <Link href="/" className="hover:text-[#F5A623] transition-colors">الرئيسية</Link>
+        <div className="bg-surface border-b border-line">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center gap-1.5 text-xs text-muted">
+            <Link href="/" className="hover:text-primary transition-colors">الرئيسية</Link>
             <ChevronRight size={12} />
-            <Link href="/daily-rents" className="hover:text-[#F5A623] transition-colors">الإيجار اليومي</Link>
+            <Link href="/daily-rents" className="hover:text-primary transition-colors">الإيجار اليومي</Link>
             <ChevronRight size={12} />
-            <span className="text-[#222222] font-medium truncate max-w-48">{listing.title}</span>
+            <span className="text-ink font-medium truncate max-w-48">{listing.title}</span>
           </div>
         </div>
 
@@ -131,13 +131,13 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
               disabled={favLoading}
               className="w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-md hover:bg-white transition-all"
             >
-              <Heart size={18} className={favorited ? "fill-red-500 text-red-500" : "text-gray-500"} />
+              <Heart size={18} className={favorited ? "fill-error text-error" : "text-muted"} />
             </button>
             <button
               onClick={handleShare}
               className="w-10 h-10 flex items-center justify-center rounded-full bg-white/90 shadow-md hover:bg-white transition-all"
             >
-              {copied ? <Check size={18} className="text-green-500" /> : <Share2 size={18} className="text-gray-500" />}
+              {copied ? <Check size={18} className="text-success" /> : <Share2 size={18} className="text-muted" />}
             </button>
           </div>
         </div>
@@ -157,41 +157,41 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
                       {formatListingType(listing.listingType)}
                     </span>
                     {listing.isGolden && (
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-primary-soft text-accent-text border border-secondary/40">
                         ذهبي
                       </span>
                     )}
                     {listing.isPromoted && !listing.isGolden && (
-                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-100">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-primary-soft text-accent-text border border-secondary/40">
                         مميز
                       </span>
                     )}
                   </div>
                   {listing.createdAt && (
-                    <span className="flex items-center gap-1 text-xs text-gray-400 shrink-0">
+                    <span className="flex items-center gap-1 text-xs text-hint shrink-0">
                       <Clock size={12} /> {timeAgo(listing.createdAt)}
                     </span>
                   )}
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-black text-[#222222] leading-snug mb-3">
+                <h1 className="text-2xl sm:text-3xl font-black text-ink leading-snug mb-3">
                   {listing.title}
                 </h1>
 
-                <p className="flex items-center gap-1.5 text-sm text-[#717171]">
-                  <MapPin size={14} className="text-[#F5A623] shrink-0" />
+                <p className="flex items-center gap-1.5 text-sm text-muted">
+                  <MapPin size={14} className="text-primary shrink-0" />
                   {listing.city}
                   {listing.district ? ` · ${listing.district}` : ""}
                 </p>
 
                 {listing.adNumber && (
-                  <p className="text-sm text-gray-400 mt-1">{formatAdNumber(listing.adNumber)}</p>
+                  <p className="text-sm text-hint mt-1">{formatAdNumber(listing.adNumber)}</p>
                 )}
               </div>
 
               {/* Stats */}
               {stats && (
-                <div className="flex gap-5 text-sm text-[#717171]">
+                <div className="flex gap-5 text-sm text-muted">
                   <span className="flex items-center gap-1.5"><Eye size={14} /> {stats.viewCount} مشاهدة</span>
                   <span className="flex items-center gap-1.5"><Users size={14} /> {stats.messageCount} تواصل</span>
                   <span className="flex items-center gap-1.5"><Bookmark size={14} /> {stats.favoriteCount} حفظ</span>
@@ -202,60 +202,60 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
               {(listing.area || listing.bedrooms !== undefined || listing.bathrooms !== undefined || listing.livingRooms !== undefined) && (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {listing.area && (
-                    <div className="bg-[#F9F9F9] rounded-2xl p-4 text-center">
-                      <Maximize2 size={18} className="text-[#F5A623] mx-auto mb-2" />
-                      <p className="text-lg font-bold text-[#222222]">{listing.area}</p>
-                      <p className="text-xs text-[#717171]">م²</p>
+                    <div className="bg-surface rounded-2xl p-4 text-center">
+                      <Maximize2 size={18} className="text-primary mx-auto mb-2" />
+                      <p className="text-lg font-bold text-ink">{listing.area}</p>
+                      <p className="text-xs text-muted">م²</p>
                     </div>
                   )}
                   {listing.bedrooms !== undefined && (
-                    <div className="bg-[#F9F9F9] rounded-2xl p-4 text-center">
-                      <Bed size={18} className="text-[#F5A623] mx-auto mb-2" />
-                      <p className="text-lg font-bold text-[#222222]">{listing.bedrooms}</p>
-                      <p className="text-xs text-[#717171]">غرف نوم</p>
+                    <div className="bg-surface rounded-2xl p-4 text-center">
+                      <Bed size={18} className="text-primary mx-auto mb-2" />
+                      <p className="text-lg font-bold text-ink">{listing.bedrooms}</p>
+                      <p className="text-xs text-muted">غرف نوم</p>
                     </div>
                   )}
                   {listing.bathrooms !== undefined && (
-                    <div className="bg-[#F9F9F9] rounded-2xl p-4 text-center">
-                      <Bath size={18} className="text-[#F5A623] mx-auto mb-2" />
-                      <p className="text-lg font-bold text-[#222222]">{listing.bathrooms}</p>
-                      <p className="text-xs text-[#717171]">دورات مياه</p>
+                    <div className="bg-surface rounded-2xl p-4 text-center">
+                      <Bath size={18} className="text-primary mx-auto mb-2" />
+                      <p className="text-lg font-bold text-ink">{listing.bathrooms}</p>
+                      <p className="text-xs text-muted">دورات مياه</p>
                     </div>
                   )}
                   {listing.livingRooms !== undefined && (
-                    <div className="bg-[#F9F9F9] rounded-2xl p-4 text-center">
-                      <Home size={18} className="text-[#F5A623] mx-auto mb-2" />
-                      <p className="text-lg font-bold text-[#222222]">{listing.livingRooms}</p>
-                      <p className="text-xs text-[#717171]">غرف معيشة</p>
+                    <div className="bg-surface rounded-2xl p-4 text-center">
+                      <Home size={18} className="text-primary mx-auto mb-2" />
+                      <p className="text-lg font-bold text-ink">{listing.livingRooms}</p>
+                      <p className="text-xs text-muted">غرف معيشة</p>
                     </div>
                   )}
                 </div>
               )}
 
               {/* Rental details */}
-              <div className="bg-[#F9F9F9] rounded-xl p-4 space-y-1.5 text-sm">
-                <p className="text-[#222222]">
-                  <span className="text-[#717171]">السعر الليلي: </span>
+              <div className="bg-surface rounded-xl p-4 space-y-1.5 text-sm">
+                <p className="text-ink">
+                  <span className="text-muted">السعر الليلي: </span>
                   <span className="font-bold">{formatPrice(listing.price)} / ليلة</span>
                 </p>
                 {listing.checkInTime && (
-                  <p className="text-[#222222]">
-                    <span className="text-[#717171]">وقت الوصول: </span>{listing.checkInTime}
+                  <p className="text-ink">
+                    <span className="text-muted">وقت الوصول: </span>{listing.checkInTime}
                   </p>
                 )}
                 {listing.checkOutTime && (
-                  <p className="text-[#222222]">
-                    <span className="text-[#717171]">وقت المغادرة: </span>{listing.checkOutTime}
+                  <p className="text-ink">
+                    <span className="text-muted">وقت المغادرة: </span>{listing.checkOutTime}
                   </p>
                 )}
                 {listing.minNights !== undefined && listing.minNights > 1 && (
-                  <p className="text-[#222222]">
-                    <span className="text-[#717171]">الحد الأدنى للإقامة: </span>{listing.minNights} ليالٍ
+                  <p className="text-ink">
+                    <span className="text-muted">الحد الأدنى للإقامة: </span>{listing.minNights} ليالٍ
                   </p>
                 )}
                 {listing.maxGuests && (
-                  <p className="text-[#222222]">
-                    <span className="text-[#717171]">الحد الأقصى للضيوف: </span>{listing.maxGuests}
+                  <p className="text-ink">
+                    <span className="text-muted">الحد الأقصى للضيوف: </span>{listing.maxGuests}
                   </p>
                 )}
               </div>
@@ -263,7 +263,7 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
               {/* Description */}
               {listing.description && (
                 <>
-                  <hr className="border-gray-100" />
+                  <hr className="border-line" />
                   <DescriptionClient text={listing.description} />
                 </>
               )}
@@ -271,14 +271,14 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
               {/* Features */}
               {enabledFeatures.length > 0 && (
                 <>
-                  <hr className="border-gray-100" />
+                  <hr className="border-line" />
                   <div>
-                    <h2 className="text-base font-bold text-[#222222] mb-4">المرافق والخدمات</h2>
+                    <h2 className="text-base font-bold text-ink mb-4">المرافق والخدمات</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                       {enabledFeatures.map(([key]) => (
-                        <div key={key} className="flex items-center gap-3 bg-[#F9F9F9] rounded-xl px-3.5 py-3 border border-transparent hover:border-[#F5A623]/20 transition-colors">
-                          <span className="text-[#F5A623] shrink-0">{FEATURE_ICONS[key] ?? <Check size={15} />}</span>
-                          <span className="text-sm font-medium text-[#222222]">{FEATURE_LABELS[key] ?? key}</span>
+                        <div key={key} className="flex items-center gap-3 bg-surface rounded-xl px-3.5 py-3 border border-transparent hover:border-primary/20 transition-colors">
+                          <span className="text-primary shrink-0">{FEATURE_ICONS[key] ?? <Check size={15} />}</span>
+                          <span className="text-sm font-medium text-ink">{FEATURE_LABELS[key] ?? key}</span>
                         </div>
                       ))}
                     </div>
@@ -289,10 +289,10 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
               {/* Map */}
               {listing.lat && listing.lng && (
                 <>
-                  <hr className="border-gray-100" />
+                  <hr className="border-line" />
                   <div>
-                    <h2 className="text-base font-bold text-[#222222] mb-4">الموقع</h2>
-                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                    <h2 className="text-base font-bold text-ink mb-4">الموقع</h2>
+                    <div className="rounded-2xl overflow-hidden border border-line shadow-sm">
                       <iframe
                         src={`https://maps.google.com/maps?q=${listing.lat},${listing.lng}&z=15&output=embed`}
                         width="100%" height="280" style={{ border: 0 }}
@@ -300,8 +300,8 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
                         title="موقع العقار"
                       />
                     </div>
-                    <p className="text-sm text-[#717171] mt-2 flex items-center gap-1">
-                      <MapPin size={13} className="text-[#F5A623]" />
+                    <p className="text-sm text-muted mt-2 flex items-center gap-1">
+                      <MapPin size={13} className="text-primary" />
                       {listing.city}{listing.district ? ` · ${listing.district}` : ""}
                     </p>
                   </div>
@@ -311,11 +311,11 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
               {/* Owner card */}
               {(listing.__owner__?.name ?? listing.owner?.name) && (
                 <>
-                  <hr className="border-gray-100" />
+                  <hr className="border-line" />
                   <div>
-                    <h2 className="text-base font-bold text-[#222222] mb-4">المعلن</h2>
-                    <div className="flex items-center gap-4 bg-[#F9F9F9] rounded-2xl p-5">
-                      <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-gray-200 shrink-0">
+                    <h2 className="text-base font-bold text-ink mb-4">المعلن</h2>
+                    <div className="flex items-center gap-4 bg-surface rounded-2xl p-5">
+                      <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-line shrink-0">
                         {(listing.__owner__?.profilePhoto ?? listing.owner?.photo) ? (
                           <Image
                             src={listing.__owner__?.profilePhoto ?? listing.owner!.photo!}
@@ -323,8 +323,8 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
                             fill className="object-cover" unoptimized
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center bg-gray-200">
-                            <span className="text-2xl font-bold text-gray-400">
+                          <div className="w-full h-full flex items-center justify-center bg-line">
+                            <span className="text-2xl font-bold text-hint">
                               {(listing.__owner__?.name ?? listing.owner?.name ?? "؟").charAt(0)}
                             </span>
                           </div>
@@ -332,26 +332,26 @@ export default function DailyRentDetailClient({ listing, photos }: Props) {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
-                          <p className="font-bold text-[#222222]">
+                          <p className="font-bold text-ink">
                             {listing.__owner__?.name ?? listing.owner?.name}
                           </p>
                           {ownerRole && ROLE_LABELS[ownerRole] && (
-                            <span className="text-xs bg-orange-50 text-[#F5A623] border border-orange-100 font-semibold px-2 py-0.5 rounded-full">
+                            <span className="text-xs bg-primary-soft text-primary border border-secondary/40 font-semibold px-2 py-0.5 rounded-full">
                               {ROLE_LABELS[ownerRole]}
                             </span>
                           )}
                         </div>
                         {listing.owner?.rating !== undefined && (
                           <div className="flex items-center gap-1 mt-0.5">
-                            <Star size={13} className="text-amber-400 fill-amber-400" />
-                            <span className="text-sm text-[#717171]">
+                            <Star size={13} className="text-warning fill-warning" />
+                            <span className="text-sm text-muted">
                               {listing.owner.rating.toFixed(1)}
                               {listing.owner.reviewCount !== undefined && ` (${listing.owner.reviewCount})`}
                             </span>
                           </div>
                         )}
                         {listing.owner?.lastActive && (
-                          <p className="text-xs text-gray-400 mt-0.5">آخر نشاط: {listing.owner.lastActive}</p>
+                          <p className="text-xs text-hint mt-0.5">آخر نشاط: {listing.owner.lastActive}</p>
                         )}
                       </div>
                     </div>

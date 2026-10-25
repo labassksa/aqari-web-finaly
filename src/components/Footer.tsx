@@ -6,12 +6,12 @@ export default async function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#111111] text-gray-400 pt-16 pb-8">
+    <footer className="bg-ink text-hint pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <div className="text-3xl font-black text-[#F5A623] mb-3">أقورا</div>
+            <div className="text-3xl font-black text-primary mb-3">أقورا</div>
             <p className="text-sm leading-relaxed max-w-xs">
               {t("tagline")}
             </p>
@@ -108,7 +108,7 @@ export default async function Footer() {
           <span>
             © {year} {t("company")} — {t("rights")}
           </span>
-          <span className="text-gray-600">المملكة العربية السعودية 🇸🇦</span>
+          <span className="text-muted">المملكة العربية السعودية 🇸🇦</span>
         </div>
       </div>
     </footer>

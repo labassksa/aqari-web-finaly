@@ -48,7 +48,7 @@ export default function Step0Role() {
     <div className="px-4 py-6 space-y-6">
       {/* Role selection */}
       <div>
-        <h2 className="text-lg font-bold text-[#222222] mb-3">ما هو دورك؟</h2>
+        <h2 className="text-lg font-bold text-ink mb-3">ما هو دورك؟</h2>
         <div className="grid grid-cols-3 gap-2 sm:gap-3">
           {ROLES.map((role) => {
             const selected = store.advertiserType === role.value;
@@ -58,14 +58,14 @@ export default function Step0Role() {
                 onClick={() => handleRoleSelect(role.value)}
                 className={`flex flex-col items-center gap-2 p-3 sm:p-4 rounded-xl border-2 transition-all text-center ${
                   selected
-                    ? 'border-[#F5A623] bg-orange-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
+                    ? 'border-primary bg-primary-soft'
+                    : 'border-line bg-white hover:border-line'
                 }`}
               >
-                <span className={selected ? 'text-[#F5A623]' : 'text-[#717171]'}>
+                <span className={selected ? 'text-primary' : 'text-muted'}>
                   {role.icon}
                 </span>
-                <span className={`text-xs font-semibold leading-tight ${selected ? 'text-[#F5A623]' : 'text-[#222222]'}`}>
+                <span className={`text-xs font-semibold leading-tight ${selected ? 'text-primary' : 'text-ink'}`}>
                   {role.label}
                 </span>
               </button>
@@ -76,43 +76,43 @@ export default function Step0Role() {
 
       {/* Service selection */}
       <div>
-        <h2 className="text-lg font-bold text-[#222222] mb-3">ماذا تريد أن تفعل؟</h2>
+        <h2 className="text-lg font-bold text-ink mb-3">ماذا تريد أن تفعل؟</h2>
         <div className="space-y-3">
           <button
             onClick={() => handleServiceSelect('listing')}
             className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-right ${
               store.selectedService === 'listing'
-                ? 'border-[#F5A623] bg-orange-50'
-                : 'border-gray-200 bg-white hover:border-gray-300'
+                ? 'border-primary bg-primary-soft'
+                : 'border-line bg-white hover:border-line'
             }`}
           >
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-              store.selectedService === 'listing' ? 'bg-[#F5A623]/10' : 'bg-gray-100'
+              store.selectedService === 'listing' ? 'bg-primary/10' : 'bg-surface'
             }`}>
               <PlusCircle
                 size={20}
                 strokeWidth={1.5}
-                className={store.selectedService === 'listing' ? 'text-[#F5A623]' : 'text-[#717171]'}
+                className={store.selectedService === 'listing' ? 'text-primary' : 'text-muted'}
               />
             </div>
             <div className="flex-1 text-right">
-              <p className={`font-bold text-sm ${store.selectedService === 'listing' ? 'text-[#F5A623]' : 'text-[#222222]'}`}>
+              <p className={`font-bold text-sm ${store.selectedService === 'listing' ? 'text-primary' : 'text-ink'}`}>
                 إضافة إعلان عقاري
               </p>
-              <p className="text-xs text-[#717171] mt-0.5">اعرض عقارك للبيع أو الإيجار</p>
+              <p className="text-xs text-muted mt-0.5">اعرض عقارك للبيع أو الإيجار</p>
             </div>
           </button>
 
           <button
             onClick={() => handleServiceSelect('marketing')}
-            className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-gray-300 transition-all text-right opacity-60"
+            className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-line bg-white hover:border-line transition-all text-right opacity-60"
           >
-            <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center shrink-0">
-              <Megaphone size={20} strokeWidth={1.5} className="text-[#717171]" />
+            <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center shrink-0">
+              <Megaphone size={20} strokeWidth={1.5} className="text-muted" />
             </div>
             <div className="flex-1 text-right">
-              <p className="font-bold text-sm text-[#222222]">طلب تسويق عقار</p>
-              <p className="text-xs text-[#717171] mt-0.5">اطلب من وسطاء تسويق عقارك</p>
+              <p className="font-bold text-sm text-ink">طلب تسويق عقار</p>
+              <p className="text-xs text-muted mt-0.5">اطلب من وسطاء تسويق عقارك</p>
             </div>
           </button>
         </div>
@@ -120,7 +120,7 @@ export default function Step0Role() {
 
       {toast && (
         <div className="fixed bottom-24 start-4 end-4 z-50 flex justify-center pointer-events-none">
-          <div className="bg-[#222222] text-white text-sm font-medium px-5 py-3 rounded-xl shadow-lg">
+          <div className="bg-ink text-white text-sm font-medium px-5 py-3 rounded-xl shadow-lg">
             هذه الخدمة قادمة قريباً
           </div>
         </div>

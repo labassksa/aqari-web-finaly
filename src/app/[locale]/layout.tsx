@@ -38,7 +38,7 @@ export default async function LocaleLayout({
     <div
       lang={locale}
       dir={isRtl ? "rtl" : "ltr"}
-      className="min-h-screen flex flex-col bg-white text-[#222222]"
+      className="min-h-screen flex flex-col bg-white text-ink"
     >
       <NextIntlClientProvider messages={messages}>
         {children}

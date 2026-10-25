@@ -66,15 +66,15 @@ export default function FavoritesPage() {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
-        <h1 className="text-2xl font-black text-[#222222] mb-6">المفضلة</h1>
+        <h1 className="text-2xl font-black text-ink mb-6">المفضلة</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="bg-white rounded-2xl overflow-hidden animate-pulse">
-              <div className="aspect-[4/3] bg-gray-200" />
+              <div className="aspect-[4/3] bg-line" />
               <div className="p-4 space-y-2">
-                <div className="h-3 bg-gray-200 rounded w-1/2" />
-                <div className="h-4 bg-gray-200 rounded w-3/4" />
-                <div className="h-4 bg-gray-200 rounded w-1/3" />
+                <div className="h-3 bg-line rounded w-1/2" />
+                <div className="h-4 bg-line rounded w-3/4" />
+                <div className="h-4 bg-line rounded w-1/3" />
               </div>
             </div>
           ))}
@@ -86,14 +86,14 @@ export default function FavoritesPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
-        <h1 className="text-2xl font-black text-[#222222] mb-6">المفضلة</h1>
+        <h1 className="text-2xl font-black text-ink mb-6">المفضلة</h1>
         <div className="flex flex-col items-center justify-center py-20 gap-4 text-center">
-          <Heart size={64} className="text-gray-200" strokeWidth={1.5} />
-          <h3 className="text-xl font-bold text-[#222222]">لا توجد إعلانات في المفضلة بعد</h3>
-          <p className="text-[#717171] text-sm">احفظ الإعلانات التي تعجبك لتجدها هنا</p>
+          <Heart size={64} className="text-line" strokeWidth={1.5} />
+          <h3 className="text-xl font-bold text-ink">لا توجد إعلانات في المفضلة بعد</h3>
+          <p className="text-muted text-sm">احفظ الإعلانات التي تعجبك لتجدها هنا</p>
           <Link
             href="/listings"
-            className="mt-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
+            className="mt-2 bg-primary hover:bg-primary-hover text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
           >
             استعرض الإعلانات
           </Link>
@@ -105,8 +105,8 @@ export default function FavoritesPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-black text-[#222222]">المفضلة</h1>
-        <span className="text-sm text-[#717171]">{items.length} إعلان</span>
+        <h1 className="text-2xl font-black text-ink">المفضلة</h1>
+        <span className="text-sm text-muted">{items.length} إعلان</span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -122,10 +122,10 @@ export default function FavoritesPage() {
             >
               <Link
                 href={`/listings/${l.id}`}
-                className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden flex flex-col"
+                className="group bg-white rounded-2xl border border-line shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all overflow-hidden flex flex-col"
               >
                 {/* Photo */}
-                <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                <div className="relative aspect-[4/3] bg-surface overflow-hidden">
                   {l.coverPhoto ? (
                     <Image
                       src={l.coverPhoto} alt={l.title} fill
@@ -133,7 +133,7 @@ export default function FavoritesPage() {
                       unoptimized
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface to-line">
                       <span className="text-5xl opacity-30">🏠</span>
                     </div>
                   )}
@@ -148,25 +148,25 @@ export default function FavoritesPage() {
                     disabled={isRemoving}
                     className="absolute top-3 end-3 w-7 h-7 flex items-center justify-center rounded-full bg-white/90 hover:bg-white shadow transition-all"
                   >
-                    <Heart size={14} className="fill-red-500 text-red-500" />
+                    <Heart size={14} className="fill-error text-error" />
                   </button>
                 </div>
 
                 {/* Content */}
                 <div className="p-4 flex flex-col gap-2 flex-1">
-                  <p className="text-xs text-[#717171]">
+                  <p className="text-xs text-muted">
                     {l.city}{l.district ? ` · ${l.district}` : ''}{l.category ? ` · ${l.category}` : ''}
                   </p>
-                  <h3 className="text-sm font-semibold text-[#222222] line-clamp-2">{l.title}</h3>
-                  <p className="text-base font-black text-[#F5A623] mt-auto">{formatPrice(l.price)}</p>
+                  <h3 className="text-sm font-semibold text-ink line-clamp-2">{l.title}</h3>
+                  <p className="text-base font-black text-primary mt-auto">{formatPrice(l.price)}</p>
                   {(l.area || l.bedrooms || l.bathrooms) && (
-                    <div className="flex items-center gap-3 text-xs text-[#717171]">
+                    <div className="flex items-center gap-3 text-xs text-muted">
                       {l.area && <span className="flex items-center gap-1"><Maximize2 size={12} />{l.area} م²</span>}
                       {l.bedrooms > 0 && <span className="flex items-center gap-1"><Bed size={12} />{l.bedrooms}</span>}
                       {l.bathrooms > 0 && <span className="flex items-center gap-1"><Bath size={12} />{l.bathrooms}</span>}
                     </div>
                   )}
-                  {l.adNumber && <p className="text-[10px] text-gray-400">{formatAdNumber(l.adNumber)}</p>}
+                  {l.adNumber && <p className="text-[10px] text-hint">{formatAdNumber(l.adNumber)}</p>}
                 </div>
               </Link>
             </div>

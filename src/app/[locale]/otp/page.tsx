@@ -114,14 +114,14 @@ export default function OtpPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F9F9F9] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-surface flex items-center justify-center px-4">
       <div className="w-full max-w-[420px] bg-white rounded-2xl shadow-lg p-8">
         <div className="text-center mb-8">
-          <span className="text-4xl font-black text-[#F5A623]">أقورا</span>
-          <h1 className="mt-4 text-xl font-bold text-[#222222]">أدخل رمز التحقق</h1>
-          <p className="mt-1 text-sm text-[#717171]">
+          <span className="text-4xl font-black text-primary">أقورا</span>
+          <h1 className="mt-4 text-xl font-bold text-ink">أدخل رمز التحقق</h1>
+          <p className="mt-1 text-sm text-muted">
             تم إرسال رمز إلى{' '}
-            <span className="font-medium text-[#222222]" dir="ltr">{phone}</span>
+            <span className="font-medium text-ink" dir="ltr">{phone}</span>
           </p>
         </div>
 
@@ -141,24 +141,24 @@ export default function OtpPage() {
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               disabled={loading}
-              className="w-12 h-12 text-center text-lg font-bold border border-gray-200 rounded-lg outline-none focus:border-[#F5A623] transition-colors disabled:opacity-50"
+              className="w-12 h-12 text-center text-lg font-bold border border-line rounded-lg outline-none focus:border-primary transition-colors disabled:opacity-50"
             />
           ))}
         </div>
 
-        {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+        {error && <p className="text-error text-sm text-center mb-4">{error}</p>}
 
         {loading && (
           <div className="flex justify-center mb-4">
-            <span className="animate-spin rounded-full h-6 w-6 border-2 border-[#F5A623] border-t-transparent" />
+            <span className="animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent" />
           </div>
         )}
 
-        <div className="text-center text-sm text-[#717171]">
+        <div className="text-center text-sm text-muted">
           {countdown > 0 ? (
             <span>إعادة الإرسال بعد {countdown}s</span>
           ) : (
-            <button onClick={resend} className="text-[#F5A623] font-medium hover:underline">
+            <button onClick={resend} className="text-primary font-medium hover:underline">
               إعادة إرسال الرمز
             </button>
           )}

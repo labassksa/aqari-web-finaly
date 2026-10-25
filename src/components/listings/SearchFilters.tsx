@@ -104,19 +104,19 @@ export default function SearchFilters({
   ].filter(Boolean).length;
 
   return (
-    <div className="bg-white border-b border-gray-100 sticky top-16 z-40 shadow-sm">
+    <div className="bg-white border-b border-line sticky top-16 z-40 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-3">
 
         {/* Main search row */}
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Search size={17} className="absolute top-1/2 -translate-y-1/2 start-3 text-gray-400 pointer-events-none" />
+            <Search size={17} className="absolute top-1/2 -translate-y-1/2 start-3 text-hint pointer-events-none" />
             <input
               type="text"
               placeholder={t("searchPlaceholder")}
               value={values.query}
               onChange={(e) => update("query", e.target.value)}
-              className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-[#F5A623] focus:ring-2 focus:ring-[#F5A623]/20 text-sm"
+              className="w-full ps-10 pe-4 py-2.5 rounded-xl border border-line focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm"
             />
           </div>
 
@@ -125,14 +125,14 @@ export default function SearchFilters({
             onClick={() => setShowFilters(!showFilters)}
             className={`relative flex items-center gap-1.5 px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${
               showFilters || activeFilterCount > 0
-                ? "bg-[#F5A623] border-[#F5A623] text-white"
-                : "border-gray-200 text-gray-600 hover:border-[#F5A623] hover:text-[#F5A623]"
+                ? "bg-primary border-primary text-white"
+                : "border-line text-muted hover:border-primary hover:text-primary"
             }`}
           >
             <SlidersHorizontal size={16} />
             <span className="hidden sm:inline">{t("filters")}</span>
             {activeFilterCount > 0 && (
-              <span className="absolute -top-1.5 -end-1.5 w-4 h-4 bg-red-500 text-white text-[10px] rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-1.5 -end-1.5 w-4 h-4 bg-error text-white text-[10px] rounded-full flex items-center justify-center font-bold">
                 {activeFilterCount}
               </span>
             )}
@@ -140,11 +140,11 @@ export default function SearchFilters({
 
           {/* List/Map toggle — always visible, text labels hidden on mobile */}
           {onViewChange && (
-            <div className="flex items-center gap-1 border border-gray-200 rounded-xl p-1 shrink-0">
+            <div className="flex items-center gap-1 border border-line rounded-xl p-1 shrink-0">
               <button
                 onClick={() => onViewChange("list")}
                 className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  view === "list" ? "bg-[#F5A623] text-white" : "text-gray-500 hover:text-[#F5A623]"
+                  view === "list" ? "bg-primary text-white" : "text-muted hover:text-primary"
                 }`}
                 aria-label={t("listView")}
               >
@@ -154,7 +154,7 @@ export default function SearchFilters({
               <button
                 onClick={() => onViewChange("map")}
                 className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  view === "map" ? "bg-[#F5A623] text-white" : "text-gray-500 hover:text-[#F5A623]"
+                  view === "map" ? "bg-primary text-white" : "text-muted hover:text-primary"
                 }`}
                 aria-label={t("mapView")}
               >
@@ -180,8 +180,8 @@ export default function SearchFilters({
                   onClick={() => update("listingType", values.listingType === type.value ? "" : type.value)}
                   className={`shrink-0 px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                     values.listingType === type.value
-                      ? "bg-[#F5A623] border-[#F5A623] text-white"
-                      : "border-gray-200 text-gray-600 hover:border-[#F5A623] hover:text-[#F5A623]"
+                      ? "bg-primary border-primary text-white"
+                      : "border-line text-muted hover:border-primary hover:text-primary"
                   }`}
                 >
                   {type.label}
@@ -194,17 +194,17 @@ export default function SearchFilters({
               <select
                 value={values.city}
                 onChange={(e) => update("city", e.target.value)}
-                className="border border-gray-200 rounded-xl px-2 py-1.5 text-xs sm:text-sm focus:outline-none focus:border-[#F5A623] bg-white max-w-[90px] sm:max-w-none"
+                className="border border-line rounded-xl px-2 py-1.5 text-xs sm:text-sm focus:outline-none focus:border-primary bg-white max-w-[90px] sm:max-w-none"
               >
                 <option value="">{t("allCities")}</option>
                 {CITIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
               </select>
               <div className="relative flex items-center">
-                <ArrowUpDown size={12} className="absolute start-2 text-gray-400 pointer-events-none" />
+                <ArrowUpDown size={12} className="absolute start-2 text-hint pointer-events-none" />
                 <select
                   value={values.sortBy}
                   onChange={(e) => update("sortBy", e.target.value)}
-                  className="ps-6 pe-1.5 py-1.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-[#F5A623] bg-white text-gray-600 appearance-none cursor-pointer max-w-[80px] sm:max-w-none"
+                  className="ps-6 pe-1.5 py-1.5 rounded-xl border border-line text-xs focus:outline-none focus:border-primary bg-white text-muted appearance-none cursor-pointer max-w-[80px] sm:max-w-none"
                 >
                   <option value="newest">{t("newest")}</option>
                   <option value="oldest">{t("oldest")}</option>
@@ -222,17 +222,17 @@ export default function SearchFilters({
             <select
               value={values.city}
               onChange={(e) => update("city", e.target.value)}
-              className="border border-gray-200 rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:border-[#F5A623] bg-white"
+              className="border border-line rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:border-primary bg-white"
             >
               <option value="">{t("allCities")}</option>
               {CITIES.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
             </select>
             <div className="relative flex items-center">
-              <ArrowUpDown size={13} className="absolute start-2.5 text-gray-400 pointer-events-none" />
+              <ArrowUpDown size={13} className="absolute start-2.5 text-hint pointer-events-none" />
               <select
                 value={values.sortBy}
                 onChange={(e) => update("sortBy", e.target.value)}
-                className="ps-7 pe-2 py-1.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-[#F5A623] bg-white text-gray-600 appearance-none cursor-pointer"
+                className="ps-7 pe-2 py-1.5 rounded-xl border border-line text-sm focus:outline-none focus:border-primary bg-white text-muted appearance-none cursor-pointer"
               >
                 <option value="newest">{t("newest")}</option>
                 <option value="oldest">{t("oldest")}</option>
@@ -245,11 +245,11 @@ export default function SearchFilters({
 
         {/* Expanded filter panel */}
         {showFilters && (
-          <div className="border-t border-gray-100 pt-4 space-y-5">
+          <div className="border-t border-line pt-4 space-y-5">
             {/* Property type chips */}
             {!hidePropertyType && (
             <div>
-              <p className="text-xs font-semibold text-[#717171] mb-2 uppercase tracking-wide">{t("propertyType")}</p>
+              <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wide">{t("propertyType")}</p>
               <div className="flex flex-wrap gap-2">
                 {PROPERTY_TYPES.map((pt) => (
                   <button
@@ -258,8 +258,8 @@ export default function SearchFilters({
                     onClick={() => togglePropertyType(pt.value)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                       values.propertyType === pt.value
-                        ? "bg-[#F5A623] border-[#F5A623] text-white"
-                        : "border-gray-200 text-gray-600 hover:border-gray-300"
+                        ? "bg-primary border-primary text-white"
+                        : "border-line text-muted hover:border-line"
                     }`}
                   >
                     {pt.label}
@@ -271,56 +271,56 @@ export default function SearchFilters({
 
             {/* Price range */}
             <div>
-              <p className="text-xs font-semibold text-[#717171] mb-2 uppercase tracking-wide">{t("priceRange")}</p>
+              <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wide">{t("priceRange")}</p>
               <div className="flex gap-2" dir="ltr">
                 <input
                   type="number"
                   placeholder={t("from")}
                   value={values.priceFrom}
                   onChange={(e) => update("priceFrom", e.target.value)}
-                  className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#F5A623]"
+                  className="flex-1 border border-line rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary"
                 />
-                <span className="self-center text-gray-300">–</span>
+                <span className="self-center text-hint">–</span>
                 <input
                   type="number"
                   placeholder={t("to")}
                   value={values.priceTo}
                   onChange={(e) => update("priceTo", e.target.value)}
-                  className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#F5A623]"
+                  className="flex-1 border border-line rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
 
             {/* Area range */}
             <div>
-              <p className="text-xs font-semibold text-[#717171] mb-2 uppercase tracking-wide">{t("areaRange")}</p>
+              <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wide">{t("areaRange")}</p>
               <div className="flex gap-2" dir="ltr">
                 <input
                   type="number"
                   placeholder={t("from")}
                   value={values.areaFrom}
                   onChange={(e) => update("areaFrom", e.target.value)}
-                  className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#F5A623]"
+                  className="flex-1 border border-line rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary"
                 />
-                <span className="self-center text-gray-300">–</span>
+                <span className="self-center text-hint">–</span>
                 <input
                   type="number"
                   placeholder={t("to")}
                   value={values.areaTo}
                   onChange={(e) => update("areaTo", e.target.value)}
-                  className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#F5A623]"
+                  className="flex-1 border border-line rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-primary"
                 />
               </div>
             </div>
 
             {/* Bedrooms pills */}
             <div>
-              <p className="text-xs font-semibold text-[#717171] mb-2 uppercase tracking-wide">{t("bedrooms")}</p>
+              <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wide">{t("bedrooms")}</p>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => update("bedrooms", "")}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                    values.bedrooms === "" ? "bg-[#F5A623] border-[#F5A623] text-white" : "border-gray-200 text-gray-600"
+                    values.bedrooms === "" ? "bg-primary border-primary text-white" : "border-line text-muted"
                   }`}
                 >{t("any")}</button>
                 {BEDROOM_OPTIONS.map((b) => (
@@ -328,7 +328,7 @@ export default function SearchFilters({
                     key={b}
                     onClick={() => update("bedrooms", values.bedrooms === b ? "" : b)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
-                      values.bedrooms === b ? "bg-[#F5A623] border-[#F5A623] text-white" : "border-gray-200 text-gray-600"
+                      values.bedrooms === b ? "bg-primary border-primary text-white" : "border-line text-muted"
                     }`}
                   >{b}</button>
                 ))}
@@ -337,7 +337,7 @@ export default function SearchFilters({
 
             {/* Feature checkboxes */}
             <div>
-              <p className="text-xs font-semibold text-[#717171] mb-2 uppercase tracking-wide">{t("features")}</p>
+              <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wide">{t("features")}</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {([
                   { key: "isFurnished", label: t("furnished") },
@@ -348,14 +348,14 @@ export default function SearchFilters({
                   <label
                     key={key}
                     className={`flex items-center gap-2 px-3 py-2 rounded-xl border cursor-pointer transition-all ${
-                      values[key] ? "border-[#F5A623] bg-orange-50 text-[#F5A623]" : "border-gray-200 text-gray-600 hover:border-gray-300"
+                      values[key] ? "border-primary bg-primary-soft text-primary" : "border-line text-muted hover:border-line"
                     }`}
                   >
                     <input
                       type="checkbox"
                       checked={values[key]}
                       onChange={(e) => update(key, e.target.checked)}
-                      className="accent-[#F5A623]"
+                      className="accent-primary"
                     />
                     <span className="text-xs font-medium">{label}</span>
                   </label>
@@ -364,13 +364,13 @@ export default function SearchFilters({
             </div>
 
             {/* Footer actions */}
-            <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-              <button onClick={reset} className="flex items-center gap-1 text-sm text-red-400 hover:text-red-600">
+            <div className="flex items-center justify-between pt-2 border-t border-line">
+              <button onClick={reset} className="flex items-center gap-1 text-sm text-error hover:text-error">
                 <X size={14} /> {t("clearAll")}
               </button>
               <button
                 onClick={() => setShowFilters(false)}
-                className="px-6 py-2 bg-[#F5A623] hover:bg-[#E09400] text-white font-bold rounded-xl text-sm transition-colors"
+                className="px-6 py-2 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-sm transition-colors"
               >
                 {t("done")}
               </button>
@@ -380,7 +380,7 @@ export default function SearchFilters({
 
         {/* Result count */}
         {resultCount !== undefined && !loading && (
-          <p className="text-xs text-[#717171]">
+          <p className="text-xs text-muted">
             {t("resultCount", { count: resultCount })}
           </p>
         )}

@@ -28,8 +28,8 @@ const PROPERTY_ICONS: Record<string, React.ReactNode> = {
 };
 
 const LISTING_TYPE_STYLE: Record<string, string> = {
-  sale:       'bg-blue-50 text-blue-700',
-  rent_long:  'bg-emerald-50 text-emerald-700',
+  sale:       'bg-info/10 text-info',
+  rent_long:  'bg-success-soft text-success',
   rent_short: 'bg-violet-50 text-violet-700',
 };
 
@@ -86,7 +86,7 @@ export default function Step1Category({ presetPropertyType }: { presetPropertyTy
       <div className="px-4 py-6">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-28 bg-gray-100 rounded-xl animate-pulse" />
+            <div key={i} className="h-28 bg-surface rounded-xl animate-pulse" />
           ))}
         </div>
       </div>
@@ -96,34 +96,34 @@ export default function Step1Category({ presetPropertyType }: { presetPropertyTy
   if (error) {
     return (
       <div className="px-4 py-16 flex flex-col items-center gap-4 text-center">
-        <AlertCircle size={42} className="text-red-400" />
-        <p className="text-sm text-[#717171]">{error}</p>
-        <button onClick={() => void loadCategories()} className="px-5 py-2.5 bg-[#F5A623] text-white rounded-xl text-sm font-bold">{t('retry')}</button>
+        <AlertCircle size={42} className="text-error" />
+        <p className="text-sm text-muted">{error}</p>
+        <button onClick={() => void loadCategories()} className="px-5 py-2.5 bg-primary text-white rounded-xl text-sm font-bold">{t('retry')}</button>
       </div>
     );
   }
 
   return (
     <div className="px-4 py-6">
-      <h2 className="text-base font-bold text-[#222222] mb-4">{t('title')}</h2>
+      <h2 className="text-base font-bold text-ink mb-4">{t('title')}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {categories.map((cat) => {
           const selected = store.categoryId === cat.id;
-          const typeStyle = LISTING_TYPE_STYLE[cat.listingType] ?? 'bg-gray-50 text-gray-600';
+          const typeStyle = LISTING_TYPE_STYLE[cat.listingType] ?? 'bg-surface text-muted';
           return (
             <button
               key={cat.id}
               onClick={() => handleSelect(cat)}
               className={`flex flex-col items-center gap-2.5 p-4 rounded-xl border-2 transition-all ${
                 selected
-                  ? 'border-[#F5A623] bg-orange-50'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? 'border-primary bg-primary-soft'
+                  : 'border-line bg-white hover:border-line'
               }`}
             >
-              <span className={selected ? 'text-[#F5A623]' : 'text-[#717171]'}>
+              <span className={selected ? 'text-primary' : 'text-muted'}>
                 {PROPERTY_ICONS[cat.propertyType] ?? <LayoutGrid size={26} strokeWidth={1.5} />}
               </span>
-              <span className={`text-xs font-semibold text-center leading-tight ${selected ? 'text-[#F5A623]' : 'text-[#222222]'}`}>
+              <span className={`text-xs font-semibold text-center leading-tight ${selected ? 'text-primary' : 'text-ink'}`}>
                 {locale === 'ar' ? cat.nameAr : cat.name}
               </span>
               <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${typeStyle}`}>
@@ -136,7 +136,7 @@ export default function Step1Category({ presetPropertyType }: { presetPropertyTy
         })}
       </div>
       {!store.categoryId && (
-        <p className="text-xs text-[#717171] text-center mt-4">اختر نوع العقار للمتابعة</p>
+        <p className="text-xs text-muted text-center mt-4">اختر نوع العقار للمتابعة</p>
       )}
     </div>
   );

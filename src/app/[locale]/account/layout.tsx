@@ -23,7 +23,7 @@ function AccountNav() {
   return (
     <>
       {/* ── Desktop sidebar ───────────────────────── */}
-      <aside className="hidden lg:flex flex-col w-60 shrink-0 border-e border-gray-100 bg-white min-h-[calc(100vh-64px)] py-4 px-3 gap-1">
+      <aside className="hidden lg:flex flex-col w-60 shrink-0 border-e border-line bg-white min-h-[calc(100vh-64px)] py-4 px-3 gap-1">
         {NAV_ITEMS.map(({ href, key, icon: Icon }) => {
           const active = pathname.startsWith(href);
           return (
@@ -32,8 +32,8 @@ function AccountNav() {
               href={href}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                 active
-                  ? 'bg-orange-50 text-[#F5A623]'
-                  : 'text-[#717171] hover:bg-gray-50 hover:text-[#222222]'
+                  ? 'bg-primary-soft text-primary'
+                  : 'text-muted hover:bg-surface hover:text-ink'
               }`}
             >
               <Icon size={18} />
@@ -42,10 +42,10 @@ function AccountNav() {
           );
         })}
 
-        <div className="mt-2 border-t border-gray-100 pt-2">
+        <div className="mt-2 border-t border-line pt-2">
           <Link
             href="/add-listing"
-            className="flex items-center justify-center gap-2 w-full bg-[#F5A623] hover:bg-[#E09400] text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
+            className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary-hover text-white font-bold py-2.5 rounded-xl text-sm transition-colors"
           >
             <Plus size={16} /> {t('addListing')}
           </Link>
@@ -53,7 +53,7 @@ function AccountNav() {
       </aside>
 
       {/* ── Mobile bottom tabs ─────────────────────── */}
-      <nav className="lg:hidden fixed bottom-0 start-0 end-0 z-50 bg-white border-t border-gray-100 shadow-lg">
+      <nav className="lg:hidden fixed bottom-0 start-0 end-0 z-50 bg-white border-t border-line shadow-lg">
         <div className="flex items-stretch">
           {NAV_ITEMS.map(({ href, key, icon: Icon }) => {
             const active = pathname.startsWith(href);
@@ -62,7 +62,7 @@ function AccountNav() {
                 key={href}
                 href={href}
                 className={`flex-1 flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-medium transition-colors ${
-                  active ? 'text-[#F5A623]' : 'text-[#717171]'
+                  active ? 'text-primary' : 'text-muted'
                 }`}
               >
                 <Icon size={20} strokeWidth={active ? 2.5 : 1.5} />
@@ -72,9 +72,9 @@ function AccountNav() {
           })}
           <Link
             href="/add-listing"
-            className="flex-1 flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-[#F5A623]"
+            className="flex-1 flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-primary"
           >
-            <div className="w-8 h-8 rounded-full bg-[#F5A623] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
               <Plus size={18} className="text-white" strokeWidth={2.5} />
             </div>
             {t('add')}
@@ -88,7 +88,7 @@ function AccountNav() {
 export default function AccountLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthGuard>
-      <div className="min-h-screen flex flex-col bg-[#F9F9F9]">
+      <div className="min-h-screen flex flex-col bg-surface">
         <Navbar />
         <div className="flex flex-1">
           <AccountNav />

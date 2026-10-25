@@ -11,7 +11,7 @@ type SubmissionResult = {
 };
 
 const inputClasses =
-  "w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-[#222222] outline-none transition-all placeholder:text-gray-400 focus:border-[#F5A623] focus:ring-2 focus:ring-[#F5A623]/20";
+  "w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink outline-none transition-all placeholder:text-hint focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 export default function ComplaintForm() {
   const t = useTranslations("complaints");
@@ -54,18 +54,18 @@ export default function ComplaintForm() {
 
     return (
       <div
-        className="rounded-2xl border border-green-200 bg-green-50 p-7 text-center sm:p-10"
+        className="rounded-2xl border border-success/30 bg-success-soft p-7 text-center sm:p-10"
         role="status"
       >
         <CheckCircle2
           size={56}
-          className="mx-auto mb-5 text-green-600"
+          className="mx-auto mb-5 text-success"
           aria-hidden="true"
         />
-        <h2 className="mb-6 text-2xl font-black text-green-800">
+        <h2 className="mb-6 text-2xl font-black text-success">
           {t("success.title")}
         </h2>
-        <div className="space-y-3 text-sm text-green-900">
+        <div className="space-y-3 text-sm text-success">
           <p>
             <span className="font-semibold">{t("success.number")}</span>{" "}
             <bdi dir="ltr" className="font-bold">
@@ -81,7 +81,7 @@ export default function ComplaintForm() {
         <button
           type="button"
           onClick={() => setResult(null)}
-          className="mt-7 rounded-xl border border-green-300 bg-white px-5 py-2.5 text-sm font-bold text-green-700 transition-colors hover:bg-green-100"
+          className="mt-7 rounded-xl border border-success/30 bg-white px-5 py-2.5 text-sm font-bold text-success transition-colors hover:bg-success-soft"
         >
           {t("success.another")}
         </button>
@@ -161,7 +161,7 @@ export default function ComplaintForm() {
 
       {error && (
         <p
-          className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+          className="rounded-xl border border-error/30 bg-error-soft px-4 py-3 text-sm text-error"
           role="alert"
         >
           {error}
@@ -171,7 +171,7 @@ export default function ComplaintForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#F5A623] py-3.5 font-bold text-white shadow-md transition-all hover:bg-[#E09400] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3.5 font-bold text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? (
           <span
@@ -200,7 +200,7 @@ function FormField({
     <div>
       <label
         htmlFor={htmlFor}
-        className="mb-1.5 block text-sm font-semibold text-[#222222]"
+        className="mb-1.5 block text-sm font-semibold text-ink"
       >
         {label}
       </label>

@@ -5,14 +5,14 @@ export default async function Screenshots() {
   const t = await getTranslations("screenshots");
 
   return (
-    <section className="py-20 sm:py-28 bg-[#222222] overflow-hidden">
+    <section className="py-20 sm:py-28 bg-ink overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
             {t("title")}
           </h2>
-          <p className="text-lg text-gray-400 max-w-xl mx-auto">
+          <p className="text-lg text-hint max-w-xl mx-auto">
             {t("subtitle")}
           </p>
         </div>

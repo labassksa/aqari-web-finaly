@@ -86,25 +86,25 @@ function AddListingInner({ presetPropertyType }: Pick<Props, 'presetPropertyType
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F9F9F9]" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="flex flex-col min-h-screen bg-surface" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="sticky top-0 z-20 bg-white shadow-sm">
         <div className="flex items-center px-4 h-14 max-w-2xl mx-auto w-full">
-          <button onClick={handleBack} className="p-2 rounded-xl hover:bg-gray-100" aria-label={t('back')}>
+          <button onClick={handleBack} className="p-2 rounded-xl hover:bg-surface" aria-label={t('back')}>
             <ChevronRight size={22} />
           </button>
           <h1 className="flex-1 text-center text-base font-bold">{t('title')}</h1>
           {currentStepLabel === 0 ? (
-            <button onClick={handleNext} className="p-2 rounded-xl hover:bg-gray-100" aria-label={t('next')}>
+            <button onClick={handleNext} className="p-2 rounded-xl hover:bg-surface" aria-label={t('next')}>
               <ChevronLeft size={22} />
             </button>
           ) : <div className="w-10" />}
         </div>
-        <div className="h-1 bg-gray-100">
-          <div className="h-full bg-[#F5A623] transition-all" style={{ width: `${progress}%` }} />
+        <div className="h-1 bg-surface">
+          <div className="h-full bg-primary transition-all" style={{ width: `${progress}%` }} />
         </div>
         <div className="flex justify-center gap-1.5 py-2.5">
           {steps.map((step, index) => (
-            <div key={String(step)} className={`rounded-full transition-all ${index < store.currentStep ? 'w-2 h-2 bg-[#F5A623]' : index === store.currentStep ? 'w-3 h-2 bg-[#F5A623]' : 'w-2 h-2 bg-gray-200'}`} />
+            <div key={String(step)} className={`rounded-full transition-all ${index < store.currentStep ? 'w-2 h-2 bg-primary' : index === store.currentStep ? 'w-3 h-2 bg-primary' : 'w-2 h-2 bg-line'}`} />
           ))}
         </div>
       </div>
@@ -114,12 +114,12 @@ function AddListingInner({ presetPropertyType }: Pick<Props, 'presetPropertyType
       </div>
 
       {showShellNext && (
-        <div className="fixed bottom-0 start-0 end-0 z-20 bg-white border-t border-gray-100 px-4 py-3 shadow-lg">
+        <div className="fixed bottom-0 start-0 end-0 z-20 bg-white border-t border-line px-4 py-3 shadow-lg">
           <div className="flex gap-3 max-w-2xl mx-auto">
             {store.currentStep > 0 && (
-              <button onClick={handleBack} className="flex-1 h-12 border border-gray-200 rounded-xl text-sm font-medium text-[#717171]">{t('back')}</button>
+              <button onClick={handleBack} className="flex-1 h-12 border border-line rounded-xl text-sm font-medium text-muted">{t('back')}</button>
             )}
-            <button onClick={handleNext} className={`${store.currentStep > 0 ? 'flex-1' : 'w-full'} h-12 bg-[#F5A623] text-white font-bold rounded-xl text-sm`}>
+            <button onClick={handleNext} className={`${store.currentStep > 0 ? 'flex-1' : 'w-full'} h-12 bg-primary text-white font-bold rounded-xl text-sm`}>
               {currentStepLabel === 6 ? t('review') : t('next')}
             </button>
           </div>
