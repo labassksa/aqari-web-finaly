@@ -127,7 +127,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen((v) => !v)}
-                  className="flex items-center gap-1.5 px-3 h-full bg-surface border-r border-line text-sm text-ink hover:bg-surface transition-colors rounded-l-xl"
+                  className="flex items-center gap-1.5 px-3 h-full bg-surface border-r border-line text-sm text-ink hover:bg-line transition-colors rounded-l-xl"
                 >
                   <span className="text-base leading-none">{selected.flag}</span>
                   <span className="font-medium">{selected.code}</span>

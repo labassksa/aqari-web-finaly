@@ -127,7 +127,7 @@ export default function MyAdsPage() {
             className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium border transition-all ${
               activeTab === t.value
                 ? 'bg-primary border-primary text-white'
-                : 'border-line text-muted hover:border-line bg-white'
+                : 'border-line text-muted hover:border-secondary bg-white'
             }`}
           >
             {t.label}
@@ -302,7 +302,7 @@ export default function MyAdsPage() {
               </button>
               <button
                 onClick={confirm.onConfirm}
-                className="flex-1 py-2.5 bg-error hover:bg-error rounded-xl text-sm font-bold text-white transition-colors"
+                className="flex-1 py-2.5 bg-error hover:bg-error/90 rounded-xl text-sm font-bold text-white transition-colors"
               >
                 تأكيد
               </button>

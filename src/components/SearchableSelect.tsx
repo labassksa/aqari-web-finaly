@@ -83,7 +83,7 @@ export default function SearchableSelect({
             ? 'border-line text-hint cursor-not-allowed bg-surface'
             : open
             ? 'border-primary ring-2 ring-primary/20'
-            : 'border-line hover:border-line'
+            : 'border-line hover:border-secondary'
         }`}
       >
         <span className={selected ? 'text-ink' : 'text-hint'}>

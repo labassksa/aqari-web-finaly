@@ -259,7 +259,7 @@ export default function SearchFilters({
                     className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                       values.propertyType === pt.value
                         ? "bg-primary border-primary text-white"
-                        : "border-line text-muted hover:border-line"
+                        : "border-line text-muted hover:border-secondary"
                     }`}
                   >
                     {pt.label}
@@ -348,7 +348,7 @@ export default function SearchFilters({
                   <label
                     key={key}
                     className={`flex items-center gap-2 px-3 py-2 rounded-xl border cursor-pointer transition-all ${
-                      values[key] ? "border-primary bg-primary-soft text-primary" : "border-line text-muted hover:border-line"
+                      values[key] ? "border-primary bg-primary-soft text-primary" : "border-line text-muted hover:border-secondary"
                     }`}
                   >
                     <input
@@ -365,7 +365,7 @@ export default function SearchFilters({
 
             {/* Footer actions */}
             <div className="flex items-center justify-between pt-2 border-t border-line">
-              <button onClick={reset} className="flex items-center gap-1 text-sm text-error hover:text-error">
+              <button onClick={reset} className="flex items-center gap-1 text-sm text-error hover:text-error/80">
                 <X size={14} /> {t("clearAll")}
               </button>
               <button

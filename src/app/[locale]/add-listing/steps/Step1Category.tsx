@@ -117,7 +117,7 @@ export default function Step1Category({ presetPropertyType }: { presetPropertyTy
               className={`flex flex-col items-center gap-2.5 p-4 rounded-xl border-2 transition-all ${
                 selected
                   ? 'border-primary bg-primary-soft'
-                  : 'border-line bg-white hover:border-line'
+                  : 'border-line bg-white hover:border-secondary'
               }`}
             >
               <span className={selected ? 'text-primary' : 'text-muted'}>

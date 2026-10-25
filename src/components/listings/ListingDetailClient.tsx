@@ -576,7 +576,7 @@ export default function ListingDetailClient({ id }: { id: string }) {
                   <div className="px-6 pb-6">
                     <button
                       onClick={handleShare}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 border border-line rounded-xl text-sm text-muted hover:border-line hover:text-ink transition-colors"
+                      className="w-full flex items-center justify-center gap-2 py-2.5 border border-line rounded-xl text-sm text-muted hover:border-secondary hover:text-ink transition-colors"
                     >
                       {copied ? <><Check size={15} className="text-success" /> تم النسخ</> : <><Share2 size={15} /> مشاركة الإعلان</>}
                     </button>

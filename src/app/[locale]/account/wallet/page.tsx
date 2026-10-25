@@ -271,7 +271,7 @@ export default function WalletPage() {
         <div className="flex gap-2 mb-4">
           {([['', 'الكل'], ['credit', 'إيداع'], ['debit', 'سحب']] as [TxType, string][]).map(([val, label]) => (
             <button key={val} onClick={() => setFilter(val)}
-              className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${filter === val ? 'bg-primary border-primary text-white' : 'border-line text-muted hover:border-line bg-white'}`}
+              className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${filter === val ? 'bg-primary border-primary text-white' : 'border-line text-muted hover:border-secondary bg-white'}`}
             >{label}</button>
           ))}
         </div>
@@ -359,7 +359,7 @@ export default function WalletPage() {
                 <div className="flex gap-2">
                   {[100, 500, 1000, 5000].map((amt) => (
                     <button key={amt} onClick={() => setTopUpAmount(String(amt))}
-                      className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all ${topUpAmount === String(amt) ? 'border-primary bg-primary-soft text-primary' : 'border-line text-muted hover:border-line'}`}
+                      className={`flex-1 py-2 rounded-xl border text-sm font-medium transition-all ${topUpAmount === String(amt) ? 'border-primary bg-primary-soft text-primary' : 'border-line text-muted hover:border-secondary'}`}
                     >{amt.toLocaleString('ar-SA')}</button>
                   ))}
                 </div>

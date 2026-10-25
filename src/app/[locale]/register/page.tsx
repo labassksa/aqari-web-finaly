@@ -124,7 +124,7 @@ export default function RegisterPage() {
                   className={`flex flex-col items-center justify-center gap-1 p-3 rounded-xl border text-sm font-medium transition-all ${
                     selectedRole === r.value
                       ? 'border-primary bg-primary-soft text-primary'
-                      : 'border-line text-muted hover:border-line'
+                      : 'border-line text-muted hover:border-secondary'
                   }`}
                 >
                   <span className="text-xl">{r.icon}</span>

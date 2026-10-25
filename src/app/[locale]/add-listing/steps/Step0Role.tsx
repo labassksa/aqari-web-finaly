@@ -59,7 +59,7 @@ export default function Step0Role() {
                 className={`flex flex-col items-center gap-2 p-3 sm:p-4 rounded-xl border-2 transition-all text-center ${
                   selected
                     ? 'border-primary bg-primary-soft'
-                    : 'border-line bg-white hover:border-line'
+                    : 'border-line bg-white hover:border-secondary'
                 }`}
               >
                 <span className={selected ? 'text-primary' : 'text-muted'}>
@@ -83,7 +83,7 @@ export default function Step0Role() {
             className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-right ${
               store.selectedService === 'listing'
                 ? 'border-primary bg-primary-soft'
-                : 'border-line bg-white hover:border-line'
+                : 'border-line bg-white hover:border-secondary'
             }`}
           >
             <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
@@ -105,7 +105,7 @@ export default function Step0Role() {
 
           <button
             onClick={() => handleServiceSelect('marketing')}
-            className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-line bg-white hover:border-line transition-all text-right opacity-60"
+            className="w-full flex items-center gap-4 p-4 rounded-xl border-2 border-line bg-white hover:border-secondary transition-all text-right opacity-60"
           >
             <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center shrink-0">
               <Megaphone size={20} strokeWidth={1.5} className="text-muted" />
