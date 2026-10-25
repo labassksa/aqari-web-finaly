@@ -399,7 +399,7 @@ export default function ChatPage() {
                   <button
                     onClick={() => loadMessages(activeChat.id, msgPage + 1, true)}
                     disabled={msgsLoading}
-                    className="text-xs text-primary font-medium border border-primary px-4 py-1.5 rounded-full hover:bg-primary-soft transition-colors"
+                    className="text-xs text-accent-text font-medium border border-primary px-4 py-1.5 rounded-full hover:bg-primary-soft transition-colors"
                   >
                     {msgsLoading ? 'جاري التحميل...' : 'تحميل المزيد'}
                   </button>

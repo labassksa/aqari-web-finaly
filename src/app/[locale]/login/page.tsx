@@ -142,7 +142,7 @@ export default function LoginPage() {
                         type="button"
                         onClick={() => selectCountry(c)}
                         className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-right hover:bg-surface transition-colors ${
-                          selected.code === c.code ? 'bg-primary-soft text-primary font-medium' : 'text-ink'
+                          selected.code === c.code ? 'bg-primary-soft text-accent-text font-medium' : 'text-ink'
                         }`}
                         dir="rtl"
                       >

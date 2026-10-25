@@ -193,7 +193,7 @@ export default function Navbar() {
                         href={link.href}
                         className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                           active
-                            ? "bg-primary-soft text-primary"
+                            ? "bg-primary-soft text-accent-text"
                             : "text-ink hover:bg-surface"
                         }`}
                         onClick={() => setDropdownOpen(false)}
@@ -218,7 +218,7 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className="text-sm px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-soft transition-all font-medium"
+                className="text-sm px-4 py-2 rounded-full border border-primary text-accent-text hover:bg-primary-soft transition-all font-medium"
               >
                 {t("login")}
               </Link>
@@ -279,7 +279,7 @@ export default function Navbar() {
                       key={link.href}
                       href={link.href}
                       className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-medium ${
-                        active ? "bg-primary-soft text-primary" : "bg-surface text-muted"
+                        active ? "bg-primary-soft text-accent-text" : "bg-surface text-muted"
                       }`}
                       onClick={() => setOpen(false)}
                     >

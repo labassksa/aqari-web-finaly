@@ -250,7 +250,7 @@ export default function Step7Review() {
           <p className="text-xs font-medium text-muted mb-2">المرافق والمميزات</p>
           <div className="flex flex-wrap gap-1.5">
             {activeFeatures.map((f) => (
-              <span key={f} className="text-xs bg-primary-soft text-primary px-2.5 py-1 rounded-full font-medium">
+              <span key={f} className="text-xs bg-primary-soft text-accent-text px-2.5 py-1 rounded-full font-medium">
                 {f}
               </span>
             ))}

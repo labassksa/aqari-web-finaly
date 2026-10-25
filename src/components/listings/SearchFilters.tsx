@@ -348,7 +348,7 @@ export default function SearchFilters({
                   <label
                     key={key}
                     className={`flex items-center gap-2 px-3 py-2 rounded-xl border cursor-pointer transition-all ${
-                      values[key] ? "border-primary bg-primary-soft text-primary" : "border-line text-muted hover:border-secondary"
+                      values[key] ? "border-primary bg-primary-soft text-accent-text" : "border-line text-muted hover:border-secondary"
                     }`}
                   >
                     <input
