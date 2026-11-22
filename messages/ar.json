@@ -23,12 +23,20 @@
     "logout": "تسجيل الخروج"
   },
   "hero": {
-    "badge": "متاح على iOS و Android",
+    "badge": "قريباً على iOS و Android",
     "title": "ابحث، تواصل، وأتمّ صفقتك العقارية بثقة",
     "subtitle": "ابحث عن عقارك المثالي، تواصل مع الملاك والوسطاء، وأتمّ صفقاتك بكل سهولة وأمان.",
     "downloadIos": "حمّل من App Store",
     "downloadAndroid": "حمّل من Google Play",
-    "comingSoon": "قريباً على المتاجر"
+    "comingSoon": "قريباً على المتاجر",
+    "browse": "تصفّح العقارات",
+    "addListing": "أضف إعلانك",
+    "cardListingsTitle": "عقارات للبيع والإيجار",
+    "cardListingsDesc": "شقق وفلل وأراضٍ ومكاتب في مختلف مدن المملكة",
+    "cardEventHallsTitle": "قاعات المناسبات",
+    "cardEventHallsDesc": "اعثر على القاعة المناسبة لمناسبتك وتواصل مع صاحبها مباشرة",
+    "cardAddTitle": "أضف عقارك",
+    "cardAddDesc": "اعرض عقارك للبيع أو الإيجار وصِل إلى المهتمين بسهولة"
   },
   "features": {
     "title": "كل ما تحتاجه في منصة واحدة",

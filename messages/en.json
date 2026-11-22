@@ -23,12 +23,20 @@
     "logout": "Sign Out"
   },
   "hero": {
-    "badge": "Available on iOS & Android",
+    "badge": "Coming soon on iOS & Android",
     "title": "Search, connect, and close your property deal with confidence",
     "subtitle": "Find your perfect property, connect with owners and brokers, and close deals safely and easily.",
     "downloadIos": "Download on App Store",
     "downloadAndroid": "Get it on Google Play",
-    "comingSoon": "Coming soon to stores"
+    "comingSoon": "Coming soon to stores",
+    "browse": "Browse properties",
+    "addListing": "Add your listing",
+    "cardListingsTitle": "Properties for sale & rent",
+    "cardListingsDesc": "Apartments, villas, land and offices across the Kingdom",
+    "cardEventHallsTitle": "Event halls",
+    "cardEventHallsDesc": "Find the right hall for your occasion and contact the owner directly",
+    "cardAddTitle": "List your property",
+    "cardAddDesc": "Offer your property for sale or rent and reach interested people easily"
   },
   "features": {
     "title": "Everything You Need in One Platform",
